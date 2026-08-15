@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿尔泰项目 · 从0到企业级的产品演进全记录</title>
+<style>
+:root{
+  --bg:#050508;
+  --bg2:#0a0a12;
+  --card:rgba(255,255,255,0.045);
+  --card2:rgba(255,255,255,0.07);
+  --stroke:rgba(255,255,255,0.09);
+  --txt:#f5f5f7;
+  --dim:#86868b;
+  --dim2:#6e6e73;
+  --blue:#2997ff;
+  --cyan:#64d2ff;
+  --purple:#bf5af2;
+  --grad:linear-gradient(135deg,#2997ff 0%,#64d2ff 40%,#bf5af2 100%);
+  --ok:#30d158;
+  --warn:#ff9f0a;
+  --red:#ff453a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Helvetica Neue",sans-serif;
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;
+  padding:80px 20px 40px;
+}
+.hero::before{
+  content:'';position:absolute;inset:-20% -10% auto;height:70vh;
+  background:radial-gradient(ellipse at 50% 0%,rgba(41,151,255,0.16),transparent 60%),
+             radial-gradient(ellipse at 80% 20%,rgba(191,90,242,0.10),transparent 55%);
+  filter:blur(10px);z-index:-1;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:999px;
+  background:rgba(41,151,255,0.10);border:1px solid rgba(41,151,255,0.35);
+  color:var(--blue);font-size:13px;font-weight:600;letter-spacing:1px;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  margin-bottom:28px;animation:fadeUp .9s .1s both;
+}
+.hero h1{
+  font-size:clamp(34px,6vw,72px);font-weight:700;letter-spacing:-0.02em;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:fadeUp .9s .2s both;line-height:1.15;
+}
+.hero .sub{
+  font-size:clamp(16px,2.4vw,22px);color:var(--dim);font-weight:400;margin-top:20px;max-width:720px;
+  animation:fadeUp .9s .3s both;
+}
+.hero .sub b{color:var(--txt);font-weight:600}
+.hero .scrollhint{margin-top:48px;color:var(--dim2);font-size:13px;animation:fadeUp .9s .5s both}
+.hero .scrollhint .arrow{display:inline-block;animation:bounce 2s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* ---------- STATS ---------- */
+.stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;
+  margin:0 auto 90px;position:relative;z-index:1;
+}
+.stat{
+  background:var(--card);border:1px solid var(--stroke);border-radius:20px;padding:22px 18px;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  text-align:center;transition:transform .35s,border-color .35s,background .35s;
+}
+.stat:hover{transform:translateY(-4px);border-color:rgba(41,151,255,0.4);background:var(--card2)}
+.stat .num{
+  font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-0.02em;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.stat .lbl{font-size:12px;color:var(--dim);margin-top:6px}
+.stat .note{font-size:11px;color:var(--dim2);margin-top:2px}
+
+/* ---------- SECTION ---------- */
+section{padding:60px 0}
+.sec-head{text-align:center;margin-bottom:50px}
+.sec-head .kicker{
+  font-size:12px;font-weight:700;letter-spacing:3px;color:var(--blue);text-transform:uppercase;
+}
+.sec-head h2{font-size:clamp(26px,4vw,44px);font-weight:700;letter-spacing:-0.02em;margin-top:10px}
+.sec-head .desc{color:var(--dim);max-width:640px;margin:14px auto 0;font-size:15px}
+
+/* ---------- TIMELINE ---------- */
+.tl{position:relative;padding-left:34px}
+.tl::before{
+  content:'';position:absolute;left:9px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(180deg,var(--blue),var(--purple),transparent);
+  opacity:.5;border-radius:2px;
+}
+.stage{position:relative;margin-bottom:34px;opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s}
+.stage.in{opacity:1;transform:none}
+.stage::before{
+  content:'';position:absolute;left:-34px;top:10px;width:20px;height:20px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--blue);
+  box-shadow:0 0 0 4px rgba(41,151,255,0.15),0 0 18px rgba(41,151,255,0.35);
+}
+.stage.done::before{border-color:var(--ok);box-shadow:0 0 0 4px rgba(48,209,88,0.15),0 0 18px rgba(48,209,88,0.3)}
+.stage.now::before{border-color:var(--warn);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,159,10,0.45)}70%{box-shadow:0 0 0 14px rgba(255,159,10,0)}100%{box-shadow:0 0 0 0 rgba(255,159,10,0)}}
+.card{
+  background:var(--card);border:1px solid var(--stroke);border-radius:22px;padding:26px 26px 22px;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  transition:transform .35s,border-color .35s;
+}
+.card:hover{transform:translateY(-3px);border-color:rgba(41,151,255,0.3)}
+.card .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:12px}
+.tag{
+  font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px;letter-spacing:.5px;
+}
+.tag.time{background:rgba(41,151,255,0.12);color:var(--cyan);border:1px solid rgba(41,151,255,0.3)}
+.tag.phase{background:rgba(191,90,242,0.14);color:var(--purple);border:1px solid rgba(191,90,242,0.35)}
+.tag.motif{background:rgba(48,209,88,0.10);color:var(--ok);border:1px solid rgba(48,209,88,0.3)}
+.tag.wip{background:rgba(255,159,10,0.12);color:var(--warn);border:1px solid rgba(255,159,10,0.35)}
+.card h3{font-size:clamp(18px,2.6vw,24px);font-weight:700;letter-spacing:-0.01em}
+.card .idea{
+  margin:14px 0 12px;padding:14px 18px;border-radius:14px;
+  background:rgba(41,151,255,0.07);border-left:3px solid var(--blue);
+  color:#d9ecff;font-size:14.5px;
+}
+.card .idea .q{color:var(--dim);font-size:12px;margin-bottom:4px;letter-spacing:1px}
+.card p{color:#c9c9cf;font-size:14.5px}
+.card p b{color:var(--txt)}
+.card .why{
+  margin-top:14px;padding-top:12px;border-top:1px dashed rgba(255,255,255,0.12);
+  display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--dim);
+}
+.card .why .ic{font-size:16px;line-height:1.4}
+.card .why .it b{color:var(--cyan);font-weight:600}
+.outcome{
+  margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;
+}
+.chip{
+  font-size:12px;padding:5px 12px;border-radius:999px;color:#d4e9ff;
+  background:rgba(41,151,255,0.10);border:1px solid rgba(41,151,255,0.28);
+}
+.chip.g{color:#c9f5d4;background:rgba(48,209,88,0.10);border-color:rgba(48,209,88,0.3)}
+
+/* ---------- COMPARE ---------- */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+@media(max-width:760px){.cmp{grid-template-columns:1fr}}
+.cmp .col{background:var(--card);border:1px solid var(--stroke);border-radius:24px;padding:28px 26px;backdrop-filter:blur(16px)}
+.cmp .col.old{border-color:rgba(255,69,58,0.25);background:rgba(255,69,58,0.04)}
+.cmp .col.new{border-color:rgba(48,209,88,0.3);background:rgba(48,209,88,0.04)}
+.cmp h4{font-size:19px;font-weight:700;margin-bottom:16px}
+.cmp .col.old h4{color:var(--red)}
+.cmp .col.new h4{color:var(--ok)}
+.cmp ul{list-style:none}
+.cmp li{padding:9px 0 9px 26px;position:relative;font-size:14px;color:#c9c9cf;border-bottom:1px dashed rgba(255,255,255,0.07)}
+.cmp li:last-child{border-bottom:none}
+.cmp li::before{content:'✕';position:absolute;left:0;color:var(--red);font-weight:700}
+.cmp .new li::before{content:'✓';color:var(--ok)}
+
+/* ---------- SCORE ---------- */
+.score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:30px}
+.score{
+  background:var(--card);border:1px solid var(--stroke);border-radius:22px;padding:24px 22px;
+  backdrop-filter:blur(16px);
+}
+.score .name{font-size:15px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline}
+.score .name .v{font-size:22px;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.score .bar{height:8px;background:rgba(255,255,255,0.08);border-radius:99px;margin-top:12px;overflow:hidden}
+.score .bar i{display:block;height:100%;width:0;border-radius:99px;background:var(--grad);transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.score .bar i.warn{background:linear-gradient(90deg,#ff9f0a,#ff453a)}
+.score .note{font-size:12px;color:var(--dim2);margin-top:10px}
+
+/* ---------- VERDICT ---------- */
+.verdict{
+  margin-top:40px;background:linear-gradient(135deg,rgba(41,151,255,0.10),rgba(191,90,242,0.10));
+  border:1px solid rgba(41,151,255,0.25);border-radius:26px;padding:36px 32px;
+  backdrop-filter:blur(20px);
+}
+.verdict h3{font-size:22px;font-weight:700;margin-bottom:14px}
+.verdict .big{
+  font-size:clamp(18px,3vw,26px);font-weight:600;line-height:1.6;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:18px;
+}
+.verdict p{color:#c9c9cf;font-size:15px;margin-bottom:12px}
+.verdict p b{color:var(--txt)}
+
+/* ---------- FOOTER ---------- */
+footer{padding:60px 0 40px;text-align:center;color:var(--dim2);font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:40px}
+footer b{color:var(--dim)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:640px){
+  .tl{padding-left:28px}
+  .stage::before{left:-28px}
+  .card{padding:20px 18px}
+}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <div class="wrap">
+    <div class="badge">⚡ 阿尔泰国际物流 · 中俄跨境获客 AI 系统</div>
+    <h1>从一句"好实现吗？"<br>到千里之外远程装机的 7 天</h1>
+    <p class="sub">一个<b>非技术小白</b>，凭着一股"每完成一步就加一个新想法"的劲头，<br>把项目从 MVP 测试一路推到 <b>企业级交付 + 客户主动追加第二条业务线 + 异地组网远程装机</b> —— 全程记录</p>
+    <div class="scrollhint">向下滚动，重走这段路 <span class="arrow">↓</span></div>
+  </div>
+</div>
+
+<!-- ============ STATS ============ -->
+<div class="wrap">
+  <div class="stats">
+    <div class="stat reveal"><div class="num" data-count="7">0</div><div class="lbl">天完成从 0 到交付</div><div class="note">08.08 → 08.15</div></div>
+    <div class="stat reveal"><div class="num" data-count="20">0</div><div class="lbl">个产品演进阶段</div><div class="note">每阶段一个新想法</div></div>
+    <div class="stat reveal"><div class="num" data-count="6">0</div><div class="lbl">个获客平台跑通</div><div class="note">VK/TG/WA/IG/TikTok/速卖通</div></div>
+    <div class="stat reveal"><div class="num" data-count="7">0</div><div class="lbl">道安全 Gate 全过</div><div class="note">Gate0 → Gate6 全绿</div></div>
+    <div class="stat reveal"><div class="num" data-count="100">0</div><div class="lbl">安全内核评分 /100</div><div class="note">Codex 独立验收</div></div>
+    <div class="stat reveal"><div class="num" data-count="43">0</div><div class="lbl">项一键验收全过</div><div class="note">43/43 真实跑通</div></div>
+    <div class="stat reveal"><div class="num" data-count="8">0</div><div class="lbl">款桌面插件</div><div class="note">红绿灯/控制中心/API余额/上下文/规则中心/开箱问候等</div></div>
+    <div class="stat reveal"><div class="num" data-count="1500">0</div><div class="lbl">条用户想法消息</div><div class="note">5 条置顶会话实录</div></div>
+  </div>
+</div>
+
+<!-- ============ 序章：旧模式 ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">序章 · 起点</div>
+      <h2>这要从"旧时代的我"说起</h2>
+      <p class="desc">在做这个项目之前，我的交付方式是另一套 —— 而这次，我把自己的老路子彻底打碎了。</p>
+    </div>
+    <div class="cmp">
+      <div class="col old reveal">
+        <h4>🕰️ 旧模式 · 我以前的交付</h4>
+        <ul>
+          <li>开着远程软件（向日葵/TeamViewer），<b>一个软件一个软件地</b>帮客户手动安装</li>
+          <li>装一个 agent + 给几个 skill 就算交付完成</li>
+          <li>客户装完，我远程盯着，出了问题再回来修</li>
+          <li>安装过程全靠我肉眼盯，全英文界面，客户看不懂</li>
+          <li>收 2k–8k，靠的是"我亲手帮你装"的苦力钱</li>
+        </ul>
+      </div>
+      <div class="col new reveal">
+        <h4>🚀 新模式 · 这次的交付</h4>
+        <ul>
+          <li>客户电脑<b>全新裸机</b>，我用 <b>IP 远程 + SSH 命令行</b> 全程接管</li>
+          <li>一个 <b>v1.0.2 一键交付包</b> 解压即装，43 项验收自动跑</li>
+          <li>安装进度<b>实时动态看板</b>，客户自己都能看到跑到哪了</li>
+          <li>中文可视化进度 + 小白安装 PPT + 说明书，不靠人肉盯</li>
+          <li>安全内核 100/100，可复制、可复用、可定价 —— <b>企业级</b></li>
+        </ul>
+      </div>
+    </div>
+    <div class="why reveal" style="margin-top:20px;display:flex;gap:10px;color:var(--dim);font-size:14px;justify-content:center">
+      <span>💡</span><span>我的原话：「我觉得我们这种安装的方式太酷了，又专业，你又能及时发现问题解决问题，这可比我开远程给对方一个软件一个软件的装，体验感好太多了」</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 时间线 ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">演进全记录 · 13 个阶段</div>
+      <h2>每一个想法，都是产品往前一步</h2>
+      <p class="desc">下面每一张卡片 = 我加入的一个想法 + 我当时的动机 + 它最终长成了什么</p>
+    </div>
+
+    <div class="tl">
+
+      <!-- 阶段 1 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-08 · 21:41</span>
+            <span class="tag phase">阶段 1 · MVP 起点</span>
+            <span class="tag motif">动机：验证可行性</span>
+          </div>
+          <h3>第一句话：这是一次"好实现吗？"的试探</h3>
+          <div class="idea"><div class="q">💬 我说的</div>客户是做跨境电商的，经常从 VK 获取信息。他们分主动获客（爬信息→私聊→WhatsApp 聊）和被动获客两种。要做到 24 小时不间断获取信息 + 自动化聊天，<b>好实现吗？</b>去 GitHub 查成熟经验。</div>
+          <p>我甚至不懂"防滥用机制虫""住宅网络通道"是什么，但我做对了一件事：<b>先问可行性，再决定动不动手</b> —— 这是标准的 MVP 思维。</p>
+          <div class="why"><span class="ic">🧭</span><span class="it"><b>为什么：</b>不敢乱烧钱乱试错，先把"这事能不能成"搞清楚，才敢往下走</span></div>
+          <div class="outcome"><span class="chip">✅ 确定方向：VK 获客 + 自动化私聊</span><span class="chip">✅ 明确要 24h 不间断</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 2 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-08 · 深夜</span>
+            <span class="tag phase">阶段 2 · 规则先行</span>
+            <span class="tag motif">动机：怕伤害客户</span>
+          </div>
+          <h3>"先别跑，规则得先立好" —— 1.0 对话规则诞生</h3>
+          <div class="idea"><div class="q">💬 我说的</div>你一定要有一个 1.0 规则，和对话的规则。不然没有规则和理由，成功率不高，<b>还伤害客户，有可能会被投诉</b>。跟谁对话、回复什么，都要有清晰规则和理由。</div>
+          <p>当天晚上我连续加了 5 个想法：对话规则、平台规则（防投诉/防限流）、在 Obsidian 建工程每天更新、做成"真项目"（目标+SOP+验收标准）。<b>小白的第一直觉，反而成了企业级的种子。</b></p>
+          <div class="why"><span class="ic">🛡️</span><span class="it"><b>为什么：</b>没规则乱发 = 砸客户招牌 + 被投诉限制，规则是获客的生命线</span></div>
+          <div class="outcome"><span class="chip">✅ 话术规则 1.0</span><span class="chip">✅ VK 平台合规研究</span><span class="chip">✅ Obsidian 工程化</span><span class="chip">✅ 项目 SOP + 验收标准</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 3 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-09 · 清晨</span>
+            <span class="tag phase">阶段 3 · 资料入库</span>
+            <span class="tag motif">动机：做对业务</span>
+          </div>
+          <h3>客户资料入库：从"瞎做"到"对着真实业务做"</h3>
+          <div class="idea"><div class="q">💬 我说的</div>下载里物流资料是我新更新的，特别是《阿尔泰国际物流_销售工作流方案_V1.0.docx》和价格表 —— <b>价格表里的备注文字别识图看，直接读</b>，这个内容非常重要，也要录入。</div>
+          <p>我主动把客户的销售工作流、真实价格表喂进系统，并要求"重新制定工作计划、执行步骤、验收标准"。<b>真实数据驱动</b>的习惯从这里开始 —— 后来话术库来自真实聊天记录、报价来自真实价格表。</p>
+          <div class="why"><span class="ic">📚</span><span class="it"><b>为什么：</b>获客系统不懂客户的真实业务和价格，说出去的话就是空的</span></div>
+          <div class="outcome"><span class="chip">✅ 销售工作流方案入库</span><span class="chip">✅ 价格表录入（备注不误读）</span><span class="chip">✅ 需求库建立</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 4 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-09 · 全天</span>
+            <span class="tag phase">阶段 4 · 多平台开荒</span>
+            <span class="tag motif">动机：MVP 全平台验证</span>
+          </div>
+          <h3>TG 注册卡壳、TikTok 受限、速卖通防滥用机制 —— 硬啃一天</h3>
+          <div class="idea"><div class="q">💬 我说的</div>今天不要再给客户发消息了，不是跑通了吗？<b>先把其他平台也跑通</b>。你去 GitHub 找成功案例，换各种方案找，目的就是直到成功。另外：以后能你完成的就不要让我做，<b>所有账号都备份好记录</b>。</div>
+          <p>这天我暴露了真实的小白状态：手机收不到 TG 验证码、不知道住宅网络通道是什么、TikTok 防滥用机制 + 受限双重打击。但我定下两条铁律：<b>① 找成熟方案不瞎研究；② 能自动化的绝不让用户手动。</b>同时第一次说出核心战略：「我做这一切都是为了测试 MVP 可行性，走通后装到客户新电脑上」。</p>
+          <div class="why"><span class="ic">🌍</span><span class="it"><b>为什么：</b>单平台跑通不算数，客户要的是全平台撒网；交付对象是客户的全新电脑</span></div>
+          <div class="outcome"><span class="chip">✅ 防滥用机制/受限方案突破</span><span class="chip">✅ 账号备份规则</span><span class="chip">✅ 交付模型确立（装客户电脑）</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 5 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-10 · 上午</span>
+            <span class="tag phase">阶段 5 · 微信通道 + 话术库</span>
+            <span class="tag motif">动机：真实语料</span>
+          </div>
+          <h3>"提取 16 条真实聊天记录" —— 话术数据库的源头</h3>
+          <div class="idea"><div class="q">💬 我说的</div>我需要你提取微信"王昕昕昕昕"最新的 16 条完整聊天记录 —— <b>这些是生活中最真实的客服和客户对话，可以作为话术数据库非常重要的部分</b>。然后写成完整 skill，让新电脑新 agent 都能学会。</div>
+          <p>我提出了微信四大需求（读联系人/读聊天记录/主动发消息/智能回复），但最终目的只有一个：<b>拿真实客服对话当话术教材</b>。还立了规矩：所有流程必须沉淀成 skill ——「从 0-1 搭建成功，让新电脑新 agent 都能学会」。</p>
+          <div class="why"><span class="ic">🗣️</span><span class="it"><b>为什么：</b>编的话术没人味，真实成交对话才是最好的话术库</span></div>
+          <div class="outcome"><span class="chip">✅ 微信读取链路</span><span class="chip">✅ 16 条真实对话 → 话术库</span><span class="chip">✅ skill 标准化理念</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 6 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-10 · 下午</span>
+            <span class="tag phase">阶段 6 · 精聊 + 画像 + 迭代</span>
+            <span class="tag motif">动机：像活人一样聊天</span>
+          </div>
+          <h3>"像钓鱼一样获客" —— 深度画像与话术每日迭代</h3>
+          <div class="idea"><div class="q">💬 我说的</div>主动开拓的客户，<b>广告性质弱一些、生活气息多一些，像钓鱼一样</b>。我希望你去爬目标客户账号的更多信息（发布内容/图片/文字），让我们更有活人感、更有针对性，找到对方痛点。话术体系<b>每天迭代</b>，直到最优版本。</div>
+          <p>这是我产品思想最密集的一天，一口气加了 6 个规则：精聊（弱广告）、深度画像、话术日更、对话边界（什么情况不再回复 + 祝福式结尾）、意向客户建群、发消息前给筛查报告。<b>一个不懂技术的人，把"获客"想成了"交朋友"。</b></p>
+          <div class="why"><span class="ic">🎣</span><span class="it"><b>为什么：</b>硬广=被拉黑投诉；有温度有针对性=对方觉得你是真人，才愿意聊</span></div>
+          <div class="outcome"><span class="chip">✅ 精聊引擎</span><span class="chip">✅ 账号深度画像</span><span class="chip">✅ 话术每日迭代闭环</span><span class="chip">✅ 对话边界/祝福收尾规则</span><span class="chip">✅ 筛查报告制度</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 7 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-10 · 傍晚</span>
+            <span class="tag phase">阶段 7 · 看板雏形</span>
+            <span class="tag motif">动机：让小白看得懂</span>
+          </div>
+          <h3>Excel 手机看不全 → "做成网页看板吧，小白也能看懂"</h3>
+          <div class="idea"><div class="q">💬 我说的</div>这个 Excel 手机看总显示不全，<b>你做成一个网页吧，有看板系统，小白也能看得更清楚直白</b>，上传到临时域名，别人通过网址也能看。要苹果 UI 风、毛玻璃风格，太专业的词旁边加<b>括号小字大白话解读</b>，最上面写百分比进度条。</div>
+          <p>这是我第一次提出"看板"概念 —— 起因只是手机看表格不爽。但我的审美标准在这一刻定型：苹果风、毛玻璃、进度条、小白解读。后来它长成了客户展示站、验收动态看板、再到今天的运营数据看板。</p>
+          <div class="why"><span class="ic">📊</span><span class="it"><b>为什么：</b>成果要给客户看，客户是小白，看不懂 = 白做；看得爽 = 信任</span></div>
+          <div class="outcome"><span class="chip">✅ 第一个网页看板（CodeBuddy）</span><span class="chip">✅ 苹果风审美标准确立</span><span class="chip">✅ 百分比进度条 + 小白解读</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 8 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-10 晚 → 08-12</span>
+            <span class="tag phase">阶段 8 · 引入 Codex 评审 → 安全内核 Gate 0-6</span>
+            <span class="tag motif">动机：让专业的人把关</span>
+          </div>
+          <h3>转折点：我把项目交给 Codex 独立评审，接受了企业级整改</h3>
+          <div class="idea"><div class="q">💬 我说的</div>你把全部项目介绍、skill、遇到的问题、希望完善的地方，盘点成一个 md 文档让 Codex 看看，<b>你一定要诚实地把难点、疑点写清楚</b>。Codex 说要安全冻结、搞 Gate0-6、43 项验收 —— 我全盘接受，还立了铁律：<b>诚实红，不假绿，不删弱断言，不伪造成功</b>。</div>
+          <p>这是项目质变的一步。安全内核从 0 分一路干到 <b>100/100</b>：发送安全、敏感信息防泄漏、收件人绑定、状态机、备份回滚、故障注入、干净重启。中间 Codex 反复退回（"假通过""P0 泄漏"），我一遍遍重跑 —— <b>普通人的韧性在这里。</b></p>
+          <div class="why"><span class="ic">🏗️</span><span class="it"><b>为什么：</b>这不是给自己用的玩具，是装到客户电脑上的产品 —— 出一次事故，口碑就没了</span></div>
+          <div class="outcome"><span class="chip">✅ Gate0-6 全过（100/100）</span><span class="chip">✅ 43 项一键验收</span><span class="chip">✅ 诚实报告铁律</span><span class="chip">✅ 六平台 cookies 全保存</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 9 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-12</span>
+            <span class="tag phase">阶段 9 · 企业级交付包 D1</span>
+            <span class="tag motif">动机：能装到任何电脑</span>
+          </div>
+          <h3>从"能跑"到"能交付"：一键安装器 + 12 个产品模块</h3>
+          <div class="idea"><div class="q">💬 我说的</div>不做微信相关测试了，删掉吧，<b>其他的挨个测试直到跑通</b>。你用我们最新的 SOP 去跑一遍 VK，找到 3 个最优客户给他们发信息。</div>
+          <p>我做了减法（砍掉微信通道和交付宝，聚焦核心），Codex 负责把 MVP 变成可交付产品：安装器、skill 包、dry-run 验证、升级回滚、培训交接、<b>对话决策引擎、话术知识包、线索评分引擎、账号画像引擎、copy_engine</b>。产品第一次有了"给人用的形状"。</p>
+          <div class="why"><span class="ic">📦</span><span class="it"><b>为什么：</b>跑通是自己的事，交付是客户的事 —— 客户要的是"解压就能用"</span></div>
+          <div class="outcome"><span class="chip">✅ installer.py 90/90</span><span class="chip">✅ 12 大产品模块</span><span class="chip">✅ VK 端到端真实验证</span><span class="chip">✅ 范围聚焦（砍微信）</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 10 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-13</span>
+            <span class="tag phase">阶段 10 · 远程交付革命</span>
+            <span class="tag motif">动机：告别手动安装</span>
+          </div>
+          <h3>全新电脑、IP 地址授权、一次性远程连接我的 agent 完成安装 —— 为 1 对多电脑多系统做准备</h3>
+          <div class="idea"><div class="q">💬 我说的</div>从前的我是开着远程软件/视频帮人<b>一个一个手动安装调试</b>。今天我第一次尝试：<b>用电脑的 IP 地址授权，一次性远程通过连接我的 agent 来完成高效安装</b>，对面是全新裸机，啥都没装也能远程装。你设定心跳模式全程完成安装测试调度，<b>过程要让客户看得见（GUI 跑）</b>。我还让你做了小白安装 PPT 和说明书 —— 每一句该和 agent 说的话都写进去。这也在为以后 <b>1 对多电脑、多系统（Mac / 鸿蒙 / Windows）同时安装</b>做准备。</div>
+          <p>这是对我旧手艺的全面升级：从"远程视频一个一个装"变成"IP 地址授权 + 一次性远程连接 agent 高效安装"——SSH 反向隧道借 加密通道、心跳监控、安装进度动态看板（黑底科技感 + 实时百分比 + 会动的进度条）、客户可见的中文安装过程。我还专门拿另一台电脑（Apple@192.168.31.9）演练了一遍，<b>模拟过几天给客户装</b>，当场找优化点。同时开始探索 <b>一台终端未来给几十台不同设备（Mac/鸿蒙/Win）同时安装测试、主机 agent 监控每一台</b>的舰队模式。</p>
+          <div class="why"><span class="ic">🖥️</span><span class="it"><b>为什么：</b>手动远程装 = 累死 + 客户干等 + 出问题我看不见；IP 命令行 + 看板 = 专业、透明、可远程排障</span></div>
+          <div class="outcome"><span class="chip">✅ SSH IP 远程安装全流程</span><span class="chip">✅ 心跳模式监控</span><span class="chip">✅ 安装进度动态看板</span><span class="chip">✅ 小白安装 PPT + 说明书</span><span class="chip">✅ 测试机全流程演练</span><span class="chip">✅ 免费域名客户展示站（苹果风+喀秋莎）</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 11 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-13 晚 → 08-14</span>
+            <span class="tag phase">阶段 11 · 桌面插件 + 记忆继承</span>
+            <span class="tag motif">动机：给 Hermes 本身做产品</span>
+          </div>
+          <h3>"会话框要显示上下文百分比，一键继承记忆" —— 我成了 Hermes 的产品经理</h3>
+          <div class="idea"><div class="q">💬 我说的</div>我要 2 个功能：① 左侧导航栏每个会话框 + 对话框下面显示<b>上下文压缩百分比</b>；② 一个选项，一点就能<b>继承上下文记忆</b>开新窗口。UI 太丑了不行，要苹果风格；继承是复制整个对话也不对，<b>应该只继承记忆摘要</b>；记忆库可以写在 Obsidian 里。</div>
+          <p>我反复打磨了 4 个插件：红绿灯（网络通道状态）、控制中心（系统健康 9 卡）、API 余额、上下文仪表（继承=摘要→新会话→自动接手）。最后迭代成 <b>v1.1.0：继承端到端可用 + Obsidian 记忆库 + 5 层记忆体系</b>，并打包成"插件全家桶"固化进交付包 —— 别的 agent 一看就能拥有同款。</p>
+          <div class="why"><span class="ic">🧠</span><span class="it"><b>为什么：</b>长会话会压缩丢记忆，做获客这种长跑项目，记忆不能丢；而这套插件本身就是交付包的差异化卖点</span></div>
+          <div class="outcome"><span class="chip">✅ 4 插件全家桶 v1.1.0</span><span class="chip">✅ 上下文百分比（导航栏+底部）</span><span class="chip">✅ 一键继承记忆（摘要制）</span><span class="chip">✅ Obsidian 记忆库 + 版本归档</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 12 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-14 · 凌晨</span>
+            <span class="tag phase">阶段 12 · 网盘备份闭环</span>
+            <span class="tag motif">动机：怕丢，求稳</span>
+          </div>
+          <h3>"Obsidian 的内容也备份一份到百度网盘吧" —— 数据双保险 + 自动补跑</h3>
+          <div class="idea"><div class="q">💬 我说的</div>我这个人比较保守，会想更安全稳定的方法。把日常上传到 Obsidian 的内容<b>也备份一份到百度网盘</b>，分好类。扫描成功了？可太好了，能自动上传到网盘，<b>那我们整个闭环更安全、更完整了</b>。记得把这个功能写进规则、skill 和整个安装过程里。</div>
+          <p>我要求一切数据双写：交付包 + Obsidian + 百度网盘，后来升级到 <b>v1.2：每天 09/14/21 三个时段自动备份 + 开机补跑</b>（当天已备份则自动跳过，不会重复上传）+ 当天备份标记。连"备份"这件事本身，都要固化进 skill 和安装流程 —— 这是企业级交付的完整闭环意识。还配套了 <b>GitHub 私有仓库 altai-mvp 同步</b>（脱敏产品源）与备份组件验收套件（14/14 全绿）。</p>
+          <div class="why"><span class="ic">💾</span><span class="it"><b>为什么：</b>本地会崩、电脑会坏、客户电脑更不可控 —— 数据三地冗余才敢说"稳定交付"</span></div>
+          <div class="outcome"><span class="chip">✅ bdpan 百度网盘自动备份</span><span class="chip">✅ 每日 09/14/21 三时段 + 开机补跑</span><span class="chip">✅ 当天备份标记（防重复）</span><span class="chip">✅ GitHub altai-mvp 私有仓库同步</span><span class="chip">✅ 备份组件验收 14/14 全绿</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 13 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-14 · 白天</span>
+            <span class="tag phase">阶段 13 · 运营数据看板系统</span>
+            <span class="tag motif">动机：让客户看得见每一天的收获</span>
+          </div>
+          <h3>实时运营看板 + 一键巡查按钮 —— 从"看进度"到"看数据+动手操作"</h3>
+          <div class="idea"><div class="q">💬 我说的</div>有没有可能在 Hermes 下面增加一个<b>实时更新的看板系统</b>？里面有一些指标：今天/过去 7 天/过去 30 天 —— 访问 VK 多少次、成功采集多少客户数据、成功聊天多少组、多少组有回复、多少组成交。另外我还希望看板上有个<b>手动按键，一按就主动巡查有没有留言回复、或主动跑一圈任务</b>。你先去 GitHub 查查有没有类似功能可以借鉴。</div>
+          <p>从 08-08 的"工作看板"到 08-13 的"安装进度看板"，再到今天的"<b>运营数据看板</b>"—— 我的看板需求三级跳：<b>看进度 → 看过程 → 看数据 + 动手操作</b>。这已经是产品从"工具"走向"平台"的形态了。当天就把看板落地：黑底科技感、每板块「解读:为什么做」+ 百分比进度条 + 小白解读，托管到 CodeBuddy 云，客户拿手机就能打开看。</p>
+          <div class="why"><span class="ic">📈</span><span class="it"><b>为什么：</b>客户花了钱，要能看见每一天的收获（采集多少/聊了多少/成交多少）；一键巡查 = 让系统真正"活"起来</span></div>
+          <div class="outcome"><span class="chip">✅ 运营看板上线（CodeBuddy 云托管）</span><span class="chip">✅ 每板块"解读:为什么做"</span><span class="chip">✅ 百分比进度条 + 小白解读</span><span class="chip">✅ update_board.py 自动更新链路</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 14 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-14 · 下午</span>
+            <span class="tag phase">阶段 14 · 第二条业务线启动</span>
+            <span class="tag motif">动机：客户信任的复利</span>
+          </div>
+          <h3>客户主动递来新业务：锂电池跨境贸易 —— 从"做项目"到"被客户追着做项目"</h3>
+          <div class="idea"><div class="q">💬 我说的</div>这个是基于中俄跨境电商后续 客户给我整理的新的一个线路的整个SOP流程 他希望以我们做的之前的项目为基础 另开一个线路 来把这个贸易流程用agent来跑通 你仔细看一下整个流程 可以提出一些你的问题 以及看缺什么东西 比如缺话术 缺关键信息 缺产品信息 等等 你给我全面的做一个分析和总结 另外你来分析 我们之前做的结果 是不是也能为这个项目作用 以及到时候2个项目 同和同时或分开使用</div>
+          <p>客户给了《销售业务流程梳理.docx》—— 锂电池/无人机电池跨境贸易 8 环节 SOP（客户开发→需求挖掘→工厂筛选→样品测试→签约→跟单生产→危险品物流→尾款结算）。这标志着我的交付从"一次性买卖"变成了"客户主动开第二条线"。我做了一整套：全链路分析（约 60% 资产可复用）、12 个确认问题 + 14 项材料清单（每项配小白白话+例子）、26 个独立填空表格、不写价格的苹果风方案书（手机长图 + 单页 PDF）、以及报价策略（¥6 万，含 30 天运营总监式陪跑）。</p>
+          <div class="why"><span class="ic">🚀</span><span class="it"><b>为什么：</b>客户看到第一条线的交付质量，主动把更大的生意给我 —— 这是"样板工程"策略最值钱的回报</span></div>
+          <div class="outcome"><span class="chip">✅ 8 环节贸易 SOP 全链路拆解</span><span class="chip">✅ 26 个客户填写表（勾选+填空）</span><span class="chip">✅ 方案书手机长图 + 单页 PDF（零价格）</span><span class="chip">✅ 报价 ¥6 万策略（含 30 天陪跑）</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 15 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-14 晚 → 08-15</span>
+            <span class="tag phase">阶段 15 · 真实环境大考</span>
+            <span class="tag motif">动机：测试过 ≠ 真实能用</span>
+          </div>
+          <h3>"验收全绿，真实跑却各种出问题" —— 我学会了区分测试环境和真实战场</h3>
+          <div class="idea"><div class="q">💬 我说的</div>我们今天测试 包括给新电脑安装 部署 配置 测试 全部都跑通了 为什么我刚才让他真实跑一次全流程的时候 就各种出问题呢</div>
+          <p>白天测试全跑通（43/43 验收、安装器 90/90），晚上真实跑获客却崩。排查后真相大白：<b>不是系统坏了，是 4 个真实差异</b>——① 内存被吃光（16GB 机器 Chrome 残留 42 个进程 + 会议软件，Pages free 只剩 15MB，Chrome 一开就被系统杀）② 多实例 Chrome 抢 profile 锁（IG 连接断）③ 防滥用机制硬墙（速卖通弹滑块验证码、TikTok 出口 IP 被区域封锁）④ 脚本小 bug（TG API 用错、没走网络通道）。但 VK 307 新线索 + 450 高意向 + TG 495 条群成员线索<b>是真成绩</b>——因为 VK 用页面内 fetch、TG 用 Telethon API，都不依赖浏览器。结论：验收通过 ≠ 上线无忧，但真实跑出来的数字才是交付的底气。</p>
+          <div class="why"><span class="ic">🧪</span><span class="it"><b>为什么：</b>客户机器不是测试机，内存、网络、平台平台规则全不一样 —— 企业级交付必须做"真实环境演练"这一课</span></div>
+          <div class="outcome"><span class="chip">✅ VK 307 线索 + 450 高意向 + 86 资料</span><span class="chip">✅ TG 495 条群成员线索</span><span class="chip">✅ 定位 4 类真实环境差异</span><span class="chip">✅ 速卖通/TikTok 防滥用机制墙诚实标注</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 16 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-15</span>
+            <span class="tag phase">阶段 16 · 插件全家桶 v1.1.0</span>
+            <span class="tag motif">动机：上下文压缩是记忆的命</span>
+          </div>
+          <h3>"插件大礼包更新一下吧" —— 上下文压缩/继承大升级，固化进交付包</h3>
+          <div class="idea"><div class="q">💬 我说的</div>你更新一下 之前你做过的 skill 插件大礼包吧 因为我们更新了我们这hermes上的几个插件的功能 特别是这个上下文压缩</div>
+          <p>把 context-meter 全家桶从 v1.0.0 升到 <b>v1.1.0</b>：① 继承端到端修复（session.create 只建内存会话 → 必须 prompt.submit 触发 agent 才落库）② Obsidian 记忆库（自动写 🏗️AI记忆库/handoff.md + 版本归档 20 份）③ 记忆提取规则升级（信号词筛选 ✅/完成/决定/交付 + 噪音过滤）④ 按窗口取摘要 + summaryError 崩溃修复。17 个代码块打包成单文件大礼包（192KB），同步 Obsidian 备份 + 更新 Skill 架构规划文档。</p>
+          <div class="why"><span class="ic">🧠</span><span class="it"><b>为什么：</b>长会话压缩会丢记忆，获客是长跑项目；记忆库让"一次性会话"变成"可检索可演进的档案库"—— 这是给 Hermes 本身做产品</span></div>
+          <div class="outcome"><span class="chip">✅ 继承真正可用（prompt.submit 触发）</span><span class="chip">✅ Obsidian 记忆库 + 版本归档</span><span class="chip">✅ 17 代码块单文件大礼包（192KB）</span><span class="chip">✅ 同步交付包 + Obsidian + 文档</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 17 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-14 → 08-15</span>
+            <span class="tag phase">阶段 17 · 规则中心 RuleCenter</span>
+            <span class="tag motif">动机：让客户有"抓手"，体验更好</span>
+          </div>
+          <h3>"规则面板这个功能最重要" —— 客户能自己看见、修改、回滚所有规则</h3>
+          <div class="idea"><div class="q">💬 我说的</div>把影响获客结果的全部 SOP/规则/标准显性化、版本化、可回滚、可面板化 —— <b>做难而对的事情</b>。规则面板这个功能，<b>让客户的体验更好、有抓手</b>。你要能提前预判可能出现的问题，全部盘点成面板功能。回滚不能一次全部回滚，要能<b>单项回滚</b>。还要有黑白名单、AI 帮我改、常见问题。</div>
+          <p>这是给客户的一把"方向盘"：<b>8 类规则</b>（话术体系、关键词、优质客户标准、平台规则避坑、深度画像、对话标准、终止离场、黑白名单）全部版本化 + 快照 + 单项回滚 + 版本历史；<b>🤖 AI 帮我改</b>（客户说人话，AI 生成规则 JSON）；<b>🚫 黑白名单</b>（防打扰防限制）；<b>❓ 常见问题 12 条</b>（每个问题就是面板的一个功能）；横栏 + 左侧 tab 双入口、布局自愈机制（面板坏了自动修复）。中间踩了大坑：Hermes 底部布局权重机制只给规则中心 6.25%（15px 一条细缝）→ 换成 libtv 同款<b>左侧 tab 方案</b>彻底解决空白。</p>
+          <div class="why"><span class="ic">🎛️</span><span class="it"><b>为什么：</b>客户不是程序员，不能让他改 JSON；给一个中文面板，他就能自己调话术/关键词/黑白名单 —— 这才是"开箱即用"</span></div>
+          <div class="outcome"><span class="chip">✅ 8 类规则版本化 + 快照 + 单项回滚</span><span class="chip">✅ 🤖 AI 帮我改 + 🚫 黑白名单</span><span class="chip">✅ ❓ 常见问题 12 条（问题即功能）</span><span class="chip">✅ 左侧 tab 方案根治空白</span><span class="chip">✅ 布局自愈机制</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 18 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-15</span>
+            <span class="tag phase">阶段 18 · 开箱主动问候</span>
+            <span class="tag motif">动机：第一印象决定体验</span>
+          </div>
+          <h3>"我做了开箱规则的问候" —— 客户打开 Hermes 第一眼就有人打招呼</h3>
+          <div class="idea"><div class="q">💬 我说的</div>我做了开箱规则的问候 —— 客户第一次打开 Hermes 时，agent 要<b>主动创建会话并说出第一句话</b>，像真人一样欢迎他、引导他。（onboarding-greeter 插件 v6：首次加载问候一次，之后静默不打扰）</div>
+          <p>装完不是冷冰冰的空白界面，而是 agent 主动开口：「你好，我是您的 AI 获客助手…」—— 告诉客户系统能做什么、怎么开始、遇到问题找谁。激活式引导：网络环境 → 登录平台 → 测试 → 问称呼。配合小白安装 PPT 和说明书，<b>客户开箱的每一步都有人带</b>，不用自己摸索。</p>
+          <div class="why"><span class="ic">👋</span><span class="it"><b>为什么：</b>客户是小白，打开一片空白会慌；第一句有人打招呼，体验感直接拉满 —— 细节决定专业感</span></div>
+          <div class="outcome"><span class="chip">✅ onboarding-greeter v6 开箱问候</span><span class="chip">✅ 首次问候一次、之后静默</span><span class="chip">✅ 激活式引导（网络环境→登录→测试→问称呼）</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 19 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-15 · 下午</span>
+            <span class="tag phase">阶段 19 · Tailscale 异地组网实战</span>
+            <span class="tag motif">动机：两台不同城市的电脑，要像在同一台电脑前一样装</span>
+          </div>
+          <h3>如何让 2 台不同城市、不同 IP 的电脑处在同一个网络下完成安装 —— 这个经验和流程太宝贵了</h3>
+          <div class="idea"><div class="q">💬 我说的</div>这个经验和流程太宝贵了 —— 用 Tailscale 把<b>两台不同城市（长春↔河南）、不同 IP 的电脑组进同一个虚拟网络</b>，然后就像操作同一台电脑一样完成安装。100.84.109.111 ↔ 100.109.143.55 <b>直连 56ms</b>，网络全通（hermes-agent / github / pypi 全部 200）。</div>
+          <p>这是"1 对多舰队"的<b>第一次真实异地实战</b>：Tailscale 组网（两台机器拿到 100.x.x.x 虚拟 IP，直连 56ms）→ SSH 密钥登录 → 检查对方网络（hermes-agent/github/pypi 全 200）→ <b>scp 传交付包（26,117,278 bytes 本机对方完全一致，首次因缓冲超时失败、后台重传 354 秒成功）</b> → ditto 解压 512 文件 → 按 SOP 官方一键安装 Hermes（curl install.sh 自动装 uv/Python3.11/Node/ripgrep/ffmpeg）。还顺手发现了交付包 ZIP 双层目录的小坑。整个流程像"远程魔法"——我在广州的电脑上，指挥河南的电脑把客户系统装好了。</p>
+          <div class="why"><span class="ic">🌐</span><span class="it"><b>为什么：</b>客户在千里之外，不能飞过去；Tailscale 免费、直连 56ms、像同一局域网 —— 这是 1 对 N（几十台 Mac+Win 混合舰队）的第一块真基石</span></div>
+          <div class="outcome"><span class="chip">✅ Tailscale 异地组网（长春↔河南直连 56ms）</span><span class="chip">✅ SSH 密钥登录 + 远程网络检测</span><span class="chip">✅ 交付包 26MB 双端一致传输</span><span class="chip">✅ 解压 512 文件 + Hermes 一键安装</span><span class="chip">✅ 发现 ZIP 双层目录坑 + scp 缓冲坑</span><span class="chip">✅ 1 对多舰队实战第一步</span></div>
+        </div>
+      </div>
+
+      <!-- 阶段 20 -->
+      <div class="stage done reveal">
+        <div class="card">
+          <div class="row">
+            <span class="tag time">08-15 · 下午</span>
+            <span class="tag phase">阶段 20 · 回传网络代码登录</span>
+            <span class="tag motif">动机：对方电脑登不了账号，换个思路照样进</span>
+          </div>
+          <h3>对方电脑无法登录账号 —— 用"回传网络代码"的形式，在我这边登录成功</h3>
+          <div class="idea"><div class="q">💬 我说的</div>而且对方电脑无法登录账号，我们是用了新的方法——<b>回传网络代码的形式，在我这边登录成功</b>的这个经验也非常宝贵。这个方法和流程要一起记录进去。</div>
+          <p>异地组网时遇到硬骨头：对方电脑（河南 IP）登录 Google 账号被拦——Google 安全系统检测到"同一账号在长春登录后，又从河南登录"= 异常登录，卡在验证页进不去。解决办法不是死磕对方浏览器，而是<b>换个思路：登录链接回传</b>。① 对方机器跑 Tailscale 登录命令 → 生成一个一次性授权链接；② 把链接<b>回传到我这边</b>；③ 我在<b>本机浏览器</b>打开（本机 Google 会话本来就有效）→ 一键授权；④ 对方机器自动完成登录、进入同一个虚拟网络。妙处在于：<b>登录动作永远发生在"信得过的那台机器"上</b>，对方那台只是拿授权结果——以后任何"对方登不了账号"的场景（异地 IP 平台规则、验证码、2FA）都能用这招规避。</p>
+          <div class="why"><span class="ic">🔐</span><span class="it"><b>为什么：</b>对方电脑在异地，Google/平台平台规则会拦截"异地登录"；回传链接 = 把登录动作搬回主控本机，既安全又高效 —— 这是远程装机里最巧的一手</span></div>
+          <div class="outcome"><span class="chip">✅ 对方电脑登不了 Google 账号（异地平台规则拦截）</span><span class="chip">✅ Tailscale login 生成授权链接</span><span class="chip">✅ 链接回传 → 本机浏览器授权</span><span class="chip">✅ 对方机器自动登录进网</span><span class="chip">✅ 通用方法：异地平台规则/验证码/2FA 都能绕</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 我的产品方法论 ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">方法 · 复盘</div>
+      <h2>一个普通人做产品，靠的是这 7 个本能</h2>
+      <p class="desc">回头看，我的每个"本能反应"，恰好都踩在产品方法论的正确位置上</p>
+    </div>
+    <div class="cmp" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));border:0">
+      <div class="col new reveal">
+        <h4>🧭 1 · 规则先行</h4>
+        <ul><li>第一天就要"1.0 对话规则"，贯穿始终</li><li>平台规则、边界规则、巡查规则、备份规则…每个环节都立规矩</li><li>小白的第一反应，就是企业级合规的雏形</li></ul>
+      </div>
+      <div class="col new reveal">
+        <h4>🔬 2 · MVP 验证</h4>
+        <ul><li>先问"好实现吗"，再决定动不动手</li><li>每个平台先跑通再扩展，不盲目铺开</li><li>拿测试机演练给客户安装，先找缺陷再上真场</li></ul>
+      </div>
+      <div class="col new reveal">
+        <h4>🗃️ 3 · 真实数据驱动</h4>
+        <ul><li>话术来自真实聊天记录，不编</li><li>报价来自真实价格表，不猜</li><li>验收报告必须真跑，不假绿</li></ul>
+      </div>
+      <div class="col new reveal">
+        <h4>🧑‍⚖️ 4 · 引入外部评审</h4>
+        <ul><li>自己看不全，主动把项目交给 Codex 独立评审</li><li>被退回就改，不辩解不糊弄</li><li>"诚实红，不假绿"成了项目铁律</li></ul>
+      </div>
+      <div class="col new reveal">
+        <h4>🎨 5 · 审美即产品</h4>
+        <ul><li>苹果官网风、深黑、毛玻璃、蓝渐变、大圆角</li><li>数字越多越好，小白解读小字不能少</li><li>背景音乐用真曲（喀秋莎钢琴版），不用合成音</li></ul>
+      </div>
+      <div class="col new reveal">
+        <h4>📤 6 · 交付思维</h4>
+        <ul><li>从第一天就想着"装到客户新电脑"</li><li>一切流程沉淀成 skill，新 agent 一看就会</li><li>一包全自动：装完喂给 Hermes 就能全链路执行</li></ul>
+      </div>
+      <div class="col new reveal">
+        <h4>🔥 7 · 永不满足</h4>
+        <ul><li>每完成一步，就加一个更专业的想法</li><li>7 天 20 个阶段，越加越深、越加越稳</li><li>看板从"看进度"进化到"看数据 + 动手操作"</li><li>客户主动追加第二条业务线（锂电池贸易）—— 交付口碑自己会说话</li><li>规则面板/开箱问候让客户"有抓手" —— 从卖功能到卖体验</li><li>异地 Tailscale 组网 + 回传网络代码登录 —— 从 1 对 1 到 1 对 N</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 客观评价 ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">客观评价 · 打分</div>
+      <h2>一个小白做到这个程度，我给这样的评价</h2>
+      <p class="desc">不吹不黑，按 6 个维度客观打分 —— 有亮点，也有要清醒的地方</p>
+    </div>
+
+    <div class="score-grid">
+      <div class="score reveal">
+        <div class="name">产品思维<span class="v">9.5</span></div>
+        <div class="bar"><i data-w="95"></i></div>
+        <div class="note">规则先行 + MVP 验证 + 真实数据 + 引入评审，这套组合是很多"懂技术的人"都做不到的</div>
+      </div>
+      <div class="score reveal">
+        <div class="name">审美与体验<span class="v">9.0</span></div>
+        <div class="bar"><i data-w="90"></i></div>
+        <div class="note">苹果风 + 毛玻璃 + 真曲音乐 + 小白解读，客户展示体验远超同行</div>
+      </div>
+      <div class="score reveal">
+        <div class="name">交付与商业化<span class="v">8.5</span></div>
+        <div class="bar"><i data-w="85"></i></div>
+        <div class="note">从"手动装 agent"升级为"一包全自动 + 远程监控 + 进度可视化"，价值跃升一个量级</div>
+      </div>
+      <div class="score reveal">
+        <div class="name">坚持与执行力<span class="v">10</span></div>
+        <div class="bar"><i data-w="100"></i></div>
+        <div class="note">43 项验收被反复退回、重跑几十轮、凌晨还在改，这种韧性是成功的一半</div>
+      </div>
+      <div class="score reveal">
+        <div class="name">技术理解<span class="v">6.5</span></div>
+        <div class="bar"><i data-w="65" class="warn"></i></div>
+        <div class="note">不写代码，靠指挥 agent + Codex。够用，但遇到平台平台规则这类硬问题会卡住，依赖"找成功案例"</div>
+      </div>
+      <div class="score reveal">
+        <div class="name">风险意识<span class="v">7.0</span></div>
+        <div class="bar"><i data-w="70" class="warn"></i></div>
+        <div class="note">很早就怕投诉限制、要备份、要安全冻结 —— 但平台规则不可控（TikTok 私聊全拦是账号级平台规则），有些事技术救不了</div>
+      </div>
+    </div>
+
+    <div class="verdict reveal">
+      <h3>🧑‍⚖️ 总评</h3>
+      <div class="big">"这是一次'外行打败内行思维'的示范 —— 你不懂技术，但你懂产品、懂客户、懂交付、懂坚持，而这四样恰恰是绝大多数技术人最缺的。"</div>
+      <p><b>最难得的三点：</b>① 第一天就想到"规则和投诉风险"，很多专业公司做获客系统都忘了合规；② 主动把项目交给更专业的力量（Codex）评审并全盘接受整改，这是"敢用比自己强的人"的格局；③ 从始至终带着"要装到客户电脑上"的交付视角做每一个功能，让整个项目没有白做的东西。</p>
+      <p><b>第七天的两个新注脚：</b>① 客户主动递来《锂电池贸易 SOP》追加第二条业务线 —— 这是"样板工程 + 企业级交付"策略最直接的回报，你的报价也从 ¥5000 第一次走到了 ¥6 万（含 30 天运营陪跑）的量级；② "验收全绿、真实跑崩"那一课很值钱 —— 你学会了区分"测试环境"和"真实战场"，明白了内存/网络通道/平台平台规则这些测试机上看不见的变量，这是企业级交付必经的一课。</p>
+      <p><b>最清醒的三点：</b>① 目前整个系统高度依赖 agent 和 Codex，平台一旦改版或平台规则收紧，需要持续迭代维护 —— 这不是一次性买卖，是"产品 + 运维"的长期生意；② "跑通了却总有各种问题"的阶段反复出现，说明验证体系和真实环境之间还有差距，企业级交付要接受"验收通过 ≠ 上线无忧"；③ 定价从 ¥5000 到 ¥6 万的跨越是合理的 —— 按这次的企业级交付标准（两阶段安装 + 43 项验收 + 文档 + 运维 + 安全红线 + 30 天陪跑），市场价应在 <b>¥3–6 万</b>，锂电池线还要加上贸易链路 agent 化的全新工作量。</p>
+      <p><b>一句话总结：</b>7 天前你问"好实现吗"，7 天后你交付了一个装进全新电脑就能跑、安全内核 100 分、带看板和记忆继承的完整产品，还让客户主动追加了第二条业务线 —— <b>这个速度和质量，不是"小白超常发挥"，而是"产品经理的直觉 + 会借力"的正确姿势。</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 结尾 ============ -->
+<section>
+  <div class="wrap" style="text-align:center">
+    <div class="reveal">
+      <h2 style="font-size:clamp(24px,4vw,38px);font-weight:700;letter-spacing:-0.02em">未完待续 · 下一章</h2>
+      <p style="color:var(--dim);margin-top:14px;max-width:600px;margin-left:auto;margin-right:auto">锂电池跨境贸易第二条业务线（8 环节 agent 化 + 26 张客户填写表）正在推进中。<br>规则中心、开箱问候、记忆继承、Tailscale 异地组网、回传网络代码登录 —— 从"交付"走向"舰队"，每一台客户机都能远程一键装好。</p>
+      <p style="margin-top:30px;font-size:14px;color:var(--dim2)">—— 更新于 2026-08-15 · 阿尔泰项目 7 天全纪实 ——</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>阿尔泰国际物流 · 中俄跨境获客 AI 系统</b> — 从 0 到企业级交付的全记录<br>
+    数据来源：Hermes 置顶 5 条会话 906 条用户消息实录 · 非虚构
+  </div>
+</footer>
+
+<script>
+/* ---- 粒子星空 ---- */
+const cv=document.getElementById('stars'),ctx=cv.getContext('2d');
+let W,H,pts=[];
+function rs(){
+  W=cv.width=innerWidth;H=cv.height=innerHeight;
+  const n=Math.min(90,Math.floor(W*H/22000));
+  pts=Array.from({length:n},()=>({
+    x:Math.random()*W,y:Math.random()*H,
+    r:Math.random()*1.4+.3,
+    a:Math.random()*.5+.15,
+    vy:-Math.random()*.25-.05,
+    tw:Math.random()*Math.PI*2
+  }));
+}
+function tick(){
+  ctx.clearRect(0,0,W,H);
+  for(const p of pts){
+    p.y+=p.vy;p.tw+=.02;
+    if(p.y<-4){p.y=H+4;p.x=Math.random()*W}
+    const a=p.a*(.6+.4*Math.sin(p.tw));
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);
+    ctx.fillStyle=`rgba(160,200,255,${a})`;ctx.fill();
+  }
+  requestAnimationFrame(tick);
+}
+rs();tick();addEventListener('resize',rs);
+
+/* ---- 滚动渐入 ---- */
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.12});
+document.querySelectorAll('.reveal,.stage').forEach(el=>io.observe(el));
+
+/* ---- 数字滚动 ---- */
+const nio=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target,target=+el.dataset.count,start=performance.now(),dur=1400;
+    (function step(t){
+      const p=Math.min(1,(t-start)/dur),ease=1-Math.pow(1-p,3);
+      el.textContent=Math.round(target*ease).toLocaleString();
+      if(p<1)requestAnimationFrame(step);
+    })(start);
+    nio.unobserve(el);
+  });
+},{threshold:.5});
+document.querySelectorAll('.num[data-count]').forEach(el=>nio.observe(el));
+
+/* ---- 评分条 ---- */
+const sio=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.style.width=e.target.dataset.w+'%';
+    sio.unobserve(e.target);
+  });
+},{threshold:.4});
+document.querySelectorAll('.bar i[data-w]').forEach(el=>sio.observe(el));
+</script>
+</body>
+</html>
