@@ -302,6 +302,41 @@ section{padding:90px 0;position:relative}
 .rp-stat.run .n{color:#7aa2ff}
 .rp-stat .l{font-size:10.5px;color:var(--dim2);margin-top:2px}
 
+/* ============ KNOWLEDGE BASE (ACT 3.5) ★ ============ */
+.kb-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.kb-card{
+  background:linear-gradient(160deg,rgba(41,151,255,0.06),rgba(191,90,242,0.05));
+  border:1px solid rgba(255,255,255,0.10);border-radius:var(--r-lg);padding:22px;cursor:pointer;
+  transition:all .35s;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+.kb-card:hover{border-color:rgba(41,151,255,0.45);transform:translateY(-3px);box-shadow:var(--shadow)}
+.kb-card .kb-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.kb-card .kb-ico{font-size:26px}
+.kb-card .kb-name{font-size:16px;font-weight:700;color:var(--txt)}
+.kb-card .kb-count{font-size:11px;color:var(--dim2);margin-left:auto;white-space:nowrap}
+.kb-card .kb-desc{font-size:12.5px;color:var(--dim);line-height:1.6;margin-bottom:12px}
+.kb-card .kb-open{font-size:12px;color:var(--blue);opacity:.8}
+.kb-card.open .kb-open{opacity:1}
+.kb-card.open{border-color:rgba(41,151,255,0.55);background:linear-gradient(160deg,rgba(41,151,255,0.10),rgba(191,90,242,0.08))}
+.kb-sub{margin-top:14px;border-top:1px dashed rgba(255,255,255,0.10);padding-top:12px}
+.kb-sub-item{font-size:12.5px;color:#c3cdf0;padding:7px 10px;border-radius:10px;cursor:pointer;transition:background .2s}
+.kb-sub-item:hover{background:rgba(41,151,255,0.10)}
+.kb-sub-item .kb-sn{font-weight:600}
+.kb-sub-item .kb-sn-n{color:var(--dim2);font-size:10.5px;margin-left:6px}
+.kb-sub-item .kb-sd{color:var(--dim2);font-size:11px;margin-top:2px}
+.kb-files{margin-top:6px;padding-left:14px;border-left:2px solid rgba(41,151,255,0.25);display:none}
+.kb-sub-item.open .kb-files{display:block}
+.kb-sub-item.open .kb-sn{color:var(--blue)}
+.kb-file{font-size:11px;color:#9fb4d8;padding:4px 6px;border-radius:6px;display:flex;gap:8px;align-items:baseline}
+.kb-file:hover{background:rgba(255,255,255,0.05)}
+.kb-file .kb-fname{color:#c9d4f5;word-break:break-all}
+.kb-file .kb-fuse{color:var(--dim2);flex-shrink:0;font-size:10.5px}
+.kb-file .kb-fmore{color:var(--blue);opacity:.7}
+.kb-more{font-size:11px;color:var(--blue);cursor:pointer;padding:5px 6px;border-radius:6px;margin-top:2px;background:rgba(41,151,255,0.06);display:inline-block}
+.kb-more:hover{background:rgba(41,151,255,0.14)}
+.kb-collapse{font-size:11px;color:var(--blue);cursor:pointer;margin-top:10px;display:none;padding:6px 10px;border-radius:8px;background:rgba(41,151,255,0.08)}
+.kb-card.open .kb-collapse{display:inline-block}
+
 /* ============ ABILITY MAP (ACT3) ★ ============ */
 .ability-wrap{display:grid;grid-template-columns:280px 1fr;gap:24px;align-items:start}
 @media(max-width:900px){.ability-wrap{grid-template-columns:1fr}}
@@ -465,7 +500,7 @@ footer b{color:var(--dim)}
   <div class="wrap">
     <div class="play-badge"><span class="ico">▶</span> 一期「短视频」 · 从 0 到交付级智能体</div>
     <h1>一句"好实现吗？"<br>到装进客户电脑就能跑的<br>交付级智能体</h1>
-    <p class="sub">一个<b>不懂代码</b>的人，7 天 20 个阶段，把"我想做个东西"做成了 <b>安全内核 100 分、43 项验收全过、客户主动追加第二条业务线</b>的完整产品。<br>这条路上每一步的<b>想法与为什么</b>，都在下面。</p>
+    <p class="sub">一个<b>不懂代码</b>的人，7 天 22 个阶段，把"我想做个东西"做成了 <b>安全内核 100 分、43 项验收全过、客户主动追加第二条业务线</b>的完整产品。<br>这条路上每一步的<b>想法与为什么</b>，都在下面。</p>
     <div class="tags">
       <span>🧠 智能体</span><span>🛒 跨境电商</span><span>🔐 交付级</span><span>🏗️ 架构</span><span>↩️ 回滚</span><span>📦 一键交付</span>
     </div>
@@ -481,7 +516,7 @@ footer b{color:var(--dim)}
 <div class="wrap" style="margin-top:-20px">
   <div class="stats">
     <div class="stat reveal"><div class="num" data-count="7">0</div><div class="lbl">天 · 从想法到交付</div><div class="note">08.08 → 08.15</div></div>
-    <div class="stat reveal"><div class="num" data-count="20">0</div><div class="lbl">个演进阶段</div><div class="note">每步一个"为什么"</div></div>
+    <div class="stat reveal"><div class="num" data-count="22">0</div><div class="lbl">个演进阶段</div><div class="note">每步一个"为什么"</div></div>
     <div class="stat reveal"><div class="num" data-count="6">0</div><div class="lbl">个获客平台</div><div class="note">VK / TG / WA / IG / TikTok / 速卖通</div></div>
     <div class="stat reveal"><div class="num" data-count="100">0</div><div class="lbl">安全内核评分</div><div class="note">Gate0→6 + Codex 独立验收</div></div>
     <div class="stat reveal"><div class="num" data-count="43">0</div><div class="lbl">项一键验收</div><div class="note">43/43 真实跑通</div></div>
@@ -615,6 +650,26 @@ footer b{color:var(--dim)}
       <div class="ability-body" id="abody">
 </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ ACT 3.5 ★ Obsidian 知识库全景 ============ -->
+<div class="act reveal" id="act35">
+  <span class="num">ACT 3.5</span>
+  <span class="title">交付全景 · Obsidian 知识库</span>
+  <span class="line"></span>
+</div>
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">全景 · THE KNOWLEDGE BASE</div>
+      <h2>交付的不只是代码，是一个 488 文件的"企业大脑"</h2>
+      <p class="desc">客户电脑里的 <b>Obsidian 知识库</b> = 项目的完整沉淀：<b>5 大分类、67 个子目录、488 个文件</b>。每一层都有它的意义。点开分类 → 看子目录 → 看每一个文件是干嘛的。<br>这，就是交付级智能体的"知识底座"。</p>
+    </div>
+    <div class="kb-wrap reveal" id="kbWrap">
+      <!-- 顶层 5 分类卡片 JS 渲染 -->
+    </div>
+    <p style="text-align:center;color:var(--dim2);font-size:12.5px;margin-top:18px">数据实时读取自客户机 Obsidian Vault · 488 文件全量收录 · 每个文件都有用途说明</p>
   </div>
 </section>
 
@@ -926,7 +981,17 @@ const STAGES=[
    q:'而且对方电脑无法登录账号，我们是用了新的方法——回传网络代码的形式，在我这边登录成功的这个经验也非常宝贵。这个方法和流程要一起记录进去。',
    b:'异地组网时遇到硬骨头：对方电脑（河南 IP）登录 Google 账号被拦——异常登录，卡在验证页。解决办法：① 对方机器跑登录命令生成一次性授权链接；② 链接回传到我这边；③ 我在本机浏览器打开一键授权；④ 对方机器自动完成登录。登录动作永远发生在"信得过的那台机器"上。',
    why:'对方电脑在异地，平台风控会拦截"异地登录"；回传链接 = 把登录动作搬回主控本机，既安全又高效',
-   chips:['✅ 对方电脑登不了 Google 账号','✅ 授权链接生成 + 回传','✅ 本机浏览器授权','✅ 对方机器自动登录进网','✅ 通用方法：风控/验证码/2FA 都能绕']}
+   chips:['✅ 对方电脑登不了 Google 账号','✅ 授权链接生成 + 回传','✅ 本机浏览器授权','✅ 对方机器自动登录进网','✅ 通用方法：风控/验证码/2FA 都能绕']},
+  {t:'08-15 · 晚',p:'阶段 21 · 百度网盘 CLI 备份跑通',m:'动机：数据是客户命根子，不能丢',h:'最后还更新了上传百度网盘、跑通 CLI 的这个事儿',
+   q:'最后我还更新了上传百度网盘、跑通 CLI 的这个事儿。客户的全部工作资产（Obsidian Vault + 业务数据 + 规则中心）必须自动备份，不能因为电脑坏了就全没了。',
+   b:'① 装官方 bdpan CLI 3.8.6；② 登录客户自己的百度网盘账号（数据归客户，不用我的账号）；③ 写 backup_obsidian_to_baidu.sh：按顶层分类打包上传（VK获客/交付工程/规则中心/data…），emoji 文件名做 sanitize 兼容；④ 设定 09:00/14:00/21:00 三个时段自动备份 + 开机补跑；⑤ 实测：21:00 跑通，obsidian-backup 目录、data 上传成功、rulecenter 上传成功、当天备份标记已写。',
+   why:'交付一个系统，更要交付"数据不丢"的承诺——百度网盘是客户熟悉的入口，CLI 自动化后客户零操作、每天 3 次自动备份，防丢失',
+   chips:['✅ bdpan CLI 3.8.6 官方登录','✅ 客户自己账号（数据归客户）','✅ 09:00/14:00/21:00 自动备份','✅ 开机补跑 + 当天备份标记','✅ 实测 21:00 全链路跑通']},
+  {t:'08-15 · 深夜',p:'阶段 22 · 客户机远程装机 + 消毒交付',m:'动机：交付不是"能跑"，是"干净地能跑"',h:'远程装完 Hermes + 交付包，客户机数据消毒后开箱',
+   q:'最后一步：客户机（河南 MacBook Pro M5）远程装机完成——Hermes + 交付包 + 插件全家桶 + 全量验收。装完还有一件重要的事：把我在客户机上留下的痕迹全部清干净（我的 API key、微信绑定、历史会话），换成客户自己的，这叫"消毒交付"。',
+   b:'① remote_install_sop.sh 全程可视化（7 阶段看板，客户机 8899 实时显示）；② 发现客户机网络可直连海外（出口 IP 38.106.19.249），登录页秒开，不需要 VPN；③ 6 平台登录页全部打开（VK/WA/TG/IG/TikTok/速卖通）；④ 消毒：8 处我的 key → CHANGE_ME 占位符、2 个微信绑定删除、233 个会话清理、weixin 身份清空；⑤ 开箱引导就位：客户新会话第一句 agent 主动打招呼，引导激活（登录→测试发送→问称呼）。',
+   why:'客户机的每一字节都应该属于客户。交付级 = 连"我的痕迹"都清理干净，客户拿到的是他自己的、干净的、开箱即用的系统',
+   chips:['✅ 远程装机 7 阶段看板可视化','✅ 客户机直连海外（出口 IP 海外）','✅ 6 平台登录页全开','✅ 消毒交付：key/微信/会话全清','✅ 开箱引导就位：第一句主动问候']}
 ];
 
 /* ================= 能力清单 ================= */
@@ -1145,6 +1210,100 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('rpReset').addEventListener('click',()=>{rpReset();sfx.click();});
 });
 
+const KB_DATA = {"Hermes 会话备份":{"meta":{"icon":"💾","desc":"会话保险柜：所有工作会话自动备份（压缩快照+按日期+详情），防止记忆丢失。"},"total":57,"subdirs":{".":["备份规则.md","索引.md"],"压缩快照":["20260804_101708_abd32d_快照.md","20260804_131948_972605_快照.md","20260804_133548_9545b3_快照.md","20260804_204316_5b4c79_快照.md","20260808_194247_87dd42_快照.md","20260810_113843_c34e39_快照.md","20260811_105716_3f6713_快照.md","20260813_060052_67e941_快照.md"],"按日期/2026-08":["2026-08-04.md","2026-08-05.md","2026-08-06.md","2026-08-08.md","2026-08-09.md","2026-08-10.md","2026-08-11.md","2026-08-13.md","2026-08-14.md"],"会话详情":["20260804_101708_abd32d_20260804_101708_abd32d.md","20260804_131948_972605_20260804_131948_972605.md","20260804_133436_673039_反爬虫GitHub技能安装配置.md","20260804_133457_1a0cdc_PPT技能安装与模板总结.md","20260804_133548_9545b3_20260804_133548_9545b3.md","20260804_133721_c6ab3c_手机微信扫码连接.md","20260804_142233_41c37f_20260804_142233_41c37f.md","20260804_184826_b0f00c_本地.md","20260804_185142_3d08b5_Hermes桌面版必备技能安装.md","20260804_191416_de576f_心跳与自动唤醒.md","20260804_194604_054a8d_OpenClaw与Hermes桌面版对比.md","20260804_204316_5b4c79_地藏菩萨主题UI皮肤制作.md","20260805_105409_abf7e4_20260805_105409_abf7e4.md","20260806_134029_cf2555_继续搞抖音自动化.md","20260808_194247_87dd42_跨境电商项目 💙 中俄物流 001 近6000+.md","20260808_194247_87dd42_跨境电商项目 💙 中俄物流.md","20260808_213604_6108f5_20260808_213604_6108f5.md","20260808_213722_009736_Obsidian苹果风工作台皮肤.md","20260808_215518_bde80d_Hermes实时达成率可视化看板.md","20260809_060330_14e08a_Hermes 闪退问题修复.md","20260809_072159_cc8cdb_Obsidian数据读取与资源库汇报.md","20260809_081442_231e17_20260809_081442_231e17.md","20260810_073303_9032a1_API余额显示修复.md","20260810_074945_61c984_Hermes崩溃预防体系.md","20260810_092636_a1fa39_寻找防崩溃skill会话.md","20260810_093718_da8a15_上下文压缩引发记录丢失.md","20260810_110113_c68078_清理命令窗口.md","20260810_113843_c34e39_中俄跨境电商 💙 002 接力.md","20260810_114239_5bd200_API消耗优化与达成率提升.md","20260810_133006_c16068_20260810_133006_c16068.md","20260811_065732_bc86a6_Kimi K3配置检查与余额显示.md","20260811_074511_2e82fb_20260811_074511_2e82fb.md","20260811_105716_3f6713_探讨AI编辑PDF工作流方案.md","20260813_060052_67e941_最终收尾接力工程启动 💙.md","20260813_060052_67e941_最终收尾接力工程启动.md","20260813_060442_c99e48_20260813_060442_c99e48.md","20260813_060442_c99e48_健康系统崩溃复盘与预防.md","20260814_183504_ad7e90_开箱引导.md"]}},"VK获客":{"meta":{"icon":"🎯","desc":"业务实战主库：VK 线索采集、规则引擎、每日战报、客户档案、基础设施与 SOP。这是 7 天项目最核心的知识沉淀。"},"total":249,"subdirs":{".":["采集器说明.md","🎯项目总纲与SOP-v3.0.md","🎯项目总纲与SOP.md","🏠VK获客仪表盘.md","📊全平台能力验证报告-v2.md","📊全平台能力验证报告.md","📋待办分层清单.md","📋待客户确认清单.md","📋需求盘点-主动被动获客执行版.md","🔍需求分析与差距评估.md","🔐账号保险箱.md","🔓回来后10分钟解锁指南.md","🔴高意向客户.md","🗺️全景进度地图.md","🗺️待办事项地图.md","🛡️Instagram风控规则手册.md","🟡中等意向客户.md"],"📋规则引擎":["TikTok私信风控规则v2.md","VK平台规则与风控避坑指南.md","多平台搜索与筛选方案.md","多平台私信风控规则总表.md","客户消息巡查频率规则.md","客户筛选规则-v2.md","客户账号深度画像SOP.md","对话终止规则与群营销.md","对话触达规则-v1.0.md","平台私信上限与风控手册.md","消息发送前SOP自检清单.md","线索筛选规则-v1.0.md","边界感复盘-Korobochki案例.md","风控一页纸.md","验收标准-转人工SOP.md"],"📅每日更新":["2026-08-08.md","2026-08-09.md","2026-08-10.md","IG-TikTok获客测试报告.md","筛查报告.md","筛选报告.md"],"线索库":["0001_МАСС-АВТО-ЗАКАЗ-—-авто-из-Кореи---Китая---Японии.md","0002_Gordienko-Nikolay.md","0003_ПаЮр-Авто---Поставка-авто-Русификация-Аквапринт.md","0004_Next-Day---Доставка-из-Китая.md","0005_Next-Day---Доставка-из-Китая.md","0006_Korobochki-Podarochnye.md","0007_ED-MOTORSS-I-Авто-из-США-ОАЭ-Кореи-Китая-Японии-.md","0008_☼-Южный-Автомобиль-☼.md","0009_Авто-из-Кореи--и-Китая--SV-_Motors.md","0010_TradeAvto---авто-из-Китая-под-заказ.md","0011_TradeAvto---авто-из-Китая-под-заказ.md","0012_TradeAvto---авто-из-Китая-под-заказ.md","0013_Smirnov-Evgeny.md","0014_MajorBroExpert---Ярославль.md","0015_Заказ-авто-из-Японии,-Кореи-и-Китая.md","0016_Авто-на-заказ-из-любой-страны-Автофрамос.md","0017_Gordienko-Nikolay.md","0018_AvtoMomoto.md","0019_AvtoMomoto.md","0020_ПаЮр-Авто---Поставка-авто-Русификация-Аквапринт.md","0021_AvtoMomoto.md","0022_AvtoMomoto.md","0023_AvtoMomoto.md","0024_AvtoMomoto.md","0025_Met-Auto---Автомобили-из-Китая,-Японии,-Кореи.md","0026_АвтоПодбор-по-РФ---Авто-из-Кореи-и-Китая.md","0027_ATAMI-AUTO---Автомобили-из-Японии,-Кореи-и-Китая.md","0028_Global-Car-Import-Автомобили-под-заказ.md","0029_Global-Car-Import-Автомобили-под-заказ.md","0030_АвтоПодбор-по-РФ---Авто-из-Кореи-и-Китая.md","0031_АвтоПодбор-по-РФ---Авто-из-Кореи-и-Китая.md","0032_Met-Auto---Автомобили-из-Китая,-Японии,-Кореи.md","0033_Мику-Маркет---Выкуп-из-Китая,-США-и-ЕС.md","0034_Авто-Тема---авто-из-Японии,-Китая-и-Кореи..md","0035_ТЛК-ЛАЗУРИТ-----Доставка-грузов-из-Китая.md","0036_MATRIX-MOTORS-АВТО-ИЗ-ГРУЗИИ,-АРМЕНИИ,-США.md","0037_Gordienko-Nikolay.md","0038_ПаЮр-Авто---Поставка-авто-Русификация-Аквапринт.md","0039_Автоподбор-Пермь---Импорт-из-Китая---АВТОСтиль!.md","0040_AvtoMomoto.md","0041_CarDialer-Автомобили-из-Китая-,-Грузии,-США-..md","0042_ED-MOTORSS-I-Авто-из-США-ОАЭ-Кореи-Китая-Японии-.md","0043_CarDialer-Автомобили-из-Китая-,-Грузии,-США-..md","0044_CarDialer-Автомобили-из-Китая-,-Грузии,-США-..md","0045_EAST-WIND-I-ДОСТАВКА-С-КИТАЯ.md","0046_Dragon-Auto---Авто-из-Китая.md","0047_Logisticheskaya-Kompania-''Tszeshenimpex''.md","0048_Wang-Leo.md","0049_AvtoMomoto.md","0050_Заказ-авто-из-Японии,-Кореи-и-Китая.md","0051_Автомобили-из-Японии,-Китая-и-Кореи-под-заказ.md","0052_Авто-на-заказ-из-любой-страны-Автофрамос.md","0053_Korei-Yaponii-Ameriki-Iz-Kitaya-Avtomobili.md","0054_Gordienko-Nikolay.md","0055_AvtoMomoto.md","0056_ПаЮр-Авто---Поставка-авто-Русификация-Аквапринт.md","0057_АвтоПривоз-45.md","0058_AvtoMomoto.md","0059_AvtoMomoto.md","0060_AvtoMomoto.md","0061_ED-MOTORSS-I-Авто-из-США-ОАЭ-Кореи-Китая-Японии-.md","0062_Red-Panda-Motors---Авто-из-Китая,-Японии,-Кореи.md","0063_AvtoMomoto.md","0064_CHI-RU-AUTO-Krasnoyarsk.md","0065_АТС-АВТО-со-всего-мира.md","0066_Автоподбор--ОДИН-НА-МИЛЛИОН-.md","0067_Езжев.md","0068_Доставка-из-Китая---CARGO-111---Карго-&-Белая.md","0069_Китайские-технологии---ВЭД-и-Логистика.md","0070_АзияТранзит.md","0071_Shilyonkin-Ivan.md","0072_Gorbatov-Alexey.md","0073_Chuprin-Alexander.md","0074_ВЭД-Опора---Поставка-товаров-из-Китая.md","0075_Поиск-работы-в-Иркутске-с-ГородРабот.ру.md","0076_CAR-TRANSIT.md","0077_Avtoprodaza-Auto.md","0078_ООО--ТРЕЙДИНГ-ЛОДЖИСТИКС-СОЛЮШЕНС-.md","0079_PRO-TORG---Оператор-импортных-сделок---Азия.md","0080_AUTOHUB---Автомобили-с-пробегом-в-Калининграде.md","0081_БСМ-(быстросъем)-для-экскаватора-погрузчика-Liug.md","0082_Навесное-оборудование.md","0083_Sadriddinov-Bakhtiyor.md","0084_Borisov-Borya.md","0085_ПРИВАЛОВ---ИМПОРТ-АВТО.md","0086_Mao-Run.md","0087_Armyaninov-Nikita.md","0088_Артём-везёт---Авто-из-Кореи,-Китая,-Европы,-ОАЭ.md","0089_TM_Auto.md","0090_CarWest---Автосалон.md","0091_ПМ-Камень----изделия-из-натурального-камня..md","0092_LogiX---Доставка-товара-из-Китая--Сертификаты.md","0093_Ignatenko-Maria.md","0094_Международная-логистика---ФОРВАРДИНГ-ЭМ-ЭЙ.md","0095_Доставка-и-выкуп-товаров-из-Китая-Карго---317.md","0096_Артём-везёт---Авто-из-Кореи,-Китая,-Европы,-ОАЭ.md","0097_CarWest---Автосалон.md","0098_Авто-на-заказ-из-любой-страны-Автофрамос.md","0099_TM_Auto.md","0100_CarWest---Автосалон.md","0101_Islamov-Ramil.md","0102_TM_Auto.md","0103_Латяо.рф---Китайские-снеки,-сладости,-лапша-опт..md","0104_Автомобили-с-аукционов-Японии,-Китая,-Кореи..md","0105_Автомобили-с-аукционов-Японии,-Китая,-Кореи..md","0106_Sunrise-auto-–-Авто-под-заказ.md","0107_Jiang-Yuhang.md","0108_Avto-Mik.md","0109_TM_Auto.md","0110_AvtoBROkers74.md","0111_Kuznetsov-Alexander.md","0112_Yadi-Trading-Co.,-Ltd.-Поставки-товаров-из-Китая.md","0113_AvtoBROkers74.md","0114_Kuznetsov-Alexander.md","0115_ООО-Альконта-Логистикс.md","0116_Мику-Маркет---Выкуп-из-Китая,-США-и-ЕС.md","0117_Naumova-Tatyana.md","0118_Мику-Маркет---Выкуп-из-Китая,-США-и-ЕС.md","0119_GP-CAR-AUTO.md","0120_Катя-Китай--Обучение--байерсво.md","0121_МАСС-АВТО-ЗАКАЗ-—-авто-из-Кореи---Китая---Японии.md","0122_Башакин-и-Брыкин---Авто-Заказ---Орёл.md","0123_Viva-Logistics.md","0124_Лента-авто-новостей--автоновинки,-автоновости.md","0125_Digital-komanda.ru.md","0126_Логово-Автомобилиста.md","0127_Уссури-Карго.md","0128_Shevchenko-Sergey.md","0129_-Победа-.md","0130_Казахстан-в-иностранной-прессе.md","0131_Пятое-колесо.md","0132_Astashenkov-Gleb.md","0133_Davlatzoda-Umedchon.md","0134_Женская-модная-одежда---2А-34.Корпус.Б..md","0135_Safaralizoda-Mukhammadzhon.md","0136_Yakubov-Farrukh.md","0137_Zhara-Valentin.md","0138_Женская-Одежда-$-NAISON-$-Корпус-Б-2А-34.md","0139_Safaralizoda-Mukhammadzhon.md","0140_Detskie-Sumki-Sadovod.md","0141_Safaralizoda-Mukhammadzhon.md","0142_Саша-Магазин.md","0143_Garimadov-Abdulo.md","0144_Zavoz_Авто---Япония---Китай---Корея.md","0145_Мир-Чемоданы.Школьный-Рюкзаки.Спортивный-Сумки..md","0146_UMEDJON-FASHION-К-Б-2Г-08.md","0147_Badridinov-Shakhrier.md","0148_Nabiev-Akhmachon.md","0149_Davlatzoda-Umedchon.md","0150_Sadavod-Rasprodazha.md","0151_МОДНЫЕ-ДЖИНСЫ-ДЛЯ-ВСЕЙ-СЕМЬИ--ОПТОМ-И-РОЗНИЦУ.md","0152_Davlatzoda-Umedchon.md","0153_Навесное-оборудование.md","0154_БСМ-(быстросъем)-для-экскаватора-погрузчика-Liug.md","0155_Женская-модная-одежда---2А-34.Корпус.Б..md","0156_Prokopyeva-Svetik.md","0157_ЕНОТЫ-Новороссия-Z.md","0158_JLH-HOME---Матрасы-и-мебель-оптом.md","0159_Всё-о-грузовых-автомобилях..md","0160_Авто-на-заказ-из-любой-страны-Автофрамос.md","0161_Топ-Бизнес.md","0162_WORKSPACE.md","0163_Служба-закупок-промышленной-продукции-китая.md"],"👤客户档案":["业务知识库-百问百答.md","会议纪要-20260810-中俄贸易AI获客方案讨论.md","完整价格表.md","客户档案-阿尔泰中俄国际物流.md","平台与报价信息.md","真实客户对话素材-全量分类-20260810.md","真实客户对话素材-最新16条-20260810.md","账号清单.md","运输基础知识.md","销售工作流方案-V1.0.md","阿尔泰国际物流_业务知识库(百问百答).md"],"04_企业规则与SOP母体系":["04_全新电脑Hermes安装SOP.md","06_演练全量问题总结_重建交付包依据.md","07_新电脑真实跑通测试报告.md","08_最终交付演练报告.md","08_运营成果看板使用指南.md"],"🏗️基础设施":["MVP获客系统部署包-v1.0.md","MVP获客系统部署包-v1.1.md","MVP获客系统部署包-v1.2.md","Skill架构规划.md","Telegram获客通道.md","TikTok-SNI绕过方案.md","WhatsApp获客通道.md","内容种草物料包.md","基础设施状态.md","微信与Instagram获客通道.md","系统架构.md","脚本清单.md","远程安装全程可视化SOP.md","速卖通与TikTok获客通道.md","阿尔泰演进全记录网页-部署记录.md","项目看板网址.md","验收测试偶发性说明.md","🎯平台账号诊断标准.md","💬阿尔泰销售话术库.md","📇平台账号与关键词库.md","🔄客户全生命周期话术引擎.md","🤖AI销售聊天Prompt-v1.md","🤖精聊引擎-v2-主动被动双模式.md","🧠阿尔泰AI知识库.md","🧾客服工作流程.md"],"🏗️基础设施/hermes-desktop-plugin-suite":["单文件版.md"],"🏗️基础设施/ABS产品目录PDF编辑引擎":["ABS产品目录PDF编辑引擎 单文件版.md","SKILL.md"],"🏗️基础设施/hermes-stable-guardian":["SKILL.md","防崩自检+控制中心 hermes-stable-guardian v1.0 单文件版.md"],"🏗️基础设施/hermes-crash-guard":["SKILL.md","防崩自检+控制中心 hermes-crash-guard v4.0 单文件版.md"]}},"企业级AI获客交付工程":{"meta":{"icon":"🏗️","desc":"交付工程库：从产品章程到 43 项验收的完整交付证据链。00-10 编号目录 = 企业级交付标准结构。"},"total":76,"subdirs":{".":["🏠企业级AI获客交付工程总控.md"],"05_验证培训与运维":["备份恢复升级回滚与事件响应SOP_v0.1.3.md","离线验收与证据包SOP_v0.1.3.md","角色培训与上线演练SOP_v0.1.5.md"],"09_Pilot候选材料":["Pilot_0_evidence.md","Pilot_dry-run证据模板_v0.1.md","Pilot人工审批记录模板_v0.1.md","Pilot白名单申请表_v0.1.md","README_Pilot候选材料_v0.1.md"],"10_最终移交总索引":["D1阶段移交索引_v0.1.md","D1阶段移交索引_v0.2.md","FINAL_evidence.md","README_全轨移交索引_v0.1.md"],"02_安装与环境预检":["04_全新电脑Hermes安装SOP.md"],"09_客户实施项目/阿尔泰国际物流":["Pilot-001实施说明.md","客户获客SOP详细版_v0.1.md","客户获客SOP详细版_v0.2.md","客户需求与执行参数汇总_阿尔泰Pilot_v1.0测试版.md","平台采集配置素材_v0.1.md"],"01_标准安装与环境预检":["安装与环境预检契约_v0.1.15.md"],"10_历史资产与迁移清单":["OpenClaw首轮资产盘点与迁移建议.md","业务脚本与SOP整合映射_v0.1.md","资产继承与处置总表.md"],"07_版本发布与变更记录":["D1阶段版本发布记录_v0.1.md"],"07_客户交付候选包":["D0-1_evidence.md","D0-2_evidence.md","D0-2最终移交索引_v0.1.md","D0_客户交付产品定义_v0.1.md","D1E_客户交付证据包与干净机验收清单_v0.1.md","D1E_证据包最终装配与干净机执行计划_v0.1.md","D1_installer与预检设计_v0.1.md","D2_skill与依赖包标准_v0.1.md","D3_client配置与知识导入_v0.1.md","D4_dry-run验证器与运行安全_v0.1.md","D5_dry-run与恢复演练模板_v0.1.md","D6_upgrade回滚与可观测性_v0.1.md","D7_培训运维交接_v0.1.md","README_客户交付候选包_v0.1.md","客户可复制交付成熟度_Codex正式基线_v0.2.md"],"00_总控与产品定义":["SOP盘点与问题清单_v1.0.md","产品章程与不可妥协原则.md"],"02_Skill与依赖包标准":["Skill包Manifest契约_v0.1.3.md"],"06_一致性与移交":["O6-2真实冲突整改方案_v0.1.md","O6-2真实冲突整改方案_v0.2.md","O6-3最终移交索引_v0.1.md","OpenClaw_O6接力记忆包_v0.1.md","跨文档权威源与引用审计_v0.1.md"],"08_业务SOP母体系":["B0-1_evidence.md","B0-2_evidence.md","B0-3_evidence.md","B0-4_evidence.md","B0_L0企业目标与治理政策_v0.1.md","B10_业务SOP最终移交索引_v0.1.md","B1_L1端到端获客价值流_v0.1.md","B2_L2跨平台通用SOP_v0.1.md","B3_统一状态机与理由码_v0.1.md","B4_决策表与检查表模板_v0.1.md","B5_L3平台Playbook骨架_v0.1.md","B6_L5数据字段与日志契约_v0.1.md","B7_L5测试与证据契约_v0.1.md","B8_业务指标与100分模型_v0.1.md","B9_Pilot验收设计_v0.1.md","README_业务SOP母体系_v0.1.md"],"04_知识包与SOP模板":["客户画像与需求痛点研究SOP_v0.4.0.md","平台附录继承与防封配置SOP_v0.1.4.md","有人味对话与转人工终止SOP_v0.4.0.md","线索准入与评分SOP_v0.5.0.md"],"04_知识包与SOP模板/筛选规则":["筛选规则-v2-final.md"],"04_知识包与SOP模板/画像":["画像SOP-v1.md"],"04_知识包与SOP模板/风控":["风控手册-v3.md"],"04_知识包与SOP模板/对话规则":["对话规则-v2.md"],"06_测试与验收矩阵":["客户可复制交付100分模型.md","客户可复制交付成熟度_Codex正式基线_v0.1.md","客户可复制交付成熟度_证据基线草案_v0.1.md"],"04_企业规则与SOP母体系":["07_百度网盘自动备份配置指南.md"],"05_客户配置与知识包模板":["客户实例配置契约_v0.1.3.md"]}},"阿尔泰AI获客系统_v1.1.0_20260813":{"meta":{"icon":"📦","desc":"交付包镜像库：装进客户电脑的系统全貌。00 开始→01 配置→02 技能→04 知识→05 话术→06 Vault→07 运维→08 验收。"},"total":89,"subdirs":{".":["🏠项目首页.md"],"06_OBSIDIAN_VAULT":["🏠首页.md"],"05_BUSINESS_SOP":["CRM闭环与复盘.md","客户画像.md","客户画像样本库.md","客户获客SOP详细版.md","平台风控Playbook.md","总体流程.md","有人味对话.md","消息发送前自检清单.md","线索准入与评分.md","话术库.md","转人工与DNC终止.md"],"00_START_HERE":["v1.1.0升级交付说明.md","版本与交付边界.md","素材盘点前后对比报告_v1.1.0.md","给Hermes的启动指令.md","给客户看的说明.md"],"07_OPERATIONS":["30分钟演练方案.md","升级回滚.md","告警配置说明.md","培训脚本.md","备份与恢复.md","客户方验收确认书_模板.md","客户验收签字单.md","已知限制确认单.md","平台能力验证报告_实战证据.md","技能与脚本部署说明.md","故障诊断.md","每日操作清单.md","灰度上线指南.md","第三方独立审计指南.md","解绑审计报告.md","验收演示脚本_45分钟版.md"],"03_CLIENT_CONFIG":["审批人与转人工联系人模板.md","客户信息采集表.md","平台账号配置说明.md","待客户确认清单.md"],"02_APPLICATION/skills/tiktok-leads":["tiktok-leads.md"],"02_APPLICATION/skills/whatsapp-automation":["whatsapp-automation.md"],"02_APPLICATION/skills/vk-scraping-and-automation":["vk-scraping-and-automation.md"],"02_APPLICATION/skills/douyin-account-scraping":["douyin-account-scraping.md"],"02_APPLICATION/skills/jingliao-engine":["jingliao-engine.md"],"02_APPLICATION/skills/crossborder-leadgen":["crossborder-leadgen.md"],"02_APPLICATION/skills/instagram-scraper":["instagram-scraper.md"],"02_APPLICATION/skills/tg-scraping-and-automation":["tg-scraping-and-automation.md"],"02_APPLICATION/skills/crossborder-auto-responder":["crossborder-auto-responder.md"],"02_APPLICATION/skills/platform-login-state":["platform-login-state.md"],"08_ACCEPTANCE":["Docker部署说明.md"],"09_原始素材":["原始素材说明.md"],"09_原始素材/客户对话素材":["业务知识库-百问百答.md","会议纪要-20260810-中俄贸易AI获客方案讨论.md","完整价格表.md","客户档案-阿尔泰中俄国际物流.md","平台与报价信息.md","真实客户对话素材-全量分类-20260810.md","真实客户对话素材-最新16条-20260810.md","账号清单.md","运输基础知识.md","销售工作流方案-V1.0.md","阿尔泰国际物流_业务知识库(百问百答).md"],"09_原始素材/规则引擎":["TikTok私信风控规则v2.md","VK平台规则与风控避坑指南.md","多平台搜索与筛选方案.md","多平台私信风控规则总表.md","客户消息巡查频率规则.md","客户筛选规则-v2.md","客户账号深度画像SOP.md","对话终止规则与群营销.md","对话触达规则-v1.0.md","平台私信上限与风控手册.md","消息发送前SOP自检清单.md","线索筛选规则-v1.0.md","边界感复盘-Korobochki案例.md","风控一页纸.md","验收标准-转人工SOP.md"],"09_原始素材/基础设施":["🎯平台账号诊断标准.md","💬阿尔泰销售话术库.md","📇平台账号与关键词库.md","🔄客户全生命周期话术引擎.md","🤖AI销售聊天Prompt-v1.md","🧠阿尔泰AI知识库.md","🧾客服工作流程.md"],"04_KNOWLEDGE_BASE":["FAQ模板_百问百答.md","VK平台风控知识库.md","公司介绍与业务范围.md","客服工作流程.md","报价边界与禁运品清单.md","线路与时效表.md"]}},"🏗️AI记忆库":{"meta":{"icon":"🧠","desc":"项目交接大脑：每个重大项目一个 handoff.md，跨会话继承上下文，压缩后不丢记忆。"},"total":17,"subdirs":{"寻找防崩溃skill会话":["handoff.md"],"寻找防崩溃skill会话/history":["handoff-20260814-011937.md"],"最终收尾接力工程启动":["handoff.md"],"客户机安装接力":["handoff.md"],"规则中心镜像":["01_话术体系.md","02_关键词标准.md","03_优质客户标准.md","04_平台风控.md","05_画像标准.md","06_对话纪律.md","07_黑白名单.md","08_发送安全.md","版本台账.md"],"跨境电商项目_中俄物流_001_近6000":["handoff.md"],"跨境电商项目_中俄物流_001_近6000/history":["handoff-20260814-001221.md","handoff-20260814-232240.md"],"中俄跨境电商_002_接力":["handoff.md"]}}};
+
+/* ================= Obsidian 知识库全景 (ACT 3.5) ================= */
+const KB_FILE_NOTES = {
+  'VK获客': {'.':'🎯项目总纲与SOP：项目全貌与标准流程','采集器说明.md':'VK 采集器使用说明','🎯项目总纲与SOP-v3.0.md':'SOP 3.0 版本（最新）'},
+  '线索库':'VK 客户线索档案：俄文公司名+画像+意向度',
+  '📋规则引擎':'平台规则与风控避坑（TikTok/VK/多平台搜索筛选）',
+  '📅每日更新':'每日战报：采集/筛选/触达复盘',
+  '👤客户档案':'客户业务知识：百问百答、价格表、会议纪要',
+  '🏗️基础设施':'部署包 v1.0-v1.2、插件全家桶、守护技能',
+  '04_企业规则与SOP母体系':'SOP 母体系：新电脑安装、演练问题、跑通测试',
+  '企业级AI获客交付工程':{'00_总控与产品定义':'产品章程 + 不可妥协原则（交付的"宪法"）','08_业务SOP母体系':'业务 SOP 证据链 B0-1~B0-16','10_最终移交总索引':'最终移交索引 + 证据（D1/FINAL）','06_测试与验收矩阵':'验收矩阵与交付成熟度基线','04_知识包与SOP模板':'画像/筛选/风控/对话 4 大 SOP'},
+  '阿尔泰AI获客系统_v1.1.0_20260813':{'00_START_HERE':'从这里开始：版本说明+交付边界','02_APPLICATION':'技能层：10 个平台采集/自动化技能','04_KNOWLEDGE_BASE':'知识库：FAQ/风控/公司介绍','05_BUSINESS_SOP':'业务 SOP：画像/话术/CRM 闭环','07_OPERATIONS':'运维：升级回滚/告警/演练','03_CLIENT_CONFIG':'客户配置：账号/审批人/采集表'},
+  'Hermes 会话备份':{'备份规则.md':'备份机制说明','索引.md':'会话索引','压缩快照':'压缩前完整快照','按日期':'按日期归档','会话详情':'每条会话完整详情'},
+  '🏗️AI记忆库':{'handoff.md':'项目交接大脑：跨会话继承上下文'},
+};
+function kbFileNote(top, sub, fname){
+  const n = KB_FILE_NOTES[top];
+  if (n && typeof n === 'string') return n;
+  if (n && n[sub]) return n[sub];
+  if (n && n['.'] && sub === '.') return n['.'];
+  // 启发式
+  if (/^000\d/.test(fname)) return 'VK 客户线索档案';
+  if (/^\d{4}_/.test(fname)) return '会话备份详情';
+  if (/^\d{8}_/.test(fname)) return '会话压缩快照';
+  if (/^\d{4}-\d{2}-\d{2}/.test(fname)) return '每日会话归档';
+  if (/^000\d/.test(fname)) return 'VK 客户线索档案';
+  if (/^D\d-/.test(fname)) return '交付证据文件';
+  if (/^B\d-/.test(fname)) return '业务 SOP 证据';
+  if (/^O\d-/.test(fname)) return '一致性整改证据';
+  if (/handoff/.test(fname)) return '项目交接大脑';
+  if (/SKILL/.test(fname)) return '技能定义文件';
+  if (/SOP|标准|规则|模板/.test(fname)) return '流程/规则/模板文档';
+  if (/报告|复盘|总结|记录/.test(fname)) return '复盘/报告文档';
+  if (/说明|指南|手册|使用/.test(fname)) return '使用说明文档';
+  return '知识文档';
+}
+function kbFoldFiles(top, sub, files){
+  // 每个文件都带用途说明; 多于6个折叠成"展开 N 个文件"
+  if (files.length <= 6) return files.map(f=>'<div class="kb-file"><span class="kb-fname">📄 '+f+'</span><span class="kb-fuse">· '+kbFileNote(top,sub,f)+'</span></div>').join('');
+  const head = files.slice(0,5).map(f=>'<div class="kb-file"><span class="kb-fname">📄 '+f+'</span><span class="kb-fuse">· '+kbFileNote(top,sub,f)+'</span></div>').join('');
+  const rest = files.slice(5);
+  return head + '<div class="kb-more" data-more="'+files.length+'">▸ 展开全部 '+rest.length+' 个文件</div>' +
+    '<div class="kb-files-rest" style="display:none">'+rest.map(f=>'<div class="kb-file"><span class="kb-fname">📄 '+f+'</span><span class="kb-fuse">· '+kbFileNote(top,sub,f)+'</span></div>').join('')+'</div>';
+}
+function renderKB(){
+  const wrap = document.getElementById('kbWrap');
+  const tops = Object.keys(KB_DATA);
+  wrap.innerHTML = tops.map(top=>{
+    const v = KB_DATA[top];
+    const subs = Object.keys(v.subdirs).sort((a,b)=> a==='.' ? -1 : b==='.' ? 1 : 0);
+    return `
+    <div class="kb-card" data-top="${top}">
+      <div class="kb-top">
+        <span class="kb-ico">${v.meta.icon}</span>
+        <span class="kb-name">${top}</span>
+        <span class="kb-count">${v.total} 文件</span>
+      </div>
+      <div class="kb-desc">${v.meta.desc}</div>
+      <div class="kb-open">▸ 展开查看 ${subs.length} 个子目录</div>
+      <div class="kb-sub" style="display:none">
+        ${subs.map(s=>{
+          const files = v.subdirs[s];
+          const note = kbFileNote(top, s, files[0]||'');
+          const displayName = s === '.' ? '📁 顶层文件' : '📂 ' + s;
+          return `
+          <div class="kb-sub-item" data-sub="${s}">
+            <div class="kb-sn">${displayName}<span class="kb-sn-n">${files.length} 文件</span></div>
+            <div class="kb-sd">${note || '点击展开文件列表'}</div>
+            <div class="kb-files">${kbFoldFiles(top, s, files)}</div>
+          </div>`;
+        }).join('')}
+        <span class="kb-collapse">▲ 收起分类</span>
+      </div>
+    </div>`;
+  }).join('');
+  // 交互
+  wrap.querySelectorAll('.kb-card').forEach(card=>{
+    card.addEventListener('click',e=>{
+      const more = e.target.closest('.kb-more');
+      if (more){ const rest = more.nextElementSibling; rest.style.display='block'; more.style.display='none'; sfx.click(); return; }
+      const sub = e.target.closest('.kb-sub-item');
+      if (sub){ sub.classList.toggle('open'); sfx.click(); return; }
+      const collapse = e.target.closest('.kb-collapse');
+      if (collapse){ card.classList.remove('open'); card.querySelector('.kb-sub').style.display='none'; sfx.click(); return; }
+      const isOpen = card.classList.toggle('open');
+      card.querySelector('.kb-sub').style.display = isOpen ? 'block' : 'none';
+      card.querySelector('.kb-open').textContent = isOpen ? '▾ 收起分类' : '▸ 展开查看';
+      sfx.open();
+    });
+  });
+}
+document.addEventListener('DOMContentLoaded',renderKB);
+
 /* ================= 渲染时间线 ================= */
 const tl=document.getElementById('timeline');
 STAGES.forEach((s,i)=>{
@@ -1167,6 +1326,8 @@ STAGES.forEach((s,i)=>{
     sfx.open();
   });
   tl.appendChild(el);
+  /* 动态元素补观察(修复大面积空白: 渲染前注册的 io 观察不到后加元素) */
+  io.observe(el);
 });
 
 /* ================= 渲染能力清单 ================= */
@@ -1194,6 +1355,8 @@ ABILITIES.forEach(a=>{
     sfx.open();
   });
   abody.appendChild(el);
+  /* 动态元素补观察 */
+  io.observe(el);
 });
 
 /* ================= 能力导航高亮 + 滚动监听 ================= */
