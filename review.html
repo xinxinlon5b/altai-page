@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿尔泰项目复盘 · 三重专业视角 + 接项目优先级清单</title>
+<style>
+:root{
+  --bg:#05070d;--bg2:#0a0f1c;--card:rgba(20,28,48,0.55);--card2:rgba(24,33,56,0.45);
+  --txt:#eef2ff;--dim:#a5b1d6;--dim2:#6b7398;--blue:#2997ff;--purple:#bf5af2;
+  --green:#30d158;--red:#ff453a;--orange:#ff9f0a;--yellow:#ffd60a;
+  --grad:linear-gradient(135deg,#2997ff,#bf5af2);
+  --r:16px;--r-lg:24px;--shadow:0 20px 60px rgba(0,0,0,.45);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','PingFang SC','Microsoft YaHei',sans-serif;line-height:1.7;overflow-x:hidden}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+a{color:var(--blue);text-decoration:none}
+
+/* ===== 顶部导航 ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,7,13,0.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-inner{max-width:1080px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:22px}
+.nav-brand{font-weight:700;font-size:14.5px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
+.nav-links{display:flex;gap:16px;font-size:13px;flex-wrap:wrap}
+.nav-links a{color:var(--dim);transition:color .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--txt)}
+
+/* ===== Hero ===== */
+.hero{padding:150px 0 60px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(closest-side,rgba(41,151,255,.22),transparent);pointer-events:none}
+.play-badge{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--blue);background:rgba(41,151,255,.10);border:1px solid rgba(41,151,255,.28);padding:6px 14px;border-radius:999px;margin-bottom:22px}
+.play-badge .ico{width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px}
+h1{font-size:clamp(32px,5.5vw,56px);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:18px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--dim);font-size:16.5px;max-width:720px;margin:0 auto 28px}
+.tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:34px}
+.chip{font-size:12px;padding:6px 14px;border-radius:999px;color:#d4e9ff;background:rgba(41,151,255,0.10);border:1px solid rgba(41,151,255,0.28)}
+
+/* ===== 评分卡 ===== */
+.score-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch}
+@media(max-width:800px){.score-grid{grid-template-columns:1fr}}
+.score-card{background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);padding:30px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--shadow)}
+.score-big{display:flex;align-items:center;gap:20px;margin-bottom:22px}
+.score-num{font-size:56px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.score-grade{font-size:14px;color:var(--green);background:rgba(48,209,88,.12);border:1px solid rgba(48,209,88,.35);padding:4px 10px;border-radius:999px}
+.score-verdict{font-size:13.5px;color:var(--dim);margin-top:8px}
+.bars{display:flex;flex-direction:column;gap:12px}
+.bar-row{display:flex;align-items:center;gap:10px}
+.bar-label{width:88px;font-size:12px;color:var(--dim);flex-shrink:0}
+.bar-track{flex:1;height:8px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;background:var(--grad);width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.bar-val{width:36px;font-size:12px;color:var(--dim);text-align:right}
+
+/* ===== 区块 ===== */
+section{padding:70px 0}
+.sec-head{margin-bottom:36px}
+.kicker{font-size:12px;letter-spacing:.14em;color:var(--blue);font-weight:600;margin-bottom:10px;text-transform:uppercase}
+h2{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-0.01em;margin-bottom:14px;line-height:1.25}
+.sec-desc{color:var(--dim);font-size:15px;max-width:760px}
+
+/* ===== 角色卡 ===== */
+.role-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.role-card{background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);padding:26px;transition:transform .3s,border-color .3s;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.role-card:hover{transform:translateY(-4px);border-color:rgba(41,151,255,.4)}
+.role-ico{font-size:34px;margin-bottom:12px}
+.role-name{font-size:19px;font-weight:700;margin-bottom:6px}
+.role-sub{font-size:12px;color:var(--dim2);margin-bottom:16px;letter-spacing:.05em}
+.role-points{list-style:none;display:flex;flex-direction:column;gap:12px}
+.role-points li{font-size:13.5px;color:var(--dim);padding:10px 12px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05)}
+.role-points li b{color:var(--txt)}
+.role-points li .tag{display:inline-block;font-size:10.5px;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:1px}
+.tag.good{background:rgba(48,209,88,.12);color:#4ade80;border:1px solid rgba(48,209,88,.3)}
+.tag.gap{background:rgba(255,159,10,.12);color:#ffb340;border:1px solid rgba(255,159,10,.3)}
+
+/* ===== 未来方向 ===== */
+.future-item{background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);padding:26px;margin-bottom:16px;transition:border-color .3s;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.future-item:hover{border-color:rgba(41,151,255,.35)}
+.future-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.future-prio{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.03em}
+.prio-p0{background:rgba(255,69,58,.15);color:#ff6961;border:1px solid rgba(255,69,58,.4)}
+.prio-p1{background:rgba(255,159,10,.13);color:#ffb340;border:1px solid rgba(255,159,10,.35)}
+.prio-p2{background:rgba(41,151,255,.13);color:#5ab3ff;border:1px solid rgba(41,151,255,.35)}
+.prio-p3{background:rgba(191,90,242,.13);color:#d39aff;border:1px solid rgba(191,90,242,.35)}
+.future-title{font-size:17.5px;font-weight:700}
+.future-gap{font-size:13.5px;color:var(--dim);margin-bottom:10px}
+.future-gap b{color:var(--orange)}
+.future-sol{font-size:13.5px;color:var(--dim);background:rgba(48,209,88,.05);border-left:3px solid rgba(48,209,88,.5);padding:10px 14px;border-radius:0 10px 10px 0;margin-bottom:10px}
+.future-sol b{color:#4ade80}
+.future-who{font-size:12px;color:var(--dim2)}
+
+/* ===== 优先级目录 ===== */
+.pri-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:18px}
+.pri-card{background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);padding:26px;transition:transform .3s,border-color .3s;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.pri-card:hover{transform:translateY(-4px);border-color:rgba(41,151,255,.4)}
+.pri-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.pri-badge{font-size:26px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pri-time{font-size:11px;color:var(--dim2);background:rgba(255,255,255,0.05);padding:3px 10px;border-radius:999px}
+.pri-name{font-size:16px;font-weight:700;margin-bottom:6px}
+.pri-when{font-size:12.5px;color:var(--blue);margin-bottom:12px}
+.pri-desc{font-size:13px;color:var(--dim);line-height:1.75}
+.pri-items{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.pri-items li{font-size:12.5px;color:var(--dim);padding:8px 10px;background:rgba(255,255,255,0.03);border-radius:10px}
+.pri-items li b{color:var(--txt)}
+
+/* ===== 小白翻译 ===== */
+.layman{font-size:13.5px;color:#cfe3ff;background:linear-gradient(135deg,rgba(41,151,255,.12),rgba(191,90,242,.10));border:1px solid rgba(41,151,255,.2);border-radius:14px;padding:16px 18px;margin-top:16px}
+.layman b{color:var(--blue)}
+.layman .tag-l{font-size:11px;font-weight:700;background:rgba(41,151,255,.2);padding:2px 8px;border-radius:6px;margin-right:8px;color:#7cc0ff}
+
+/* ===== 总结 ===== */
+.final{padding:70px 0 90px;text-align:center}
+.final-card{background:linear-gradient(160deg,rgba(41,151,255,.10),rgba(191,90,242,.08));border:1px solid rgba(41,151,255,.25);border-radius:var(--r-lg);padding:44px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--shadow)}
+.final-card h3{font-size:26px;font-weight:800;margin-bottom:14px}
+.final-card p{color:var(--dim);font-size:15px;max-width:720px;margin:0 auto 20px}
+.final-card .cta{display:inline-block;margin-top:8px;padding:13px 30px;border-radius:999px;background:var(--grad);color:#fff;font-size:14.5px;font-weight:600;transition:transform .2s,box-shadow .2s}
+.final-card .cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(41,151,255,.35)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+.reveal.in{opacity:1;transform:none}
+
+footer{padding:30px 0;text-align:center;color:var(--dim2);font-size:12px;border-top:1px solid rgba(255,255,255,0.05)}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="nav-inner">
+  <div class="nav-brand">阿尔泰项目复盘</div>
+  <div class="nav-links">
+    <a href="#score">总评</a>
+    <a href="#roles">三重视角</a>
+    <a href="#future">未来方向</a>
+    <a href="#priority">接项目清单</a>
+    <a href="#final">总结</a>
+  </div>
+</div></nav>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="play-badge"><span class="ico">▶</span> 项目复盘 · 三重专业视角</div>
+    <h1>这个项目做得怎么样？<br>下一步该往哪走？</h1>
+    <p>从<b>架构师、工程师、产品经理</b>三个角度，诚实复盘 7 天从 0 到交付级智能体的全过程——<br>哪里做得好、哪里是短板、未来怎么补，以及接下一个项目前，<b>该按什么顺序先定什么</b>。</p>
+    <div class="tags">
+      <span class="chip">🏗️ 架构视角</span><span class="chip">🔧 工程视角</span><span class="chip">📊 产品视角</span>
+      <span class="chip">🎯 接单优先级</span><span class="chip">📚 小白可懂</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 总评 ===== -->
+<section id="score">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">总评 · THE SCORE</div>
+      <h2>成熟度评分：87 / 100</h2>
+      <p class="sec-desc">按 7 个维度打分（工程/验收/测试/文档/运维/安全/业务）。<b>工程侧全面优秀，业务侧是唯一短板</b>——这正是"交付级"与"生产级"的差距。</p>
+    </div>
+    <div class="score-grid">
+      <div class="score-card reveal">
+        <div class="score-big">
+          <div class="score-num">87</div>
+          <div><span class="score-grade">A- 企业级交付</span>
+          <div class="score-verdict">工程侧 88-97 分，业务侧 70 分 → 总分约 87。<br>一句话：<b>系统造得非常结实，但还没在真实业务里跑起来。</b></div></div>
+        </div>
+      </div>
+      <div class="score-card reveal">
+        <div class="bars" id="bars"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 三重视角 ===== -->
+<section id="roles">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">复盘 · THREE LENSES</div>
+      <h2>三个角色，三种看法</h2>
+      <p class="sec-desc">同一个项目，架构师看"扛不扛得住"，工程师看"干不干净"，产品经理看"值不值钱"。</p>
+    </div>
+    <div class="role-grid">
+      <div class="role-card reveal">
+        <div class="role-ico">🏗️</div>
+        <div class="role-name">架构师视角</div>
+        <div class="role-sub">ARCHITECT · 系统扛不扛得住</div>
+        <ul class="role-points">
+          <li><span class="tag good">做得对</span><b>分层清晰</b>：获客层 / 数据层 / 规则层 / 触达层 / 监控层各司其职，7 天堆出来的系统没有变成一团乱麻</li>
+          <li><span class="tag good">做得对</span><b>1 平台 2 业务线架构</b>：统一获客层 + 线索分流（物流 / 电池 / 都要），复用率 60%，不是每个客户从零造</li>
+          <li><span class="tag good">做得对</span><b>异地组网架构</b>：Tailscale 1 对 N 舰队 + 回传授权登录，为"远程交付多客户"铺好了路</li>
+          <li><span class="tag gap">待补</span><b>绑定 Hermes 生态</b>：技能、插件、调度都绑在 Hermes 上——如果客户 IT 环境要求 Docker 或自托管，需要解绑</li>
+          <li><span class="tag gap">待补</span><b>单机单客户</b>：目前一台电脑服务一个客户，没有多租户隔离设计</li>
+        </ul>
+        <div class="layman"><span class="tag-l">小白翻译</span>房子盖得结构很正：客厅、卧室、厨房分得清清楚楚，不是把所有东西堆在一个房间里。但"水管"用的是开发商统一配的，客户想换牌子得提前说。<b>下一套房子，要设计成能同时住好几个客户还不串门。</b></div>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-ico">🔧</div>
+        <div class="role-name">工程师视角</div>
+        <div class="role-sub">ENGINEER · 代码干不干净</div>
+        <ul class="role-points">
+          <li><span class="tag good">做得对</span><b>安全内核 100 分</b>：Gate0-6 七道闸门 + send_mode=disabled 强制 + 零真实误发——"AI 会发错消息"是行业最大的雷，你把它拆了</li>
+          <li><span class="tag good">做得对</span><b>43 项验收全绿</b>：full/quick/oneclick 分层验收，每项跑到确认通过，不是"差不多行了"</li>
+          <li><span class="tag good">做得对</span><b>回滚/备份/自愈</b>：规则版本化可回滚、百度网盘 3 时段自动备份、guardian 崩溃自愈——系统出了事有退路</li>
+          <li><span class="tag good">做得对</span><b>消毒交付</b>：客户机清掉你的 key/微信/会话，客户拿到的是"自己的"电脑</li>
+          <li><span class="tag gap">待补</span><b>验收是自证</b>：43/43 是自己跑的，客户没有第三方审计视角——信任感打折扣</li>
+          <li><span class="tag gap">待补</span><b>无远程告警</b>：系统挂了没人主动知道，要等客户发现</li>
+        </ul>
+        <div class="layman"><span class="tag-l">小白翻译</span>工程师把"安全锁"做到了极致：系统默认不能乱发消息，要发必须过七道检查——就像银行取钱要过安检、人脸、密码三道关。唯一的小遗憾：<b>这些检查是"自己查自己"</b>，就像自己批改自己的考卷，客户没法百分百信服。</div>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-ico">📊</div>
+        <div class="role-name">产品经理视角</div>
+        <div class="role-sub">PRODUCT · 值不值钱</div>
+        <ul class="role-points">
+          <li><span class="tag good">做得对</span><b>业务价值验证</b>：客户主动追加第二条业务线（锂电池）= 最硬的需求证明，比任何调研都有说服力</li>
+          <li><span class="tag good">做得对</span><b>定价逻辑成立</b>：5000 样板 → 6 万企业级，三支柱叙事（态度/陪跑/市场价一半）逻辑自洽</li>
+          <li><span class="tag good">做得对</span><b>素材沉淀</b>：话术引擎 48 条真实俄语话术、34 客户画像、163 线索库——资产在客户手里，换 agent 带不走</li>
+          <li><span class="tag gap">待补</span><b>业务层是"骨架不是血肉"</b>：话术/FAQ/知识库很多是模板，真实数据只填了一部分——客户真正用起来才知道好不好用</li>
+          <li><span class="tag gap">待补</span><b>未真实平台放量</b>：只做了自测（发给自己），没在真实账号上灰度跑过</li>
+        </ul>
+        <div class="layman"><span class="tag-l">小白翻译</span>客户愿意为"第二个项目"掏钱，说明第一个项目真的打动了他——就像餐厅客人吃完主动加菜。但目前系统里的"菜谱"还是半成品：<b>有些菜只有名字没有配方</b>，等真实客户点菜（真发消息）才知道好不好吃。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 未来方向 ===== -->
+<section id="future">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">未来 · THE ROADMAP</div>
+      <h2>6 个方向，把 87 分补到 95+</h2>
+      <p class="sec-desc">按"先补什么、后补什么"排好序。每一项都有：现状缺口 → 解决方案 → 谁来做。</p>
+    </div>
+    <div class="future-item reveal">
+      <div class="future-head"><span class="future-prio prio-p0">P0 · 最优先</span><span class="future-title">① 灰度上线：从"自测通过"到"真实放量"</span></div>
+      <div class="future-gap"><b>现状缺口：</b>只发给自己测试过，没在真实客户账号上跑过。这是 87 分最大的水分。</div>
+      <div class="future-sol"><b>方案：</b>白名单灰度上线——选 3-5 个测试小号，日上限 20 条、频率 5 条/小时，遇到平台风控响应码立即熔断，跑 48 小时出试运行报告。staged_go_live.py 执行器可立即写。</div>
+      <div class="future-who">👤 我能立即干 · 需客户提供测试小号 + 俄区网络节点 + 书面同意</div>
+    </div>
+    <div class="future-item reveal">
+      <div class="future-head"><span class="future-prio prio-p0">P0 · 最优先</span><span class="future-title">② 远程告警：系统出问题主动找你</span></div>
+      <div class="future-gap"><b>现状缺口：</b>客户机系统挂了没人知道，要等客户自己发现——这在企业级交付里不可接受。</div>
+      <div class="future-sol"><b>方案：</b>ops_alert.py 每 30 分钟心跳检测（进程存活 / 数据库锁 / API 连续失败 / 磁盘空间），异常推送到 webhook（微信/钉钉）。默认先推给运维方（你），不打扰客户。</div>
+      <div class="future-who">👤 我能立即干 · 需确认告警推送到哪</div>
+    </div>
+    <div class="future-item reveal">
+      <div class="future-head"><span class="future-prio prio-p1">P1 · 重要</span><span class="future-title">③ 第三方审计：让验收"可信"</span></div>
+      <div class="future-gap"><b>现状缺口：</b>43/43 是自己跑的，客户没有独立验证视角——"自己批改自己考卷"。</div>
+      <div class="future-sol"><b>方案：</b>写《第三方审计指南》+ 45 分钟验收演示脚本，邀请客户方 IT 或第三方机构现场观摩验收，签客户方确认书。审计留痕可追溯。</div>
+      <div class="future-who">👤 我能立即干 · 需客户安排线上验收观摩</div>
+    </div>
+    <div class="future-item reveal">
+      <div class="future-head"><span class="future-prio prio-p1">P1 · 重要</span><span class="future-title">④ 业务血肉：真实素材灌装 + 迭代闭环</span></div>
+      <div class="future-gap"><b>现状缺口：</b>话术/FAQ/知识库很多是模板，真实数据没填满——系统"会说话"但"还没学会业务"。</div>
+      <div class="future-sol"><b>方案：</b>从本地素材全量灌装（报价 1.8$/kg / 8 条线路时效 / 保险 3-5$/KG / 48 条真实俄语话术 / 34 画像），加话术周报生成器：失败样本 → 重写 → 对比，形成迭代闭环。</div>
+      <div class="future-who">👤 我能立即干大部分 · 需客户确认费率冲突（5$/KG vs 3$/KG）</div>
+    </div>
+    <div class="future-item reveal">
+      <div class="future-head"><span class="future-prio prio-p2">P2 · 加分</span><span class="future-title">⑤ 解绑 Hermes：Docker 容器化</span></div>
+      <div class="future-gap"><b>现状缺口：</b>技能/插件/调度绑在 Hermes 上，客户 IT 要求 Docker 或自托管时无法交付。</div>
+      <div class="future-sol"><b>方案：</b>依赖审计 + 纯 Python 调度器 + Docker 镜像，容器内跑 43/43 复验。双运行模式（Hermes / Docker）文档化。</div>
+      <div class="future-who">👤 我能干 · 低优先级，等有客户明确要求再投入</div>
+    </div>
+    <div class="future-item reveal">
+      <div class="future-head"><span class="future-prio prio-p3">P3 · 远期</span><span class="future-title">⑥ 多租户舰队：1 台电脑管 N 个客户</span></div>
+      <div class="future-gap"><b>现状缺口：</b>目前一台电脑服务一个客户，客户多了电脑也多。</div>
+      <div class="future-sol"><b>方案：</b>利用已有 Tailscale 1 对 N 组网，做中央控制台 + 多客户隔离（每客户独立数据目录/独立登录态/独立话术引擎）。这是把"交付生意"变成"订阅生意"的关键一步。</div>
+      <div class="future-who">👤 远期规划 · 需先在 2-3 个客户上验证单客户模式</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 接项目优先级清单 ===== -->
+<section id="priority">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">接单 · THE CHECKLIST</div>
+      <h2>接下一个项目，先定什么？</h2>
+      <p class="sec-desc">这是从这次交付提炼的<b>接项目优先级清单</b>——P0 先定，P3 后定。每一项都写清楚了"为什么"和"小白怎么懂"。</p>
+    </div>
+    <div class="pri-grid">
+      <div class="pri-card reveal">
+        <div class="pri-top"><span class="pri-badge">P0</span><span class="pri-time">第一天 · 必做</span></div>
+        <div class="pri-name">🎯 1. 需求与边界</div>
+        <div class="pri-when">先于一切：客户到底要什么、不要什么</div>
+        <div class="pri-desc">项目开始前必须白纸黑字写清楚：客户要解决什么问题、系统做到什么程度算完成、哪些明确不做。这是整个项目的"宪法"，后面所有工作都围绕它。</div>
+        <ul class="pri-items">
+          <li><b>交付物</b>：需求说明书（客户签字）</li>
+          <li><b>关键问题</b>：要解决什么问题？范围边界？成功标准？</li>
+        </ul>
+        <div class="layman"><span class="tag-l">小白翻译</span>就像装修前先定"要装成什么样、预算多少、哪些不做"——<b>不问清楚就开工，后面全是返工</b>。上次项目就是客户说"好实现吗"一句话开始，边界全靠边做边摸，这次要先定死。</div>
+      </div>
+      <div class="pri-card reveal">
+        <div class="pri-top"><span class="pri-badge">P0</span><span class="pri-time">第一周 · 必做</span></div>
+        <div class="pri-name">💬 2. 定价与合同</div>
+        <div class="pri-when">先谈钱，再干活</div>
+        <div class="pri-desc">报价要"三段论"：工作量（2-4 人周成本）+ 企业级体系溢价（验收/运维/安全）+ 业务价值锚点。低价（5000）当样板，正规报价（3-6 万）当生意。合同要写清范围、验收标准、售后边界。</div>
+        <ul class="pri-items">
+          <li><b>交付物</b>：报价单 + 服务合同</li>
+          <li><b>关键问题</b>：报多少？包含什么？不包含什么？售后多久？</li>
+        </ul>
+        <div class="layman"><span class="tag-l">小白翻译</span><b>先谈钱再干活</b>。上次 5000 干出 5 万的话（还获客了第二条业务线），是"样板价"；下一个客户必须按企业级 3-6 万报，不然你的时间越来越不值钱。合同里写清楚"6 万包含什么、不包含什么"，客户问起来有据可依。</div>
+      </div>
+      <div class="pri-card reveal">
+        <div class="pri-top"><span class="pri-badge">P1</span><span class="pri-time">第二周 · 重要</span></div>
+        <div class="pri-name">🗂️ 3. 素材与知识库</div>
+        <div class="pri-when">业务的血肉，越早要越好</div>
+        <div class="pri-desc">系统"会聊天"的前提是"懂业务"。开工就向客户要 5 类素材：报价单、聊天样本、FAQ、理想客户画像、成交案例。同时盘点本地已有素材（上次项目沉淀的都能复用）。</div>
+        <ul class="pri-items">
+          <li><b>交付物</b>：客户素材清单（14 项分 4 组）+ 本地素材盘点</li>
+          <li><b>关键问题</b>：素材从哪来？有没有 PII 要脱敏？</li>
+        </ul>
+        <div class="layman"><span class="tag-l">小白翻译</span>系统像新员工，<b>上班第一天得先读公司资料</b>：产品手册、报价表、客户聊天记录。你越早把资料给它，它越快学会干活。上次项目结尾才发现素材没填满，这次一开工就要。</div>
+      </div>
+      <div class="pri-card reveal">
+        <div class="pri-top"><span class="pri-badge">P1</span><span class="pri-time">第二周 · 重要</span></div>
+        <div class="pri-name">🔌 4. 平台与账号</div>
+        <div class="pri-when">登录态是命门，别等到最后一刻</div>
+        <div class="pri-desc">客户要在哪些平台获客（VK/TG/WA/IG/TikTok/速卖通）？账号谁提供？登录态怎么配置？——这些必须尽早定，因为平台登录是"客户现场操作"（账号安全），不是你能远程搞定的。</div>
+        <ul class="pri-items">
+          <li><b>交付物</b>：平台账号清单 + 登录方式确认</li>
+          <li><b>关键问题</b>：6 平台全要还是部分？账号谁出？俄区节点谁提供？</li>
+        </ul>
+        <div class="layman"><span class="tag-l">小白翻译</span>系统要"替你发消息"，就得先"登录你的账号"——而账号密码永远只有你自己能输入。所以<b>提前确认客户要在哪几个平台玩、账号准备好了没</b>，不然系统装好了却登录不进去，等于白装。上次客户机直连海外是运气好，不能当常规。</div>
+      </div>
+      <div class="pri-card reveal">
+        <div class="pri-top"><span class="pri-badge">P2</span><span class="pri-time">第三周 · 加分</span></div>
+        <div class="pri-name">🧪 5. 验收标准</div>
+        <div class="pri-when">验收标准越早定，交付越顺畅</div>
+        <div class="pri-desc">把"什么算交付完成"变成可勾选的清单：43 项验收里哪些是硬门槛？安全红线（send_mode 默认 disabled）客户认不认？验收方式是线上演示还是第三方审计？</div>
+        <ul class="pri-items">
+          <li><b>交付物</b>：验收清单（客户确认版）</li>
+          <li><b>关键问题</b>：哪些是硬门槛？谁验收？怎么算通过？</li>
+        </ul>
+        <div class="layman"><span class="tag-l">小白翻译</span>交房前先给客户看"验收清单"——<b>就像买房先看户型图再验收</b>。上面列清楚"哪些必须全绿、哪些可以商量"，客户签字确认，避免交付时说"这个我没要"。上次 43 项验收是你自己定的标准，这次要让客户参与定。</div>
+      </div>
+      <div class="pri-card reveal">
+        <div class="pri-top"><span class="pri-badge">P2</span><span class="pri-time">第三周 · 加分</span></div>
+        <div class="pri-name">🛟 6. 运维与售后</div>
+        <div class="pri-when">交付不是终点，运维才是口碑</div>
+        <div class="pri-desc">交付后 30 天陪跑（每周复盘报告）+ 后续维护怎么收费（年费 1.5-3 万或效果分润）？备份策略（百度网盘 3 时段）？告警推送？这些在开工时就谈好，别等交付完再谈。</div>
+        <ul class="pri-items">
+          <li><b>交付物</b>：运维方案 + 售后条款</li>
+          <li><b>关键问题</b>：陪跑多久？维护怎么收费？数据备份归谁？</li>
+        </ul>
+        <div class="layman"><span class="tag-l">小白翻译</span>卖车不是交钥匙就完事，<b>还得包保养</b>。跟客户说清楚："系统上线后我陪你跑 30 天，每周给你一份报告；之后每年维护费 XX，或者按效果分成。"——这样客户觉得你负责任，你也持续有收入。上次"无限陪跑"没边界，这次要写进合同。</div>
+      </div>
+      <div class="pri-card reveal">
+        <div class="pri-top"><span class="pri-badge">P3</span><span class="pri-time">远期 · 锦上添花</span></div>
+        <div class="pri-name">🏭 7. 规模化</div>
+        <div class="pri-when">从"一单一单做"到"流水线交付"</div>
+        <div class="pri-desc">把这次沉淀的交付流水线（安装器+验收+文档体系）固化成模板，下一个客户边际成本递减。目标：一台电脑管 N 个客户（多租户），把交付生意变成订阅生意。</div>
+        <ul class="pri-items">
+          <li><b>交付物</b>：交付流水线模板 v2 + 多租户架构</li>
+          <li><b>关键问题</b>：哪些环节能复用？怎么标准化？</li>
+        </ul>
+        <div class="layman"><span class="tag-l">小白翻译</span>第一次开饭店手忙脚乱，第二次就轻车熟路了——<b>把"怎么做饭"写成标准菜谱</b>，新店照着做就行。你这次 7 天做的交付流程，就是那张"标准菜谱"，下一个客户能更快、更便宜、赚更多。</div>
+      </div>
+      <div class="pri-card reveal">
+        <div class="pri-top"><span class="pri-badge">P3</span><span class="pri-time">远期 · 锦上添花</span></div>
+        <div class="pri-name">📣 8. 影响力</div>
+        <div class="pri-when">让市场知道你做了什么</div>
+        <div class="pri-desc">这次的项目演进网页本身就是获客素材。持续输出：短视频（你正在做的）、复盘文章、开源部分工具。让"想做智能体/电商的人"看到你——这就是你的客户池。</div>
+        <ul class="pri-items">
+          <li><b>交付物</b>：内容矩阵（短视频/文章/网页）</li>
+          <li><b>关键问题</b>：目标受众是谁？什么内容最能打动人？</li>
+        </ul>
+        <div class="layman"><span class="tag-l">小白翻译</span><b>酒香也怕巷子深</b>。你这次把项目做成网页/短视频，就是最好的"免费广告"——让下一个客户自己找上门，而不是你一个个去谈。这就是"影响力"的复利。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 总结 ===== -->
+<section id="final">
+  <div class="wrap">
+    <div class="final-card reveal">
+      <h3>一句话总结</h3>
+      <p><b>工程上你已经超过了 90% 的"智能体外包"</b>——他们连验收测试都没有，你有 43 项。真正的下一步不是"再堆功能"，而是：<b>把系统推到真实业务里跑（灰度上线），把验收变成第三方可信（审计），把交付做成可复制的流水线（模板化）</b>。这样 87 分 → 95 分，一个客户 → N 个客户。</p>
+      <a class="cta" href="https://xinxinlon5b.github.io/altai-page/" target="_blank">← 回看 7 天演进全记录</a>
+      <a class="cta" href="#priority" style="margin-left:12px;background:rgba(41,151,255,.15);border:1px solid rgba(41,151,255,.4);color:#7cc0ff">↑ 再看接单清单</a>
+    </div>
+  </div>
+</section>
+
+<footer>阿尔泰项目复盘 · 三重专业视角 + 接项目优先级清单 · 2026-08-15</footer>
+
+<script>
+// 评分数据
+const SCORES=[
+  {k:'工程化', v:95, note:'安装器/两阶段协议/清单/哈希'},
+  {k:'验收体系', v:97, note:'full 43/43 + quick + oneclick'},
+  {k:'测试质量', v:95, note:'根因修复全 probe 实证'},
+  {k:'文档移交', v:90, note:'客户文档/SOP/知识库/培训'},
+  {k:'运维', v:88, note:'备份恢复/升级回滚/演练'},
+  {k:'安全', v:95, note:'send_mode=disabled + 零误发'},
+  {k:'业务成熟度', v:70, note:'模板待真实数据填充'},
+];
+// 渲染评分条
+const bars=document.getElementById('bars');
+bars.innerHTML=SCORES.map(s=>`
+  <div class="bar-row">
+    <span class="bar-label">${s.k}</span>
+    <div class="bar-track"><div class="bar-fill" data-v="${s.v}" style="width:0"></div></div>
+    <span class="bar-val">${s.v}</span>
+  </div>`).join('');
+
+// 滚动渐入
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// 评分条动画
+setTimeout(()=>{
+  document.querySelectorAll('.bar-fill').forEach(el=>{ el.style.width=el.dataset.v+'%'; });
+},400);
+</script>
+</body>
+</html>
