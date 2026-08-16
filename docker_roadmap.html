@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>altai-docker · Docker 容器化进度看板</title>
+<style>
+  :root {
+    --bg: #05060a; --card: rgba(22,27,40,0.55); --border: rgba(255,255,255,0.08);
+    --text: #f2f4f8; --text2: #9aa3b2;
+    --green: #4ade80; --yellow: #ffd60a; --red: #ff453a; --blue: #2997ff; --purple: #bf5af2;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.6; min-height: 100vh;
+  }
+  .glow { position: fixed; border-radius:50%; filter: blur(120px); opacity:0.15; pointer-events:none; z-index:0; }
+  .glow-1 { width:500px; height:500px; background:var(--blue); top:-150px; left:-100px; }
+  .glow-2 { width:400px; height:400px; background:var(--purple); bottom:-100px; right:-100px; }
+
+  .wrap { position:relative; z-index:1; max-width: 960px; margin:0 auto; padding: 30px 20px 60px; }
+
+  /* Header */
+  .header { text-align:center; padding: 30px 0 10px; }
+  .kicker { display:inline-block; font-size:12px; letter-spacing:2px; color:var(--blue);
+    background:rgba(41,151,255,0.1); border:1px solid rgba(41,151,255,0.25);
+    padding:5px 14px; border-radius:999px; margin-bottom:14px; }
+  .header h1 { font-size: clamp(26px, 4vw, 40px); font-weight:700; letter-spacing:-0.5px;
+    background: linear-gradient(120deg, #fff 20%, #7cc0ff 60%, #bf5af2 90%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .header .sub { color:var(--text2); font-size:14px; margin-top:10px; }
+
+  /* Overall status bar */
+  .overall {
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    padding:16px 24px; margin:26px auto 30px; backdrop-filter: blur(20px);
+    max-width: 520px;
+  }
+  .dot-status { width:16px; height:16px; border-radius:50%; }
+  .dot-status.running { background:var(--yellow); box-shadow: 0 0 12px var(--yellow); animation: blink 1.6s infinite; }
+  .dot-status.done { background:var(--green); box-shadow: 0 0 12px var(--green); }
+  .dot-status.todo { background:#3a4150; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .overall .label { font-size:15px; font-weight:600; }
+  .overall .pct { font-size:13px; color:var(--text2); }
+  .overall .progress-track { width:140px; height:6px; background:#1a1f2e; border-radius:3px; overflow:hidden; }
+  .overall .progress-fill { height:100%; background:linear-gradient(90deg, var(--blue), var(--green)); border-radius:3px; transition: width 0.6s ease; }
+
+  /* Steps */
+  .steps { display:flex; flex-direction:column; gap:12px; }
+  .step {
+    display:flex; align-items:center; gap:16px;
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    padding:16px 20px; backdrop-filter: blur(20px);
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .step:hover { transform: translateX(4px); }
+  .step.done { border-color: rgba(74,222,128,0.25); }
+  .step.running { border-color: rgba(255,214,10,0.35); box-shadow: 0 0 16px rgba(255,214,10,0.05); }
+  .light { width:22px; height:22px; border-radius:50%; flex-shrink:0; position:relative; }
+  .step.done .light { background:var(--green); box-shadow: 0 0 10px var(--green); }
+  .step.running .light { background:var(--yellow); box-shadow: 0 0 10px var(--yellow); animation: blink 1.6s infinite; }
+  .step.todo .light { background:#3a4150; }
+  .step-info { flex:1; }
+  .step-name { font-size:15px; font-weight:600; display:flex; align-items:center; gap:8px; }
+  .step-badge { font-size:10px; padding:2px 8px; border-radius:999px; font-weight:600; }
+  .badge-done { background:rgba(74,222,128,0.15); color:var(--green); }
+  .badge-running { background:rgba(255,214,10,0.15); color:var(--yellow); }
+  .badge-todo { background:rgba(154,163,178,0.15); color:var(--text2); }
+  .step-desc { font-size:12.5px; color:var(--text2); margin-top:3px; }
+  .step-note { font-size:12px; margin-top:5px; }
+  .step.done .step-note { color:var(--green); }
+  .step.running .step-note { color:var(--yellow); }
+  .step-arrow { font-size:20px; color:var(--text2); flex-shrink:0; }
+
+  .updated { text-align:center; color:#5b6472; font-size:12px; margin-top:30px; }
+  .learn-link { text-align:center; margin-top:12px; }
+  .learn-link a { color:var(--blue); font-size:13px; text-decoration:none; }
+  .learn-link a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+
+<div class="wrap">
+  <div class="header">
+    <div class="kicker">LIVE DOCKER ROADMAP · 实时进度</div>
+    <h1 id="title">altai-docker · 容器化进度看板</h1>
+    <p class="sub">Docker 容器化 8 步链路 · 每一步都有验证标准 · 红绿灯实时追踪</p>
+  </div>
+
+  <div class="overall" id="overall">
+    <div class="dot-status" id="overall-dot"></div>
+    <div class="label" id="overall-label">加载中…</div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="pct" id="overall-pct">0%</div>
+  </div>
+
+  <div class="steps" id="steps">
+    <div style="text-align:center; color:var(--text2); padding:40px;">加载进度数据…</div>
+  </div>
+
+  <div class="learn-link">
+    <a href="https://xinxinlon5b.github.io/altai-page/roadmap.html" target="_blank">📘 看完整未来方向全景图（87→95+）</a>
+  </div>
+  <div class="updated" id="updated"></div>
+</div>
+
+<script>
+async function loadProgress() {
+  try {
+    const res = await fetch('docker_progress.json?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    render(data);
+  } catch (e) {
+    document.getElementById('steps').innerHTML =
+      '<div style="text-align:center; color:var(--red); padding:30px;">⚠️ 进度数据加载失败：' + e.message +
+      '<br><br>（首次部署后 GitHub Pages 需要 1-2 分钟生效，稍后刷新）</div>';
+  }
+}
+
+function render(data) {
+  document.getElementById('title').textContent = data.project + ' · 进度看板';
+
+  const status = data.overall === 'done' ? 'done' : 'running';
+  document.getElementById('overall-dot').className = 'dot-status ' + (status === 'done' ? 'done' : 'running');
+  document.getElementById('overall-label').textContent =
+    data.overall === 'done' ? '✅ 全部完成！' : '🔄 ' + (data.overall || '进行中');
+
+  const steps = data.steps || [];
+  const doneCount = steps.filter(s => s.status === 'done').length;
+  const pct = Math.round(doneCount / steps.length * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('overall-pct').textContent = doneCount + '/' + steps.length + ' · ' + pct + '%';
+
+  const container = document.getElementById('steps');
+  container.innerHTML = '';
+  steps.forEach((s, i) => {
+    const el = document.createElement('div');
+    el.className = 'step ' + s.status;
+    const badgeText = s.status === 'done' ? '✅ 完成' : s.status === 'running' ? '🔶 进行中' : '⭕ 待做';
+    const badgeCls = 'badge-' + s.status;
+    const note = s.note ? '<div class="step-note">📌 ' + s.note + '</div>' : '';
+    el.innerHTML =
+      '<div class="light"></div>' +
+      '<div class="step-info">' +
+        '<div class="step-name">' + s.name + ' <span class="step-badge ' + badgeCls + '">' + badgeText + '</span></div>' +
+        '<div class="step-desc">' + (s.desc || '') + '</div>' + note +
+      '</div>' +
+      (i < steps.length - 1 ? '<div class="step-arrow">↓</div>' : '');
+    container.appendChild(el);
+  });
+
+  document.getElementById('updated').textContent = '最后更新：' + (data.updated_at || '');
+}
+
+loadProgress();
+setInterval(loadProgress, 30000); // 每 30s 自动刷新
+</script>
+</body>
+</html>
