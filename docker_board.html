@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐳 altai-docker · Docker 容器化项目全景看板</title>
+<style>
+  :root {
+    --bg: #05060a; --card: rgba(22,27,40,0.55); --border: rgba(255,255,255,0.08);
+    --text: #f2f4f8; --text2: #9aa3b2; --text3: #5b6472;
+    --green: #4ade80; --yellow: #ffd60a; --red: #ff453a; --blue: #2997ff; --purple: #bf5af2;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.6; min-height: 100vh;
+  }
+  .glow { position: fixed; border-radius:50%; filter: blur(120px); opacity:0.15; pointer-events:none; z-index:0; }
+  .glow-1 { width:500px; height:500px; background:var(--blue); top:-150px; left:-100px; }
+  .glow-2 { width:400px; height:400px; background:var(--purple); bottom:-100px; right:-100px; }
+  .wrap { position:relative; z-index:1; max-width: 1060px; margin:0 auto; padding: 30px 20px 60px; }
+
+  /* Header */
+  .header { text-align:center; padding: 30px 0 10px; }
+  .kicker { display:inline-block; font-size:12px; letter-spacing:2px; color:var(--blue);
+    background:rgba(41,151,255,0.1); border:1px solid rgba(41,151,255,0.25);
+    padding:5px 14px; border-radius:999px; margin-bottom:14px; }
+  .header h1 { font-size: clamp(26px, 4vw, 40px); font-weight:700; letter-spacing:-0.5px;
+    background: linear-gradient(120deg, #fff 20%, #7cc0ff 60%, #bf5af2 90%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .header .sub { color:var(--text2); font-size:14px; margin-top:10px; }
+
+  /* 总进度环 */
+  .overall-row { display:flex; align-items:center; justify-content:center; gap:40px; margin: 30px auto; flex-wrap:wrap; }
+  .ring { position:relative; width:150px; height:150px; }
+  .ring svg { transform: rotate(-90deg); }
+  .ring .bg { stroke: #1a1f2e; }
+  .ring .fg { stroke: url(#grad); stroke-linecap: round; transition: stroke-dashoffset 0.8s ease; }
+  .ring-center { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .ring-center .pct { font-size:30px; font-weight:800; }
+  .ring-center .lbl { font-size:10px; color:var(--text3); letter-spacing:1px; }
+  .overall-stats { display:flex; gap:24px; flex-wrap:wrap; justify-content:center; }
+  .stat-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 20px; text-align:center; backdrop-filter:blur(20px); min-width:110px; }
+  .stat-card .num { font-size:22px; font-weight:800; background:linear-gradient(120deg,#7cc0ff,#bf5af2); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .stat-card .lbl { font-size:11px; color:var(--text2); margin-top:3px; }
+
+  /* 区块 */
+  .section { margin-top: 34px; }
+  .sec-title { display:flex; align-items:center; gap:10px; font-size:19px; font-weight:700; margin-bottom:16px; }
+  .sec-title .bar { width:4px; height:20px; border-radius:2px; background:linear-gradient(180deg,var(--blue),var(--purple)); }
+
+  /* 架构图 */
+  .arch { display:flex; align-items:stretch; gap:14px; flex-wrap:wrap; justify-content:center; }
+  .arch-core { flex:1.4; min-width:260px; background:var(--card); border:1px solid rgba(41,151,255,0.35); border-radius:16px; padding:18px; backdrop-filter:blur(20px); }
+  .arch-core .t { font-size:14px; font-weight:700; color:var(--blue); text-align:center; margin-bottom:8px; }
+  .arch-core .mods { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
+  .mod { font-size:10.5px; padding:3px 9px; border-radius:999px; background:rgba(41,151,255,0.1); border:1px solid rgba(41,151,255,0.25); color:#7cc0ff; }
+  .arch-side { flex:1; min-width:220px; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; backdrop-filter:blur(20px); text-align:center; }
+  .arch-side .t { font-size:13px; font-weight:700; margin-bottom:6px; }
+  .arch-side .d { font-size:11.5px; color:var(--text2); }
+  .arch-side.hermes { border-color: rgba(191,90,242,0.3); }
+  .arch-side.hermes .t { color:var(--purple); }
+  .arch-side.docker { border-color: rgba(74,222,128,0.3); }
+  .arch-side.docker .t { color:var(--green); }
+  .arch-arrow { display:flex; align-items:center; color:var(--text3); font-size:18px; }
+
+  /* 节点卡片 */
+  .steps { display:flex; flex-direction:column; gap:12px; }
+  .step { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px 20px; backdrop-filter:blur(20px); }
+  .step-head { display:flex; align-items:center; gap:14px; cursor:pointer; user-select:none; }
+  .step .light { width:20px; height:20px; border-radius:50%; flex-shrink:0; background:var(--green); box-shadow:0 0 10px var(--green); }
+  .step-id { font-size:13px; font-weight:800; color:var(--green); min-width:36px; }
+  .step-name { font-size:15px; font-weight:700; flex:1; }
+  .step-badge { font-size:10.5px; padding:3px 10px; border-radius:999px; background:rgba(74,222,128,0.15); color:var(--green); font-weight:700; }
+  .step-chevron { color:var(--text3); font-size:14px; transition: transform 0.3s; }
+  .step.open .step-chevron { transform: rotate(90deg); }
+  .step-body { display:none; margin-top:12px; padding-top:12px; border-top:1px dashed var(--border); }
+  .step.open .step-body { display:block; }
+  .step-body .row { display:flex; gap:8px; font-size:12.5px; margin-bottom:6px; }
+  .step-body .k { color:var(--text3); min-width:70px; flex-shrink:0; }
+  .step-body .v { color:var(--text2); }
+  .step-body .v.green { color:var(--green); }
+  .step-body code { background:rgba(255,255,255,0.06); padding:1px 6px; border-radius:4px; font-size:11.5px; }
+
+  /* 目录树 */
+  .tree { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px 22px; backdrop-filter:blur(20px); font-family:'SF Mono',Menlo,Consolas,monospace; font-size:12px; color:var(--text2); overflow-x:auto; }
+  .tree .dir { color:#7cc0ff; }
+  .tree .file { color:var(--text2); }
+  .tree .hl { color:var(--green); }
+
+  /* 证据 */
+  .evidence { display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:12px; }
+  .ev-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 16px; backdrop-filter:blur(20px); }
+  .ev-card .t { font-size:12.5px; font-weight:700; color:var(--green); margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+  .ev-card pre { font-size:11px; color:var(--text2); white-space:pre-wrap; word-break:break-all; font-family:'SF Mono',Menlo,monospace; }
+
+  /* 尾部 */
+  .footer { text-align:center; color:var(--text3); font-size:12px; margin-top:36px; }
+  .updated { text-align:center; color:#5b6472; font-size:12px; margin-top:10px; }
+
+  .reveal { opacity:0; transform: translateY(16px); transition: opacity 0.6s, transform 0.6s; }
+  .reveal.visible { opacity:1; transform: none; }
+</style>
+</head>
+<body>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+
+<div class="wrap">
+  <div class="header reveal visible">
+    <div class="kicker">DOCKER CONTAINERIZATION PROJECT · 实时数据</div>
+    <h1>🐳 altai-docker · Docker 容器化项目全景</h1>
+    <p class="sub">把 altai 核心获客引擎装进标准容器 · 不依赖 Hermes 独立运行 · 8 节点全链路闭环</p>
+  </div>
+
+  <!-- 总进度 -->
+  <div class="overall-row reveal visible">
+    <div class="ring">
+      <svg width="150" height="150" viewBox="0 0 150 150">
+        <defs>
+          <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#2997ff"/>
+            <stop offset="100%" style="stop-color:#4ade80"/>
+          </linearGradient>
+        </defs>
+        <circle class="bg" cx="75" cy="75" r="62" fill="none" stroke-width="12"/>
+        <circle class="fg" id="ring-fg" cx="75" cy="75" r="62" fill="none" stroke-width="12"
+          stroke-dasharray="389.6" stroke-dashoffset="0"/>
+      </svg>
+      <div class="ring-center">
+        <div class="pct" id="ring-pct">100%</div>
+        <div class="lbl">完成度</div>
+      </div>
+    </div>
+    <div class="overall-stats" id="overall-stats">
+      <div class="stat-card"><div class="num" id="st-done">8/8</div><div class="lbl">节点完成</div></div>
+      <div class="stat-card"><div class="num" id="st-health">healthy</div><div class="lbl">容器状态</div></div>
+      <div class="stat-card"><div class="num">317MB</div><div class="lbl">镜像体积</div></div>
+      <div class="stat-card"><div class="num" id="st-modules">30+</div><div class="lbl">核心模块</div></div>
+      <div class="stat-card"><div class="num">python:3.11</div><div class="lbl">基础镜像</div></div>
+    </div>
+  </div>
+
+  <!-- 架构图 -->
+  <div class="section reveal">
+    <div class="sec-title"><div class="bar"></div>一、项目架构 · 双运行模式</div>
+    <div class="arch">
+      <div class="arch-core">
+        <div class="t">⚙️ altai_core 核心引擎（一份代码）</div>
+        <div class="mods">
+          <span class="mod">send_guard</span><span class="mod">lead_scoring</span><span class="mod">copy_engine</span>
+          <span class="mod">db</span><span class="mod">outbox</span><span class="mod">profile_builder</span>
+          <span class="mod">conversation_decision</span><span class="mod">message_state</span>
+        </div>
+        <div style="text-align:center;font-size:11px;color:var(--text3);margin-top:10px;">30+ 纯 Python 模块 · SQLite 存储 · 无 Hermes 依赖</div>
+      </div>
+      <div class="arch-arrow">⬇</div>
+      <div class="arch-side hermes">
+        <div class="t">🖥 模式 A · Hermes 版</div>
+        <div class="d">AI 驾驶舱<br>桌面应用 · 开箱即用<br>适合不懂技术的客户</div>
+      </div>
+      <div class="arch-arrow">⬅➡</div>
+      <div class="arch-side docker">
+        <div class="t">🐳 模式 B · Docker 版（本项目）</div>
+        <div class="d">稳定发动机 · 7×24 独立跑<br><b style="color:var(--green)">docker compose up</b> 一键启动<br>适合有 IT 的客户</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 节点 -->
+  <div class="section reveal">
+    <div class="sec-title"><div class="bar"></div>二、项目节点 · 8 步全链路（点击展开验证细节）</div>
+    <div class="steps" id="steps"></div>
+  </div>
+
+  <!-- 目录结构 -->
+  <div class="section reveal">
+    <div class="sec-title"><div class="bar"></div>三、项目结构</div>
+    <div class="tree">
+<pre>altai-docker/
+├── <span class="dir">app/altai_core/</span>      <span class="file">30+ 核心模块（send_guard / lead_scoring / copy_engine …）</span>
+├── <span class="dir">config/</span>             <span class="file">local.yaml（send_mode 默认 disabled = fail-closed 安全红线）</span>
+├── <span class="dir">data/</span>               <span class="file">SQLite 业务数据（挂载卷，容器删了不丢）</span>
+├── <span class="dir">scripts/</span>            <span class="file">healthcheck.sh（容器健康检查）</span>
+├── <span class="dir">tests/</span>              <span class="file">41+ 测试用例（gate_d1…gate6 安全红线）</span>
+├── <span class="dir">docs/</span>               <span class="file">STRUCTURE.md 骨架 + DEPLOY.md 双模式部署手册</span>
+├── <span class="hl">Dockerfile</span>           <span class="file">python:3.11-slim · 依赖分层缓存 · HEALTHCHECK</span>
+├── <span class="hl">docker-compose.yml</span>   <span class="file">一键启动 · 数据卷 · 健康检查 · 日志轮转</span>
+├── <span class="hl">run.py</span>               <span class="file">纯 Python 入口（--self-check / --serve / --status）</span>
+├── requirements.txt    <span class="file">依赖清单</span>
+└── progress.json       <span class="file">进度数据（看板数据源）</span></pre>
+    </div>
+  </div>
+
+  <!-- 验证证据 -->
+  <div class="section reveal">
+    <div class="sec-title"><div class="bar"></div>四、真实验证证据（非模拟）</div>
+    <div class="evidence">
+      <div class="ev-card">
+        <div class="t">✅ 容器状态</div>
+        <pre id="ev-health">altai-core | Up 18 minutes (healthy)</pre>
+      </div>
+      <div class="ev-card">
+        <div class="t">✅ 容器内自检</div>
+        <pre>✅ 核心模块导入: 8 个模块 OK
+✅ 安全闸门: send_mode=disabled (fail-closed 正确)
+✅ 数据目录: /opt/altai/data
+✅ 自检全部通过</pre>
+      </div>
+      <div class="ev-card">
+        <div class="t">✅ 心跳日志</div>
+        <pre>[altai-docker] 20:55:39 心跳正常
+[altai-docker] 20:56:39 心跳正常
+[altai-docker] 20:57:39 心跳正常</pre>
+      </div>
+      <div class="ev-card">
+        <div class="t">✅ 数据卷互通</div>
+        <pre>容器内写 d4_test.txt
+→ 宿主机立即读到
+D4 挂载验证通过</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- 学习次第 -->
+  <div class="section reveal">
+    <div class="sec-title"><div class="bar"></div>五、学习次第（怎么跟着学 Docker）</div>
+    <div class="tree">
+<pre>1️⃣ 理解概念：容器=标准集装箱（代码+环境打包，任何电脑都能跑）
+2️⃣ 看结构：altai-docker/ 目录 = 项目骨架
+3️⃣ 看入口：run.py --self-check（自检 = 启动前的体检）
+4️⃣ 看 Dockerfile：FROM python:3.11 → 装依赖 → 复制代码 → 健康检查
+5️⃣ 看 compose：docker compose up -d（一键启动 = 一条命令）
+6️⃣ 实操验证：docker compose ps（healthy 绿）= 第一步成功
+7️⃣ 改配置：config/local.yaml（send_mode）→ 重启生效
+8️⃣ 备份数据：data/ 目录直接拷（SQLite 文件）</pre>
+    </div>
+  </div>
+
+  <div class="updated" id="updated"></div>
+  <div class="footer">altai-docker v0.1.0 · 本机验证 · 部署手册 docs/DEPLOY.md</div>
+</div>
+
+<script>
+// 节点数据 (与 progress.json 同步)
+const STEPS = [
+  { id:'D0', name:'骨架设计', desc:'目录结构 + 依赖清单 + 模块边界', status:'done', note:'30 模块导入成功', verify:'ls app/altai_core/ → 30+ .py 文件', result:'全部模块可导入' },
+  { id:'D1', name:'看板网页', desc:'红绿灯进度看板 + progress.json 部署', status:'done', note:'已部署 GitHub Pages', verify:'curl https://xinxinlon5b.github.io/altai-page/docker_roadmap.html → 200', result:'线上可访问' },
+  { id:'D2', name:'Dockerfile', desc:'基础镜像 + 依赖安装', status:'done', note:'docker build 成功 (317MB)', verify:'docker build -t altai-docker:0.1.0 . → 成功', result:'镜像 317MB 构建完成' },
+  { id:'D3', name:'入口+自检', desc:'run.py + self_check.py 全绿', status:'done', note:'容器内自检全绿 (8模块+安全闸门)', verify:'docker run altai-docker:0.1.0 --self-check → 全绿', result:'自检 4 项全过' },
+  { id:'D4', name:'数据卷', desc:'config/data 挂载互通', status:'done', note:'容器写→宿主机读 互通验证通过', verify:'docker exec 写文件 → 宿主机 cat 读到', result:'互通验证通过' },
+  { id:'D5', name:'compose', desc:'docker-compose 一键启动 + healthcheck', status:'done', note:'容器 healthy ✅', verify:'docker compose ps → healthy', result:'Up 18 minutes (healthy)' },
+  { id:'D6', name:'容器复验', desc:'容器内跑安全测试子集', status:'done', note:'send_guard fail-closed 验证通过', verify:'容器内 python 断言 send_mode=disabled', result:'fail-closed 正确' },
+  { id:'D7', name:'双模式文档', desc:'Hermes 版 / Docker 版部署手册', status:'done', note:'DEPLOY.md 完成, 双模式图清晰', verify:'docs/DEPLOY.md 含双模式对比+部署3步+验证清单', result:'手册完成' },
+];
+
+function renderSteps() {
+  const c = document.getElementById('steps');
+  c.innerHTML = '';
+  STEPS.forEach((s, i) => {
+    const el = document.createElement('div');
+    el.className = 'step';
+    el.innerHTML = `
+      <div class="step-head">
+        <div class="light"></div>
+        <div class="step-id">${s.id}</div>
+        <div class="step-name">${s.name} <span style="font-size:11.5px;color:var(--text3);font-weight:400;">${s.desc}</span></div>
+        <div class="step-badge">✅ 完成</div>
+        <div class="step-chevron">▶</div>
+      </div>
+      <div class="step-body">
+        <div class="row"><div class="k">说明</div><div class="v">${s.desc}</div></div>
+        <div class="row"><div class="k">验证方法</div><div class="v"><code>${s.verify}</code></div></div>
+        <div class="row"><div class="k">验证结果</div><div class="v green">${s.result}</div></div>
+        <div class="row"><div class="k">备注</div><div class="v">${s.note}</div></div>
+      </div>`;
+    el.querySelector('.step-head').addEventListener('click', () => el.classList.toggle('open'));
+    c.appendChild(el);
+  });
+}
+
+// 进度环动画
+function renderRing() {
+  const pct = 100;
+  const circumference = 2 * Math.PI * 62; // 389.6
+  const offset = circumference * (1 - pct / 100);
+  document.getElementById('ring-fg').style.strokeDashoffset = offset;
+  document.getElementById('ring-pct').textContent = pct + '%';
+}
+
+// 滚动 reveal
+function initReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+}
+
+// 拉取实时进度 (progress.json 同源)
+async function loadLive() {
+  try {
+    const res = await fetch('docker_progress.json?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const d = await res.json();
+    document.getElementById('updated').textContent = '最后更新：' + (d.updated_at || '');
+  } catch (e) {
+    document.getElementById('updated').textContent = '（数据为当前验证快照，进度文件读取失败）';
+  }
+}
+
+renderSteps();
+renderRing();
+initReveal();
+loadLive();
+</script>
+</body>
+</html>
