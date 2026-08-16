@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿尔泰智能体 · 未来方向全景图（87→95+ 路线图）</title>
+<style>
+  :root {
+    --bg: #05060a;
+    --bg2: #0a0d14;
+    --card: rgba(22, 27, 40, 0.55);
+    --card-border: rgba(255,255,255,0.08);
+    --text: #f2f4f8;
+    --text2: #9aa3b2;
+    --blue: #2997ff;
+    --cyan: #5ac8fa;
+    --green: #4ade80;
+    --orange: #ff9f0a;
+    --red: #ff453a;
+    --purple: #bf5af2;
+    --radius: 20px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  /* 背景光晕 */
+  .glow {
+    position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.18; pointer-events: none; z-index: 0;
+  }
+  .glow-1 { width: 600px; height: 600px; background: #2997ff; top: -200px; left: -100px; }
+  .glow-2 { width: 500px; height: 500px; background: #bf5af2; top: 30%; right: -200px; }
+  .glow-3 { width: 400px; height: 400px; background: #4ade80; bottom: -150px; left: 30%; }
+
+  .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Hero ── */
+  .hero { padding: 90px 0 60px; text-align: center; }
+  .hero .kicker {
+    display: inline-block; font-size: 13px; letter-spacing: 2px; color: var(--blue);
+    background: rgba(41,151,255,0.1); border: 1px solid rgba(41,151,255,0.25);
+    padding: 6px 16px; border-radius: 999px; margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-size: clamp(34px, 5vw, 58px); font-weight: 700; letter-spacing: -1px; line-height: 1.15;
+    background: linear-gradient(120deg, #fff 20%, #7cc0ff 55%, #bf5af2 90%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero .sub { color: var(--text2); font-size: 17px; max-width: 720px; margin: 20px auto 0; }
+  .hero .score-row { display: flex; justify-content: center; gap: 24px; margin-top: 36px; flex-wrap: wrap; }
+  .score-card {
+    background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
+    padding: 18px 30px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    min-width: 140px;
+  }
+  .score-card .num { font-size: 40px; font-weight: 800; letter-spacing: -1px; }
+  .score-card .lbl { font-size: 13px; color: var(--text2); margin-top: 2px; }
+  .score-card.up .num { color: var(--green); }
+
+  /* ── Section ── */
+  section { padding: 40px 0; }
+  .sec-head { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+  .sec-icon {
+    width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(41,151,255,0.2), rgba(191,90,242,0.2));
+    border: 1px solid rgba(41,151,255,0.3);
+  }
+  .sec-head h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .sec-head .tag {
+    font-size: 11px; padding: 3px 10px; border-radius: 999px; font-weight: 600; letter-spacing: 0.5px;
+  }
+  .tag-p0 { background: rgba(255,69,58,0.15); color: var(--red); border: 1px solid rgba(255,69,58,0.3); }
+  .tag-p1 { background: rgba(255,159,10,0.15); color: var(--orange); border: 1px solid rgba(255,159,10,0.3); }
+  .tag-p2 { background: rgba(74,222,128,0.15); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+  .tag-p3 { background: rgba(191,90,242,0.15); color: var(--purple); border: 1px solid rgba(191,90,242,0.3); }
+
+  .gap-box {
+    background: linear-gradient(135deg, rgba(255,69,58,0.08), rgba(255,159,10,0.06));
+    border: 1px solid rgba(255,69,58,0.2); border-radius: var(--radius);
+    padding: 18px 22px; margin-bottom: 24px; font-size: 15px;
+  }
+  .gap-box b { color: var(--orange); }
+
+  /* ── Steps (SOP 时间线) ── */
+  .steps { display: flex; flex-direction: column; gap: 0; margin: 26px 0; }
+  .step { display: flex; gap: 18px; position: relative; padding-bottom: 26px; }
+  .step:not(:last-child)::before {
+    content: ''; position: absolute; left: 15px; top: 36px; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, rgba(41,151,255,0.5), rgba(41,151,255,0.05));
+  }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; z-index: 1;
+    display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700;
+    background: rgba(41,151,255,0.15); border: 1px solid rgba(41,151,255,0.4); color: var(--blue);
+  }
+  .step-body { flex: 1; }
+  .step-body h4 { font-size: 16px; margin-bottom: 6px; }
+  .step-body p, .step-body li { font-size: 14px; color: var(--text2); }
+  .step-body ul { padding-left: 18px; }
+  .step-body li { margin: 3px 0; }
+
+  /* ── Cards grid ── */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 22px 0; }
+  .card {
+    background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
+    padding: 20px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .card:hover { transform: translateY(-4px); border-color: rgba(41,151,255,0.35); }
+  .card h5 { font-size: 15px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .card p, .card li { font-size: 13.5px; color: var(--text2); }
+  .card ul { padding-left: 16px; }
+  .card li { margin: 3px 0; }
+  .card .big { font-size: 34px; font-weight: 800; letter-spacing: -1px; color: var(--blue); }
+  .card .big.green { color: var(--green); }
+  .card .big.orange { color: var(--orange); }
+  .card .big.purple { color: var(--purple); }
+
+  /* ── Table ── */
+  .table-wrap { margin: 22px 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--card-border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--card); backdrop-filter: blur(20px); }
+  th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  th { background: rgba(41,151,255,0.08); color: var(--blue); font-weight: 600; font-size: 12.5px; letter-spacing: 0.5px; }
+  tr:last-child td { border-bottom: none; }
+  td .ok { color: var(--green); } td .no { color: var(--red); } td .warn { color: var(--orange); }
+
+  /* ── 小白解读 ── */
+  .plain {
+    background: linear-gradient(135deg, rgba(74,222,128,0.06), rgba(41,151,255,0.06));
+    border: 1px solid rgba(74,222,128,0.18); border-radius: var(--radius);
+    padding: 16px 20px; font-size: 14px; color: var(--text2); margin-top: 22px;
+  }
+  .plain b { color: var(--green); }
+
+  /* ── Compare (Docker 双模式) ── */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 22px 0; }
+  @media (max-width: 800px) { .compare { grid-template-columns: 1fr; } }
+  .comp-box { border-radius: var(--radius); padding: 22px; border: 1px solid var(--card-border); background: var(--card); }
+  .comp-box .name { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+  .comp-box.hermes { border-color: rgba(41,151,255,0.3); }
+  .comp-box.docker { border-color: rgba(74,222,128,0.3); }
+  .comp-box ul { padding-left: 18px; }
+  .comp-box li { font-size: 13.5px; color: var(--text2); margin: 5px 0; }
+
+  /* ── 动画 ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .pulse { animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(41,151,255,0.35);} 50% { box-shadow: 0 0 0 8px rgba(41,151,255,0);} }
+
+  /* ── 架构图 ── */
+  .arch { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 26px 0; }
+  .arch-box {
+    background: var(--card); border: 1px solid var(--card-border); border-radius: 14px;
+    padding: 14px 18px; font-size: 13.5px; display: flex; align-items: center; gap: 8px;
+    backdrop-filter: blur(20px); transition: transform 0.2s;
+  }
+  .arch-box:hover { transform: scale(1.04); }
+  .arch-box .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .arch-arrow { font-size: 20px; color: var(--text2); align-self: center; }
+
+  footer { text-align: center; color: #5b6472; font-size: 13px; padding: 50px 0 40px; }
+
+  .nav-dock {
+    position: sticky; top: 14px; z-index: 50; display: flex; justify-content: center; margin: 20px auto 0;
+    max-width: 900px;
+  }
+  .dock {
+    background: rgba(10,13,20,0.75); border: 1px solid var(--card-border); border-radius: 999px;
+    backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); padding: 6px 8px;
+    display: flex; gap: 2px; flex-wrap: wrap; justify-content: center;
+  }
+  .dock a {
+    color: var(--text2); text-decoration: none; font-size: 12.5px; padding: 7px 14px; border-radius: 999px;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .dock a:hover { background: rgba(41,151,255,0.15); color: #fff; }
+</style>
+</head>
+<body>
+<div class="glow glow-1"></div>
+<div class="glow glow-2"></div>
+<div class="glow glow-3"></div>
+
+<nav class="nav-dock reveal visible">
+  <div class="dock">
+    <a href="#hero">总览</a>
+    <a href="#s1">① 灰度上线</a>
+    <a href="#s2">② 远程告警</a>
+    <a href="#s3">③ 第三方审计</a>
+    <a href="#s4">④ 业务血肉</a>
+    <a href="#s5">⑤ Docker</a>
+    <a href="#s6">⑥ 多租户</a>
+    <a href="#s7">⑦ 员工协作</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <!-- ══════ HERO ══════ -->
+  <div class="hero" id="hero">
+    <div class="kicker">ALTAI ROADMAP · 2026</div>
+    <h1>未来方向全景图<br>87 → 95+ 分路线</h1>
+    <p class="sub">从「自测通过」到「真实放量」，从「一单一做」到「流水线 + 订阅」。六个补分方向 + 一个员工协作方案，每一步都有小白能照做的 SOP。</p>
+    <div class="score-row">
+      <div class="score-card"><div class="num">87</div><div class="lbl">当前成熟度</div></div>
+      <div class="score-card up pulse"><div class="num">95+</div><div class="lbl">目标成熟度</div></div>
+      <div class="score-card"><div class="num">7</div><div class="lbl">待落地方向</div></div>
+      <div class="score-card"><div class="num">43</div><div class="lbl">验收项已全绿</div></div>
+    </div>
+  </div>
+
+  <!-- ══════ ① 灰度上线 ══════ -->
+  <section id="s1">
+    <div class="sec-head reveal">
+      <div class="sec-icon">🚀</div>
+      <h2>① 灰度上线：从「自测通过」到「真实放量」</h2>
+      <span class="tag tag-p0">P0 · 最优先</span>
+    </div>
+    <div class="gap-box reveal"><b>现状缺口：</b>只发给自己测试过，没在真实客户账号上跑过。这是 87 分最大的水分——系统「能跑」和「敢真发」是两回事。</div>
+
+    <div class="arch reveal">
+      <div class="arch-box"><span class="dot" style="background:#ff9f0a"></span>准备期 D1-2</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box"><span class="dot" style="background:#2997ff"></span>白名单灰度 D3-4</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box"><span class="dot" style="background:#4ade80"></span>小流量放量 D5-6</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box"><span class="dot" style="background:#bf5af2"></span>试运行报告 D7</div>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>注册测试小号（账号要求）</h4>
+          <ul>
+            <li><b>账号来源：</b>客户本人或员工手机号注册，<b style="color:var(--orange)">绝不用买来的号</b>（风控高、易封）</li>
+            <li><b>手机号：</b>一个平台一个号，实名绑定，能收验证码</li>
+            <li><b>注册地点/网络：</b>用目标国网络（俄区）注册 VK，避免「新号 + 异国 IP」组合</li>
+            <li><b>新号冷静期：</b>注册后先养 2-3 天（浏览、加 3-5 个好友、发 1-2 条动态），不要当天就发私信</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>小号名字 / 头像 / 资料倾向（方便客户有好感）</h4>
+          <ul>
+            <li><b>名字：</b>像真人，用常见俄语名 + 行业词（如 <code>Алексей Логистика</code>），<b style="color:var(--orange)">不要「物流公司」「货运代理」这种广告味名字</b></li>
+            <li><b>头像：</b>真人感照片（可授权使用的图），不要 logo、不要风景图</li>
+            <li><b>简介：</b>一句话业务向，像个人在做（「помогаю с доставкой из Китая» 帮中国发货），不像公司客服</li>
+            <li><b>性别/年龄：</b>与业务匹配，30-45 岁商务感最佳</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>配置灰度参数（staged_go_live.py 执行器）</h4>
+          <ul>
+            <li><b>白名单：</b>3-5 个测试小号（可以是你自己的小号，也可以客户提供的）</li>
+            <li><b>日上限：</b>20 条 / 天（首日可再降到 10 条）</li>
+            <li><b>频率：</b>5 条 / 小时（均匀分布，不要一口气发完）</li>
+            <li><b>时段：</b>目标时区 10:00-19:00（客户在线时）</li>
+            <li><b>熔断：</b>遇到平台风控响应码（429/403/验证码）→ <b style="color:var(--red)">立即全停</b>，人工看原因再恢复</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>执行灰度（48 小时）</h4>
+          <ul>
+            <li><b>D3-D4：</b>只发白名单小号，目标 <b>20-40 条/号</b>，观察送达率、回复率、风控触发</li>
+            <li><b>D5-D6：</b>逐步放开到真实线索（先从评分 high 的 450 条里选 50 条），日上限提到 50 条</li>
+            <li><b>全程：</b>发送闸门（send_guard）保持 authorize 才发，绝不裸发</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>出试运行报告（D7）</h4>
+          <ul>
+            <li><b>指标：</b>送达率 ≥ 90%？回复率 ≥ 3%？风控 0 次？</li>
+            <li><b>记录：</b>发了多少、回复多少、哪些话术效果好、哪些平台有问题</li>
+            <li><b>决策：</b>达标 → 正式放量；不达标 → 定位问题（话术？时段？账号？）再调</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid reveal">
+      <div class="card">
+        <h5>📊 核心指标标准（必须同时满足）</h5>
+        <div class="big">90%</div><p>送达率（发出后成功显示「已读/已送达」的比例）</p>
+        <div class="big green" style="margin-top:10px">≥3%</div><p>回复率（收到回复的私信 / 总发送数）</p>
+        <div class="big orange" style="margin-top:10px">0</div><p>风控触发次数（验证码/封禁/限流）</p>
+      </div>
+      <div class="card">
+        <h5>🚦 熔断规则（出问题立即全停）</h5>
+        <ul>
+          <li><b>429</b>（限流）→ 停 2 小时</li>
+          <li><b>403</b>（风控）→ 停 24 小时 + 人工检查</li>
+          <li><b>验证码弹窗</b> → 立即全停 + 人工处理</li>
+          <li><b>连续 3 条失败</b> → 熔断自动触发</li>
+          <li>恢复前必须人工确认原因</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h5>⏱ 灰度节奏表</h5>
+        <ul>
+          <li><b>D1-2：</b>注册小号 + 养号 + 配置参数</li>
+          <li><b>D3-4：</b>白名单 3-5 号，日 20 条</li>
+          <li><b>D5-6：</b>放开真实线索，日 50 条</li>
+          <li><b>D7：</b>试运行报告 + 放量决策</li>
+          <li>全程 send_guard 守护，绝不裸发</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="plain reveal"><b>小白解读：</b>就像新店开业先请亲戚朋友来试吃（白名单小号），好吃再对外开放（真实放量）。前 7 天是「试营业」，随时可以关门调整，不会砸招牌。</div>
+  </section>
+
+  <!-- ══════ ② 远程告警 ══════ -->
+  <section id="s2">
+    <div class="sec-head reveal">
+      <div class="sec-icon">🛡️</div>
+      <h2>② 远程告警：系统出问题主动找你</h2>
+      <span class="tag tag-p0">P0 · 最优先</span>
+    </div>
+    <div class="gap-box reveal"><b>现状缺口：</b>客户机系统挂了没人知道，要等客户自己发现——在企业级交付里不可接受。就像装了监控但没人看屏幕。</div>
+
+    <div class="arch reveal">
+      <div class="arch-box"><span class="dot" style="background:#2997ff"></span>每 30 分钟心跳</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box"><span class="dot" style="background:#ff9f0a"></span>异常检测</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box"><span class="dot" style="background:#4ade80"></span>自动修复</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box"><span class="dot" style="background:#ff453a"></span>告警推送</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box"><span class="dot" style="background:#bf5af2"></span>留痕复盘</div>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <tr><th>巡检项</th><th>检测方式</th><th>正常标准</th><th>异常 → 动作</th></tr>
+        <tr><td>进程存活</td><td>检查关键进程（gateway/serve/插件）</td><td>全部运行</td><td class="warn">自动重启 → 重启失败才告警</td></tr>
+        <tr><td>数据库锁</td><td>读 DB 是否响应</td><td>&lt; 2s 响应</td><td class="warn">记录 + 告警</td></tr>
+        <tr><td>API 连续失败</td><td>统计最近 30 分钟失败率</td><td>失败 &lt; 5%</td><td class="warn">连续 10 次失败 → 告警</td></tr>
+        <tr><td>磁盘空间</td><td>df 检查</td><td>剩余 &gt; 10GB</td><td class="warn">&lt; 10GB → 清理缓存 + 告警</td></tr>
+        <tr><td>发送闸门</td><td>send_guard 状态</td><td>authorize 才发</td><td class="ok">异常 → 立即熔断 + 告警</td></tr>
+        <tr><td>平台登录态</td><td>cookie 有效性</td><td>有效</td><td class="warn">失效 → 告警「需重新登录」</td></tr>
+        <tr><td>网络连通</td><td>ping 关键平台</td><td>可达</td><td class="warn">不可达 → 提示检查代理</td></tr>
+      </table>
+    </div>
+
+    <div class="grid reveal">
+      <div class="card">
+        <h5>🔔 告警推送渠道（默认推给运维方，不打扰客户）</h5>
+        <ul>
+          <li><b>优先级 1：</b>运维方微信（你）——系统级问题</li>
+          <li><b>优先级 2：</b>钉钉群/企业微信——团队级</li>
+          <li><b>优先级 3：</b>客户（仅「需重新登录」这类客户能解决的事）</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h5>🤖 自愈能力（能自己修就不麻烦人）</h5>
+        <ul>
+          <li><b>进程挂：</b>自动拉起（已有 guardian 基础）</li>
+          <li><b>磁盘满：</b>自动清日志/缓存</li>
+          <li><b>DB 锁：</b>自动 kill 死锁进程</li>
+          <li><b>发送失败：</b>自动熔断，不重试硬发</li>
+          <li><b>规则配置：</b>自动回滚到上一版本</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h5>✅ 目标：做到「无痕修复」</h5>
+        <p>客户无感知 = 问题从发生到解决，客户都不知道出过事。<br><br>只有 <b style="color:var(--orange)">修不了 / 需要客户操作（如重新扫码登录）</b> 的事才告警到客户。</p>
+      </div>
+    </div>
+
+    <div class="plain reveal"><b>小白解读：</b>就像给系统装了个「健康手环」，每 30 分钟测一次体温（进程）、血压（数据库）、血糖（磁盘）。小毛病手环自己调理（自动重启），大毛病才打电话给你（告警）。客户全程不用管。</div>
+  </section>
+
+  <!-- ══════ ③ 第三方审计 ══════ -->
+  <section id="s3">
+    <div class="sec-head reveal">
+      <div class="sec-icon">📋</div>
+      <h2>③ 第三方审计：让验收「可信」</h2>
+      <span class="tag tag-p1">P1 · 重要</span>
+    </div>
+    <div class="gap-box reveal"><b>现状缺口：</b>43/43 是自己跑的，客户没有独立验证视角——「自己批改自己考卷」，信任感打折扣。</div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>写《第三方审计指南》（一份文档）</h4>
+          <ul>
+            <li>验收项目清单（43 项全部列出，每项：测什么 / 怎么测 / 通过标准）</li>
+            <li>安全红线单独成节（send_mode 默认 disabled、发送前四重自检）</li>
+            <li>数据隐私说明（哪些数据在客户机、哪些上传、哪些不碰）</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>准备 45 分钟验收演示脚本</h4>
+          <ul>
+            <li><b>0-10 分钟：</b>系统总览（架构图 + 看板 7/7 全绿）</li>
+            <li><b>10-25 分钟：</b>安全演示——展示「发送默认 disabled」「未授权会拒绝」「四重自检拦截」</li>
+            <li><b>25-35 分钟：</b>功能演示——线索采集 → AI 评分 → 画像 → 话术生成</li>
+            <li><b>35-45 分钟：</b>容错演示——故意 kill 进程看自愈、断网看熔断</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>邀请客户方 IT 或第三方机构现场观摩</h4>
+          <ul>
+            <li>线上会议共享屏幕即可，不需要客户到现场</li>
+            <li>客户方 IT 人员全程可以提问、要求重测某项</li>
+            <li>审计不是「表演」，是「可复现」——同一操作重跑结果一致</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>签客户方确认书 + 留痕</h4>
+          <ul>
+            <li>确认书模板：验收日期、验收人、验收项、结论（通过/有保留）</li>
+            <li>全程录屏存档（客户方也留一份）</li>
+            <li>有保留意见 → 记录整改项 + 整改后复验记录</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid reveal">
+      <div class="card">
+        <h5>📦 审计交付物清单</h5>
+        <ul>
+          <li>《第三方审计指南》PDF</li>
+          <li>45 分钟演示脚本（分节时间表）</li>
+          <li>客户方确认书（签字版）</li>
+          <li>全程录屏存档</li>
+          <li>整改项跟踪表（如有）</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h5>🎯 为什么能提升信任</h5>
+        <ul>
+          <li>从「自己说好」→「第三方看着测」</li>
+          <li>安全红线现场验证，客户亲眼看到「发不出去」</li>
+          <li>留痕可追溯，后续出问题有据可查</li>
+          <li>这是企业级采购的「信任门票」</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="plain reveal"><b>小白解读：</b>就像买二手房，卖家说自己房子没问题不算数，得请第三方验房师来测（审计）、出报告（确认书）、全程录像（留痕）。客户才敢签字付款。</div>
+  </section>
+
+  <!-- ══════ ④ 业务血肉 ══════ -->
+  <section id="s4">
+    <div class="sec-head reveal">
+      <div class="sec-icon">🧠</div>
+      <h2>④ 业务血肉：真实素材灌装 + 迭代闭环</h2>
+      <span class="tag tag-p1">P1 · 重要</span>
+    </div>
+    <div class="gap-box reveal"><b>现状缺口：</b>话术/FAQ/知识库很多是模板，真实数据没填满——系统「会说话」但「还没学会业务」。像新员工背了话术模板，但没看过公司真实资料。</div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <tr><th>素材类型</th><th>现状</th><th>问题</th><th>解决方案</th></tr>
+        <tr><td>报价单</td><td>有模板，费率待确认</td><td class="warn">5$/KG vs 3$/KG 冲突未确认</td><td>找客户确认最终费率 → 全量灌装到话术引擎</td></tr>
+        <tr><td>线路时效</td><td>8 条线路已录</td><td class="ok">基本可用</td><td>补全每条线路的时效范围 + 适用货型</td></tr>
+        <tr><td>保险</td><td>有保险项</td><td class="warn">3-5$/KG 范围太宽</td><td>确认分档（货值/渠道）→ 精确话术</td></tr>
+        <tr><td>俄语话术</td><td>48 条真实话术</td><td class="ok">质量高</td><td>按场景打标签（破冰/跟进/报价/异议处理）</td></tr>
+        <tr><td>客户画像</td><td>34 个画像</td><td class="ok">已就绪</td><td>按行业/规模分层，绑定到对应话术</td></tr>
+        <tr><td>线索库</td><td>163 条线索</td><td class="ok">已沉淀</td><td>按评分/意向分级，标记跟进状态</td></tr>
+        <tr><td>FAQ/知识库</td><td>模板为主</td><td class="no">真实问答没填满</td><td>从 VK 真实对话提取问答 → 入库</td></tr>
+        <tr><td>成交案例</td><td>无</td><td class="no">没有真实成交记录</td><td>灰度上线后收集首批成交 → 做案例库</td></tr>
+      </table>
+    </div>
+
+    <div class="grid reveal">
+      <div class="card">
+        <h5>🔄 迭代闭环（每周一次）</h5>
+        <div style="font-size:14px; line-height:2">
+          <span style="color:var(--red)">失败样本</span>（没回复/被拒绝）
+          → <span style="color:var(--orange)">分析原因</span>（话术？时机？人不对？）
+          → <span style="color:var(--blue)">重写话术</span>
+          → <span style="color:var(--green)">下周测试</span>
+          → <span style="color:var(--purple)">对比数据</span>
+        </div>
+        <p style="margin-top:10px">每次迭代都有数据对比：回复率提升几个点，哪条话术最有效。</p>
+      </div>
+      <div class="card">
+        <h5>📊 迭代指标看板</h5>
+        <ul>
+          <li>周发送量 / 回复量 / 回复率</li>
+          <li>各话术模板的回复率排名</li>
+          <li>各平台表现对比</li>
+          <li>跟进转化率（聊到报价的占比）</li>
+          <li>成交数（最终北极星指标）</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h5>🗂 素材灌装执行清单</h5>
+        <ul>
+          <li>① 客户确认费率冲突（今天就要问）</li>
+          <li>② 全量灌装：报价/时效/保险/话术/画像</li>
+          <li>③ 从 VK 10 个真实对话提取 FAQ</li>
+          <li>④ 生成话术周报（自动每周日 20:00）</li>
+          <li>⑤ 灰度后收集首批成交案例</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="plain reveal"><b>小白解读：</b>系统像刚入职的新员工，先背了通用话术（模板），现在要「读公司真实资料」（报价/时效/聊天记录），每周开一次复盘会（话术周报），把「客户不爱听的话」改掉，越用越聪明。</div>
+  </section>
+
+  <!-- ══════ ⑤ Docker 容器化 ══════ -->
+  <section id="s5">
+    <div class="sec-head reveal">
+      <div class="sec-icon">🐳</div>
+      <h2>⑤ 解绑 Hermes：Docker 容器化（你最关心的问题）</h2>
+      <span class="tag tag-p2">P2 · 加分</span>
+    </div>
+
+    <div class="gap-box reveal"><b>现状缺口：</b>技能/插件/调度绑在 Hermes 上，客户 IT 要求 Docker 或自托管时无法交付。</div>
+
+    <div class="grid reveal">
+      <div class="card" style="grid-column: span 2">
+        <h5>❓ 你说的「依赖审计 + 纯 Python 调度器 + Docker 镜像」是什么意思？</h5>
+        <p style="margin-top:8px; font-size:14.5px; line-height:1.8">
+          <b>打个比方：</b>现在你的系统像一台「一体机」——屏幕、主机、键盘焊死在一起（都绑在 Hermes 里）。Docker 化 = 把「主机」（核心获客逻辑）单独拆出来，装进一个标准集装箱（Docker 镜像），<b style="color:var(--green)">这个集装箱放在任何电脑上都能跑，不需要装 Hermes</b>。
+        </p>
+        <ul style="margin-top:10px">
+          <li><b>依赖审计：</b>盘清楚核心获客逻辑到底用了哪些库（不依赖 Hermes 的那些），列出清单</li>
+          <li><b>纯 Python 调度器：</b>把「定时采集/发送/报告」从 Hermes 的 cron 换成独立 Python 调度（APScheduler 之类），不依赖 Hermes 进程</li>
+          <li><b>Docker 镜像：</b>把核心逻辑 + 依赖 + 调度器打包成一个镜像，`docker run` 就能启动，43 项验收在容器内复验</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="compare reveal">
+      <div class="comp-box hermes">
+        <div class="name">🟦 模式 A：Hermes 版（当前）</div>
+        <ul>
+          <li>AI 对话 + 获客 + 看板全家桶</li>
+          <li>适合你现在的交付（客户不懂技术）</li>
+          <li>开箱即用，人机交互体验好</li>
+          <li>缺点：客户 IT 要求 Docker 时交付不了</li>
+        </ul>
+      </div>
+      <div class="comp-box docker">
+        <div class="name">🟩 模式 B：Docker 版（新增）</div>
+        <ul>
+          <li>核心获客逻辑独立跑（采集/评分/话术/发送/报告）</li>
+          <li>适合客户有 IT 团队、要求自托管的场景</li>
+          <li>更稳定（不依赖桌面应用，7×24 跑）</li>
+          <li>缺点：没有 AI 聊天界面，运维门槛高一点</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid reveal">
+      <div class="card">
+        <h5>🤔 那为什么还要用 Hermes？</h5>
+        <p>因为 <b style="color:var(--blue)">Hermes 是「驾驶舱」，Docker 是「发动机」</b>，两者不是替代关系：</p>
+        <ul>
+          <li><b>Hermes 的价值：</b>AI 对话、智能决策、人机协作、快速迭代——这是你的核心优势</li>
+          <li><b>Docker 的价值：</b>稳定执行、客户 IT 认可、可规模化部署</li>
+          <li><b>最佳实践：</b>同一套核心逻辑，两种包装。客户要简单 → 给 Hermes 版；客户要 Docker → 给容器版。报价还能加码</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h5>📈 Docker 版会更稳定吗？</h5>
+        <ul>
+          <li><b>更稳定：</b>不依赖图形界面/桌面应用，纯服务 7×24 跑</li>
+          <li><b>更标准：</b>客户 IT 团队熟悉 Docker，运维交接更容易</li>
+          <li><b>但不是「更高级」：</b>损失了 AI 对话能力，纯执行流水线</li>
+          <li><b>结论：</b>Docker 是「交付选项」不是「升级」，按客户需求二选一或都要</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>依赖审计（半天）</h4>
+          <ul>
+            <li>列出获客核心模块的 Python 依赖（requests/apscheduler/pandas 等）</li>
+            <li>区分：哪些依赖 Hermes（AI 对话） vs 哪些独立（采集/发送）</li>
+            <li>产出：<b>依赖清单 + 独立可运行性评估</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>纯 Python 调度器（1-2 天）</h4>
+          <ul>
+            <li>用 APScheduler 重写定时任务（采集/评分/发送/报告）</li>
+            <li>发送闸门（send_guard）逻辑原样保留——安全红线不因换壳妥协</li>
+            <li>产出：独立可跑的调度服务</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Docker 镜像（1 天）</h4>
+          <ul>
+            <li>写 Dockerfile：Python 3.11 + 依赖 + 调度器 + 配置文件</li>
+            <li>数据卷挂载：客户数据在宿主机（可备份、可迁移）</li>
+            <li>产出：可 `docker compose up` 一键启动</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>容器内复验 43 项（1 天）</h4>
+          <ul>
+            <li>在容器内重跑验收（安全红线优先）</li>
+            <li>双运行模式文档化：Hermes 版 / Docker 版各一份部署手册</li>
+            <li>产出：交付选项 +1，报价加码</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="plain reveal"><b>小白解读：</b>现在系统像「苹果一体机」——好用但客户想拆开换零件（自托管）不行。Docker 化 = 做出一个「标准主机箱」，任何懂电脑的人都能自己装。但一体机还是卖给普通客户，主机箱卖给有 IT 的客户——<b style="color:var(--green)">两种都卖，生意更大</b>。</div>
+  </section>
+
+  <!-- ══════ ⑥ 多租户舰队 ══════ -->
+  <section id="s6">
+    <div class="sec-head reveal">
+      <div class="sec-icon">🛰️</div>
+      <h2>⑥ 多租户舰队：1 台电脑管 N 个客户</h2>
+      <span class="tag tag-p3">P3 · 远期</span>
+    </div>
+    <div class="gap-box reveal"><b>现状缺口：</b>目前一台电脑服务一个客户，客户多了电脑也多——人力成本线性增长，生意做不大。</div>
+
+    <div class="arch reveal">
+      <div class="arch-box"><span class="dot" style="background:#2997ff"></span>中央控制台（你的电脑）</div>
+      <div class="arch-arrow">⇄</div>
+      <div class="arch-box"><span class="dot" style="background:#4ade80"></span>客户 A 隔离区</div>
+      <div class="arch-arrow"></div>
+      <div class="arch-box"><span class="dot" style="background:#4ade80"></span>客户 B 隔离区</div>
+      <div class="arch-arrow"></div>
+      <div class="arch-box"><span class="dot" style="background:#4ade80"></span>客户 C 隔离区</div>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>数据隔离（第一原则）</h4>
+          <ul>
+            <li>每个客户一个<b>独立数据目录</b>：~/.hermes/data/clients/&lt;客户A&gt;/</li>
+            <li>独立登录态（cookie 互不干扰）、独立话术引擎、独立看板端口</li>
+            <li>客户 A 的 AI 永远看不到客户 B 的数据（目录隔离 + 权限隔离）</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>中央控制台（你的操作台）</h4>
+          <ul>
+            <li>一个网页/面板：看到所有客户的状态（绿/黄/红）</li>
+            <li>批量操作：统一发更新、统一升级话术引擎</li>
+            <li>告警汇聚：所有客户的问题集中到你的微信</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>复用已有基础</h4>
+          <ul>
+            <li>Tailscale 1 对 N 组网已经就绪（lon5blon5b@）</li>
+            <li>安装器 + 验收体系可以模板化（边际成本递减）</li>
+            <li>先跑 2-3 个客户验证单客户模式，再横向扩展</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid reveal">
+      <div class="card">
+        <h5>💰 为什么是关键一步</h5>
+        <ul>
+          <li>交付生意（一单一做）→ 订阅生意（持续收费）</li>
+          <li>1 台电脑管 N 客户 = 人力成本不涨，收入涨</li>
+          <li>模板化交付：下一个客户 3 天装完，不是 7 天</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h5>🗺 落地路径</h5>
+        <ul>
+          <li><b>现在：</b>把当前交付流程固化成「安装器 + 验收 + 文档」模板</li>
+          <li><b>短期：</b>第 2、3 个客户按模板交付，验证可复用</li>
+          <li><b>中期：</b>做中央控制台 + 多客户隔离</li>
+          <li><b>远期：</b>订阅制（年费 1.5-3 万 / 客户）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="plain reveal"><b>小白解读：</b>现在一个客户一台电脑 = 开一家店雇一个店长。多租户 = 一个中央仓库 + 每个客户一个「独立货架」（隔离区），一个仓管（你）管所有货架。客户多了不用雇更多店长。</div>
+  </section>
+
+  <!-- ══════ ⑦ 员工协作 ══════ -->
+  <section id="s7">
+    <div class="sec-head reveal">
+      <div class="sec-icon">👥</div>
+      <h2>⑦ 员工协作：让 10+ 员工一起用，但带不走数据</h2>
+      <span class="tag tag-p3">P3 · 你要的新方案</span>
+    </div>
+    <div class="gap-box reveal"><b>你的需求：</b>未来 10 多个员工都能用这个项目干活，但他们只是「使用 + 转人工」，<b style="color:var(--red)">员工流失后带不走任何数据</b>，同时降本增效。</div>
+
+    <div class="grid reveal">
+      <div class="card" style="grid-column: span 2">
+        <h5>🎯 核心思路：数据不落地，员工只碰「操作界面」</h5>
+        <p style="margin-top:8px; font-size:14.5px; line-height:1.8">
+          员工的电脑上<b style="color:var(--orange)">不存任何客户数据</b>——所有数据都在你的服务器/控制台。<br>
+          员工通过<b style="color:var(--blue)">网页工作台</b>操作：看线索、选话术、点发送、转人工。<br>
+          就像银行柜员——柜员能操作你的账户，但钱不放在柜员口袋里。
+        </p>
+      </div>
+    </div>
+
+    <div class="arch reveal">
+      <div class="arch-box"><span class="dot" style="background:#2997ff"></span>员工工作台（网页）</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box"><span class="dot" style="background:#4ade80"></span>中央服务器（数据全在这）</div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box"><span class="dot" style="background:#bf5af2"></span>平台账号（VK/WA/TG）</div>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>设计「员工工作台」（网页版，不装软件）</h4>
+          <ul>
+            <li>员工打开网页 → 登录（账号密码 + 手机验证码）</li>
+            <li>看到：待跟进线索、话术建议、一键发送、转人工按钮</li>
+            <li>看不到：客户手机号明文、登录 cookie、API key、话术引擎底层</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>权限分层（谁能看到什么）</h4>
+          <ul>
+            <li><b>员工（普通）：</b>只能看分配给他的线索 + 操作发送/转人工</li>
+            <li><b>组长：</b>多看一个组的数据 + 统计报表</li>
+            <li><b>老板（你）：</b>全部数据 + 配置 + 导出</li>
+            <li>数据导出权限 <b style="color:var(--red)">只有你有</b>，员工永远没有</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>防带走的 5 道锁</h4>
+          <ul>
+            <li><b>锁 1 数据不落地：</b>员工浏览器只拿渲染后的界面，拿不到原始数据</li>
+            <li><b>锁 2 禁止复制：</b>客户手机号/微信号打码显示，复制即脱敏</li>
+            <li><b>锁 3 操作留痕：</b>每个员工的操作都有日志（谁、何时、干了啥）</li>
+            <li><b>锁 4 登录态集中：</b>平台账号在服务器，员工手机上没有 cookie</li>
+            <li><b>锁 5 离职即失权：</b>账号一停，所有权限立即消失</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>降本增效怎么体现</h4>
+          <ul>
+            <li>1 个员工能同时盯 3-5 个平台的线索（系统自动筛好）</li>
+            <li>AI 已写完 80% 话术，员工只做「判断 + 发送」</li>
+            <li>不用雇会俄语的——AI 翻译 + 话术库</li>
+            <li>员工培训从 1 个月 → 1 天（界面极简）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <tr><th>角色</th><th>能看到</th><th>能操作</th><th>不能</th></tr>
+        <tr><td>员工</td><td>分配给他的线索（脱敏）</td><td>发送、转人工、备注</td><td class="no">导出、看明文手机号、改配置</td></tr>
+        <tr><td>组长</td><td>本组线索 + 统计</td><td>分配任务、审核话术</td><td class="no">导出、看 API key</td></tr>
+        <tr><td>老板（你）</td><td class="ok">全部</td><td class="ok">一切</td><td class="ok">—</td></tr>
+      </table>
+    </div>
+
+    <div class="plain reveal"><b>小白解读：</b>员工就像餐厅服务员——能点菜（操作线索）、能上菜（发消息）、能叫厨师（转人工），但<b style="color:var(--green)">不知道菜谱配方（话术引擎）、不知道食材供应商（客户数据）</b>。服务员离职了，餐厅照样开。</div>
+  </section>
+
+  <!-- ══════ 落地优先级总表 ══════ -->
+  <section id="s8" style="padding-top:20px">
+    <div class="sec-head reveal">
+      <div class="sec-icon">🗓️</div>
+      <h2>落地优先级总表：先做什么，后做什么</h2>
+    </div>
+    <div class="table-wrap reveal">
+      <table>
+        <tr><th>优先级</th><th>方向</th><th>耗时</th><th>前置条件</th><th>产出</th></tr>
+        <tr><td><b class="no">P0</b></td><td>① 灰度上线</td><td>7 天</td><td>测试小号 + 客户同意</td><td>试运行报告 + 放量决策</td></tr>
+        <tr><td><b class="no">P0</b></td><td>② 远程告警</td><td>1-2 天</td><td>确认告警推送渠道</td><td>ops_alert.py 上线</td></tr>
+        <tr><td><b class="warn">P1</b></td><td>③ 第三方审计</td><td>2-3 天</td><td>客户安排观摩</td><td>审计指南 + 确认书</td></tr>
+        <tr><td><b class="warn">P1</b></td><td>④ 业务血肉</td><td>3-5 天</td><td>客户确认费率</td><td>话术引擎灌满 + 周报</td></tr>
+        <tr><td><b class="ok">P2</b></td><td>⑤ Docker 容器化</td><td>3-4 天</td><td>有客户 IT 明确要求</td><td>Docker 镜像 + 双模式文档</td></tr>
+        <tr><td><b class="ok">P3</b></td><td>⑥ 多租户舰队</td><td>2-4 周</td><td>2-3 个客户验证后</td><td>中央控制台</td></tr>
+        <tr><td><b class="ok">P3</b></td><td>⑦ 员工协作</td><td>2-3 周</td><td>有员工要接入时</td><td>员工工作台 + 权限系统</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    阿尔泰智能体 · 未来方向全景图 · 2026-08-15<br>
+    从「自测通过」到「真实放量」，从「一单一做」到「流水线 + 订阅」
+  </footer>
+</div>
+
+<script>
+  // 滚动出现动画
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Dock 平滑滚动
+  document.querySelectorAll('.dock a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+</script>
+</body>
+</html>
