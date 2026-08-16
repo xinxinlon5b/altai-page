@@ -1,15 +1,15 @@
 {
   "project": "altai-docker · Docker 容器化",
-  "updated_at": "2026-08-15T23:59:00+08:00",
-  "overall": "进行中",
+  "updated_at": "2026-08-16T00:45:00+08:00",
+  "overall": "done",
   "steps": [
     {"id": "d0", "name": "D0 骨架设计", "desc": "目录结构 + 依赖清单 + 模块边界", "status": "done", "note": "30 模块导入成功"},
-    {"id": "d1", "name": "D1 看板网页", "desc": "红绿灯进度看板 + progress.json 部署", "status": "running", "note": "正在构建看板"},
-    {"id": "d2", "name": "D2 Dockerfile", "desc": "基础镜像 + 依赖安装", "status": "todo", "note": ""},
-    {"id": "d3", "name": "D3 入口+自检", "desc": "run.py + self_check.py 全绿", "status": "todo", "note": ""},
-    {"id": "d4", "name": "D4 数据卷", "desc": "config/data 挂载互通", "status": "todo", "note": ""},
-    {"id": "d5", "name": "D5 compose", "desc": "docker-compose 一键启动 + healthcheck", "status": "todo", "note": ""},
-    {"id": "d6", "name": "D6 容器复验", "desc": "容器内跑安全测试子集", "status": "todo", "note": ""},
-    {"id": "d7", "name": "D7 双模式文档", "desc": "Hermes 版 / Docker 版部署手册", "status": "todo", "note": ""}
+    {"id": "d1", "name": "D1 看板网页", "desc": "红绿灯进度看板 + progress.json 部署", "status": "done", "note": "已部署 GitHub Pages"},
+    {"id": "d2", "name": "D2 Dockerfile", "desc": "基础镜像 + 依赖安装", "status": "done", "note": "docker build 成功 (317MB)"},
+    {"id": "d3", "name": "D3 入口+自检", "desc": "run.py + self_check.py 全绿", "status": "done", "note": "容器内自检全绿 (8模块+安全闸门)"},
+    {"id": "d4", "name": "D4 数据卷", "desc": "config/data 挂载互通", "status": "done", "note": "容器写→宿主机读 互通验证通过"},
+    {"id": "d5", "name": "D5 compose", "desc": "docker-compose 一键启动 + healthcheck", "status": "done", "note": "容器 healthy ✅"},
+    {"id": "d6", "name": "D6 容器复验", "desc": "容器内跑安全测试子集", "status": "done", "note": "send_guard fail-closed 验证通过"},
+    {"id": "d7", "name": "D7 双模式文档", "desc": "Hermes 版 / Docker 版部署手册", "status": "done", "note": "DEPLOY.md 完成, 双模式图清晰"}
   ]
 }
