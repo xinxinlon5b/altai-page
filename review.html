@@ -72,6 +72,23 @@ h2{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-0.01em;margin-
 .tag.good{background:rgba(48,209,88,.12);color:#4ade80;border:1px solid rgba(48,209,88,.3)}
 .tag.gap{background:rgba(255,159,10,.12);color:#ffb340;border:1px solid rgba(255,159,10,.3)}
 
+/* ===== 容器化突破 ===== */
+.breakthrough{background:linear-gradient(160deg,rgba(191,90,242,.10),rgba(41,151,255,.08));border:1px solid rgba(191,90,242,.28);border-radius:var(--r-lg);padding:30px;margin-bottom:18px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.bt-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.bt-badge{font-size:11px;font-weight:700;background:rgba(191,90,242,.2);color:#d39aff;padding:4px 12px;border-radius:999px;border:1px solid rgba(191,90,242,.4)}
+.bt-title{font-size:20px;font-weight:800}
+.bt-quote{font-size:13.5px;color:#cfe3ff;background:rgba(41,151,255,.08);border-left:3px solid var(--purple);padding:12px 16px;border-radius:0 12px 12px 0;margin-bottom:14px}
+.bt-quote b{color:#d39aff}
+.bt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.bt-cell{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px;text-align:center}
+.bt-cell .bc-ico{font-size:22px;margin-bottom:4px}
+.bt-cell .bc-name{font-size:12px;font-weight:700;color:var(--txt);margin-bottom:2px}
+.bt-cell .bc-note{font-size:10.5px;color:var(--dim2)}
+.bt-why{font-size:13.5px;color:var(--dim);margin-bottom:12px}
+.bt-why b{color:var(--txt)}
+.bt-think{font-size:13px;color:var(--dim);background:rgba(48,209,88,.05);border-left:3px solid rgba(48,209,88,.5);padding:10px 14px;border-radius:0 10px 10px 0}
+.bt-think b{color:#4ade80}
+
 /* ===== 未来方向 ===== */
 .future-item{background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);padding:26px;margin-bottom:16px;transition:border-color .3s;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .future-item:hover{border-color:rgba(41,151,255,.35)}
@@ -129,6 +146,7 @@ footer{padding:30px 0;text-align:center;color:var(--dim2);font-size:12px;border-
   <div class="nav-links">
     <a href="#score">总评</a>
     <a href="#roles">三重视角</a>
+    <a href="#breakthrough">⚡ 容器突破</a>
     <a href="#future">未来方向</a>
     <a href="#priority">接项目清单</a>
     <a href="#final">总结</a>
@@ -152,15 +170,15 @@ footer{padding:30px 0;text-align:center;color:var(--dim2);font-size:12px;border-
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="kicker">总评 · THE SCORE</div>
-      <h2>成熟度评分：87 / 100</h2>
-      <p class="sec-desc">按 7 个维度打分（工程/验收/测试/文档/运维/安全/业务）。<b>工程侧全面优秀，业务侧是唯一短板</b>——这正是"交付级"与"生产级"的差距。</p>
+      <h2>成熟度评分：88 / 100</h2>
+      <p class="sec-desc">按 7 个维度打分（工程/验收/测试/文档/运维/安全/业务）。<b>工程侧全面优秀（容器化落地再 +1），业务侧是唯一短板</b>——这正是"交付级"与"生产级"的差距。</p>
     </div>
     <div class="score-grid">
       <div class="score-card reveal">
         <div class="score-big">
-          <div class="score-num">87</div>
+          <div class="score-num">88</div>
           <div><span class="score-grade">A- 企业级交付</span>
-          <div class="score-verdict">工程侧 88-97 分，业务侧 70 分 → 总分约 87。<br>一句话：<b>系统造得非常结实，但还没在真实业务里跑起来。</b></div></div>
+          <div class="score-verdict">工程侧 90-97 分，业务侧 70 分 → 总分约 88。<br>一句话：<b>系统造得非常结实，容器化后能独立跑，但还没在真实业务里跑起来。</b></div></div>
         </div>
       </div>
       <div class="score-card reveal">
@@ -187,10 +205,10 @@ footer{padding:30px 0;text-align:center;color:var(--dim2);font-size:12px;border-
           <li><span class="tag good">做得对</span><b>分层清晰</b>：获客层 / 数据层 / 规则层 / 触达层 / 监控层各司其职，7 天堆出来的系统没有变成一团乱麻</li>
           <li><span class="tag good">做得对</span><b>1 平台 2 业务线架构</b>：统一获客层 + 线索分流（物流 / 电池 / 都要），复用率 60%，不是每个客户从零造</li>
           <li><span class="tag good">做得对</span><b>异地组网架构</b>：Tailscale 1 对 N 舰队 + 回传授权登录，为"远程交付多客户"铺好了路</li>
-          <li><span class="tag gap">待补</span><b>绑定 Hermes 生态</b>：技能、插件、调度都绑在 Hermes 上——如果客户 IT 环境要求 Docker 或自托管，需要解绑</li>
+          <li><span class="tag good">已解决 ★</span><b>Docker 容器化解绑</b>：altai-core 独立于 Hermes 运行（7×24 自动跑，关掉 Hermes 照样工作）——之前"绑定 Hermes 生态"的待补已解决</li>
           <li><span class="tag gap">待补</span><b>单机单客户</b>：目前一台电脑服务一个客户，没有多租户隔离设计</li>
         </ul>
-        <div class="layman"><span class="tag-l">小白翻译</span>房子盖得结构很正：客厅、卧室、厨房分得清清楚楚，不是把所有东西堆在一个房间里。但"水管"用的是开发商统一配的，客户想换牌子得提前说。<b>下一套房子，要设计成能同时住好几个客户还不串门。</b></div>
+        <div class="layman"><span class="tag-l">小白翻译</span>房子盖得结构很正：客厅、卧室、厨房分得清清楚楚，不是把所有东西堆在一个房间里。最妙的是——<b>现在这套房子自带独立水电（Docker 容器），开发商（Hermes）关店了也能住</b>。剩下的路：设计成能同时住好几个客户还不串门（多租户）。</div>
       </div>
       <div class="role-card reveal">
         <div class="role-ico">🔧</div>
@@ -219,6 +237,37 @@ footer{padding:30px 0;text-align:center;color:var(--dim2);font-size:12px;border-
         </ul>
         <div class="layman"><span class="tag-l">小白翻译</span>客户愿意为"第二个项目"掏钱，说明第一个项目真的打动了他——就像餐厅客人吃完主动加菜。但目前系统里的"菜谱"还是半成品：<b>有些菜只有名字没有配方</b>，等真实客户点菜（真发消息）才知道好不好吃。</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 容器化重大突破 ===== -->
+<section id="breakthrough">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">重大突破 · THE BREAKTHROUGH</div>
+      <h2>⚡ 容器化：从"装 Hermes"到"一台发动机"</h2>
+      <p class="sec-desc">2026-08-16 下午，在置顶会话里完成 <b>altai-docker 容器化</b>（D0-D7 全绿）。这不是一次普通的技术迭代——它改变了整个交付模式。</p>
+    </div>
+
+    <div class="breakthrough reveal">
+      <div class="bt-head">
+        <span class="bt-badge">D0-D7 全部完成</span>
+        <span class="bt-title">🐳 altai-core：自动获客的发动机</span>
+      </div>
+      <div class="bt-quote"><b>核心观念突破：</b>"这是一台自动获客的发动机，跟 Hermes 是两回事。你把 Hermes 桌面应用完全退出，这台发动机照样在跑、照样获客。它自己就是一套独立系统。"</div>
+      <div class="bt-grid">
+        <div class="bt-cell"><div class="bc-ico">📐</div><div class="bc-name">D0 骨架设计</div><div class="bc-note">30 模块导入成功</div></div>
+        <div class="bt-cell"><div class="bc-ico">📊</div><div class="bc-name">D1 看板网页</div><div class="bc-note">红绿灯进度已部署</div></div>
+        <div class="bt-cell"><div class="bc-ico">🐳</div><div class="bc-name">D2 Dockerfile</div><div class="bc-note">docker build 317MB</div></div>
+        <div class="bt-cell"><div class="bc-ico">🩺</div><div class="bc-name">D3 入口+自检</div><div class="bc-note">8 模块+安全闸门全绿</div></div>
+        <div class="bt-cell"><div class="bc-ico">🔒</div><div class="bc-name">D4 数据卷</div><div class="bc-note">容器删了数据还在</div></div>
+        <div class="bt-cell"><div class="bc-ico">🚀</div><div class="bc-name">D5 compose</div><div class="bc-note">一条命令启动, healthy</div></div>
+        <div class="bt-cell"><div class="bc-ico">🧪</div><div class="bc-name">D6 容器复验</div><div class="bc-note">send_guard fail-closed 通过</div></div>
+        <div class="bt-cell"><div class="bc-ico">📖</div><div class="bc-name">D7 双模式文档</div><div class="bc-note">DEPLOY.md + 傻瓜手册</div></div>
+      </div>
+      <div class="bt-why"><b>为什么这是"观念突破"？</b>之前所有能力都绑在 Hermes 里——客户必须装 Hermes 桌面应用、登录、保持开着，系统才能工作。容器化之后：<b>① 独立运行</b>（7×24 自动跑，不依赖 Hermes 开关）；<b>② 一条命令交付</b>（docker compose up -d，任何电脑都一样）；<b>③ 数据隔离</b>（config/data 挂载卷，容器删了数据还在）；<b>④ 安全红线不丢</b>（容器里也 send_mode=disabled fail-closed）。</div>
+      <div class="bt-think"><b>带来的思考：</b>交付模式从"给客户装一套软件"变成"给客户一台发动机 + 一个网页入口（http://127.0.0.1:8890/）"。Hermes 变成"开发工具"，客户拿到的是"独立产品"——这离"企业级产品"又近了一大步，也为多租户舰队（一台电脑管 N 个客户）铺平了路。</div>
     </div>
   </div>
 </section>
@@ -256,10 +305,10 @@ footer{padding:30px 0;text-align:center;color:var(--dim2);font-size:12px;border-
       <div class="future-who">👤 我能立即干大部分 · 需客户确认费率冲突（5$/KG vs 3$/KG）</div>
     </div>
     <div class="future-item reveal">
-      <div class="future-head"><span class="future-prio prio-p2">P2 · 加分</span><span class="future-title">⑤ 解绑 Hermes：Docker 容器化</span></div>
-      <div class="future-gap"><b>现状缺口：</b>技能/插件/调度绑在 Hermes 上，客户 IT 要求 Docker 或自托管时无法交付。</div>
-      <div class="future-sol"><b>方案：</b>依赖审计 + 纯 Python 调度器 + Docker 镜像，容器内跑 43/43 复验。双运行模式（Hermes / Docker）文档化。</div>
-      <div class="future-who">👤 我能干 · 低优先级，等有客户明确要求再投入</div>
+      <div class="future-head"><span class="future-prio prio-p2" style="background:rgba(48,209,88,.15);color:#4ade80;border:1px solid rgba(48,209,88,.4)">✅ 已完成 ★ 8-16</span><span class="future-title">⑤ 解绑 Hermes：Docker 容器化</span></div>
+      <div class="future-gap"><b>现状：</b><span style="color:#4ade80">已完成！</span> altai-docker D0-D7 全绿：容器独立运行、一条命令交付、数据卷隔离、安全红线保留（详见上方"容器化重大突破"）。</div>
+      <div class="future-sol"><b>下一步：</b>把 altai-core 容器化后的获客引擎做成交付标准形态——新客户默认给 Docker 版（有 IT 的客户）或 Hermes 版（简单客户），双模式文档已经写好（DEPLOY.md + 傻瓜手册）。</div>
+      <div class="future-who">👤 已完成 · 下一步是让容器版在真实客户机上跑起来</div>
     </div>
     <div class="future-item reveal">
       <div class="future-head"><span class="future-prio prio-p3">P3 · 远期</span><span class="future-title">⑥ 多租户舰队：1 台电脑管 N 个客户</span></div>
@@ -376,24 +425,24 @@ footer{padding:30px 0;text-align:center;color:var(--dim2);font-size:12px;border-
   <div class="wrap">
     <div class="final-card reveal">
       <h3>一句话总结</h3>
-      <p><b>工程上你已经超过了 90% 的"智能体外包"</b>——他们连验收测试都没有，你有 43 项。真正的下一步不是"再堆功能"，而是：<b>把系统推到真实业务里跑（灰度上线），把验收变成第三方可信（审计），把交付做成可复制的流水线（模板化）</b>。这样 87 分 → 95 分，一个客户 → N 个客户。</p>
+      <p><b>工程上你已经超过了 90% 的"智能体外包"</b>——他们连验收测试都没有，你有 43 项；他们绑死在一个平台上，你已经容器化独立运行。真正的下一步不是"再堆功能"，而是：<b>把系统推到真实业务里跑（灰度上线），把验收变成第三方可信（审计），把容器版做成标准交付形态（流水线）</b>。这样 88 分 → 95 分，一个客户 → N 个客户。</p>
       <a class="cta" href="https://xinxinlon5b.github.io/altai-page/" target="_blank">← 回看 7 天演进全记录</a>
       <a class="cta" href="#priority" style="margin-left:12px;background:rgba(41,151,255,.15);border:1px solid rgba(41,151,255,.4);color:#7cc0ff">↑ 再看接单清单</a>
     </div>
   </div>
 </section>
 
-<footer>阿尔泰项目复盘 · 三重专业视角 + 接项目优先级清单 · 2026-08-15</footer>
+<footer>阿尔泰项目复盘 · 三重专业视角 + 容器化突破 + 接项目优先级清单 · 2026-08-16 v2</footer>
 
 <script>
 // 评分数据
 const SCORES=[
-  {k:'工程化', v:95, note:'安装器/两阶段协议/清单/哈希'},
-  {k:'验收体系', v:97, note:'full 43/43 + quick + oneclick'},
+  {k:'工程化', v:96, note:'安装器/两阶段协议/清单/哈希 + Docker 容器化'},
+  {k:'验收体系', v:97, note:'full 43/43 + quick + oneclick + 容器内复验'},
   {k:'测试质量', v:95, note:'根因修复全 probe 实证'},
-  {k:'文档移交', v:90, note:'客户文档/SOP/知识库/培训'},
-  {k:'运维', v:88, note:'备份恢复/升级回滚/演练'},
-  {k:'安全', v:95, note:'send_mode=disabled + 零误发'},
+  {k:'文档移交', v:90, note:'客户文档/SOP/知识库/培训/傻瓜手册'},
+  {k:'运维', v:90, note:'备份恢复/升级回滚/演练 + 容器健康检查/数据卷'},
+  {k:'安全', v:95, note:'send_mode=disabled + 零误发 + 容器 fail-closed'},
   {k:'业务成熟度', v:70, note:'模板待真实数据填充'},
 ];
 // 渲染评分条

@@ -93,6 +93,14 @@ h2{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-0.01em;margin-
 .flow-out{font-size:12px;color:var(--dim2)}
 .flow-out b{color:#7cc0ff}
 
+/* 容器化突破 */
+.bt-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.bt-card{background:linear-gradient(160deg,rgba(191,90,242,.10),rgba(41,151,255,.08));border:1px solid rgba(191,90,242,.28);border-radius:var(--r-lg);padding:22px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.bt-card h4{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--txt)}
+.bt-card h4 .bt-ico{font-size:20px;vertical-align:-3px;margin-right:6px}
+.bt-card p{font-size:12.5px;color:var(--dim);line-height:1.7}
+.bt-card p b{color:#d39aff}
+
 /* 总结 */
 .final{padding:60px 0 80px;text-align:center}
 .final-card{background:linear-gradient(160deg,rgba(41,151,255,.10),rgba(191,90,242,.08));border:1px solid rgba(41,151,255,.25);border-radius:var(--r-lg);padding:44px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--shadow)}
@@ -114,6 +122,7 @@ footer{padding:30px 0;text-align:center;color:var(--dim2);font-size:12px;border-
   <div class="nav-links">
     <a href="#systems">12 大体系</a>
     <a href="#flow">全流程作战图</a>
+    <a href="#docker">🐳 容器突破</a>
     <a href="#final">总结</a>
   </div>
 </div></nav>
@@ -122,11 +131,12 @@ footer{padding:30px 0;text-align:center;color:var(--dim2);font-size:12px;border-
   <div class="wrap">
     <div class="play-badge">🎯 干活总纲 · 不是给客户看的</div>
     <h1>企业级智能体交付<br>能力体系全景 + 全流程作战图</h1>
-    <p>一个<b>真正能交付的产品</b>，从骨架到细节，需要一整套能力体系支撑。<br>下面是 <b>12 大体系</b>（每个都有名字 + 小白解释）+ <b>13+1 步全流程</b>（每步注释为什么）。<br>照着这张图干活，就是企业级交付。</p>
+    <p>一个<b>真正能交付的产品</b>，从骨架到细节，需要一整套能力体系支撑。<br>下面是 <b>12 大体系</b>（每个都有名字 + 小白解释）+ <b>13+1 步全流程</b>（每步注释为什么）。<br>✨ <b>已更新（2026-08-16）：加入 Docker 容器化重大突破</b>——交付模式从"装 Hermes"升级为"一台发动机"。</p>
     <div class="tags">
       <span class="chip">🧠 Harness</span><span class="chip">🏗️ 架构</span><span class="chip">🔐 安全</span>
       <span class="chip">↩️ 回滚</span><span class="chip">📡 监控</span><span class="chip">🧪 验收</span>
       <span class="chip">📦 交付</span><span class="chip">🤝 陪跑</span>
+      <span class="chip" style="background:rgba(191,90,242,.2);border-color:rgba(191,90,242,.5);color:#d39aff">🐳 Docker 容器化 ★</span>
     </div>
   </div>
 </div>
@@ -156,19 +166,56 @@ footer{padding:30px 0;text-align:center;color:var(--dim2);font-size:12px;border-
   </div>
 </section>
 
+<!-- ===== 容器化突破 ===== -->
+<section id="docker">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">重大突破 · THE BREAKTHROUGH</div>
+      <h2>🐳 Docker 容器化：体系里"已实现"的那一块</h2>
+      <p class="sec-desc">2026-08-16 下午完成 altai-docker（D0-D7 全绿）。<b>它验证了 12 体系里"架构解耦"和"交付安装"不是纸面能力</b>——而是真正落地、可复制的能力。</p>
+    </div>
+    <div class="bt-wrap">
+      <div class="bt-card reveal">
+        <h4><span class="bt-ico">⚙️</span>独立运行</h4>
+        <p>altai-core 是"自动获客的发动机"——<b>退出 Hermes 桌面应用照样 7×24 跑</b>。客户拿到的是独立产品，不是"必须开着助手才能用的东西"。</p>
+      </div>
+      <div class="bt-card reveal">
+        <h4><span class="bt-ico">📦</span>一条命令交付</h4>
+        <p><b>docker compose up -d</b> 在任何电脑上结果一致。交付从"装软件+配置半天"变成"拷目录+一条命令"，任何有 Docker 的环境都能装。</p>
+      </div>
+      <div class="bt-card reveal">
+        <h4><span class="bt-ico">🔒</span>数据卷隔离</h4>
+        <p>config/data 挂载卷：<b>容器删了数据还在</b>。业务数据是客户的命根子，容器可以随时重建，数据永远安全——这是运维体系的一部分。</p>
+      </div>
+      <div class="bt-card reveal">
+        <h4><span class="bt-ico">🩺</span>安全红线保留</h4>
+        <p>容器内也 <b>send_mode=disabled fail-closed</b>（D6 复验通过）。安全不是"跑在 Hermes 里才有的特性"，而是产品内核——换任何环境都不丢。</p>
+      </div>
+      <div class="bt-card reveal">
+        <h4><span class="bt-ico">📖</span>双模式交付</h4>
+        <p>有 IT 的客户 → Docker 版（DEPLOY.md 三步）；简单客户 → Hermes 版（开箱引导）。<b>同一套核心，两种交付形态</b>——这是"交付流水线"的雏形。</p>
+      </div>
+      <div class="bt-card reveal">
+        <h4><span class="bt-ico">🚀</span>为舰队铺路</h4>
+        <p>容器化 = 标准化 = 可复制。一台电脑管 N 个客户（多租户舰队）之前是纸面规划，现在有了真正的技术底座——<b>每个客户一个容器，天然隔离</b>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== 总结 ===== -->
 <section id="final">
   <div class="wrap">
     <div class="final-card reveal">
       <h3>一张图记住：</h3>
-      <p><b>12 体系是"盖什么"（能力），13+1 步是"怎么盖"（流程）。</b><br>干活前先对着 12 体系打钩（缺什么补什么），干活时照着流程走（先定边界再谈钱、先要素材再开发、先安全再交付、先验收再陪跑）。<br>这就是从"能跑的 demo"到"客户敢付 6 万"的差距。</p>
+      <p><b>12 体系是"盖什么"（能力），13+1 步是"怎么盖"（流程）。</b><br>干活前先对着 12 体系打钩（缺什么补什么），干活时照着流程走（先定边界再谈钱、先要素材再开发、先安全再交付、先验收再陪跑）。<br>🐳 <b>2026-08-16：Docker 容器化已落地</b>——"架构解耦""交付安装""规模化舰队"三块从纸面变实锤，交付模式升级为"一台发动机"。<br>这就是从"能跑的 demo"到"客户敢付 6 万"的差距。</p>
       <a class="cta" href="https://xinxinlon5b.github.io/altai-page/review.html" target="_blank">← 回看项目复盘</a>
       <a class="cta" href="https://xinxinlon5b.github.io/altai-page/" target="_blank">← 回看 7 天演进</a>
     </div>
   </div>
 </section>
 
-<footer>企业级智能体交付 · 能力体系全景 + 全流程作战图 · 2026-08-16</footer>
+<footer>企业级智能体交付 · 能力体系全景 + 全流程作战图 + Docker 容器化突破 · 2026-08-16 v2</footer>
 
 <script>
 /* ================= 12 大体系 ================= */
@@ -202,7 +249,7 @@ const SYSTEMS=[
   {n:'1 平台多业务线',d:'统一获客层 + 线索分流（物流/电池/都要）。<b>复用率 60%，第二个客户成本大降</b>'},
   {n:'数据流设计',d:'线索 → 画像 → 评分 → 话术 → 触达 → 跟进，数据单向流动。<b>每步都有据可查</b>'},
   {n:'扩展性预留',d:'新平台 = 加一个适配器，不重写。<b>从 6 平台加到 8 平台是加法不是乘法</b>'},
-  {n:'解耦设计',d:'核心逻辑与平台/框架解耦（为 Docker 预留）。<b>不被单一生态绑架</b>'},
+  {n:'解耦设计',d:'核心逻辑与平台/框架解耦。<b>已实现：Docker 容器化后不依赖 Hermes 独立运行</b>'},
  ]},
 {ico:'🔐',name:'安全内核',en:'SAFETY CORE',layer:'第 3 层 · 银行金库',
  layman:'银行金库有多道锁，不是信不过自己，是怕万一。安全内核就是智能体的"金库"——默认不能乱发消息，要发必须过七道检查。',
@@ -277,6 +324,7 @@ const SYSTEMS=[
   {n:'看板可视化',d:'客户机 8899 实时显示安装进度 7 阶段。<b>客户看着装，放心</b>'},
   {n:'消毒交付',d:'客户机清掉我的 key/微信/会话，换客户自己的。<b>客户拿到的是自己的电脑</b>'},
   {n:'开箱引导',d:'新会话 agent 主动打招呼 + 7 步引导（环境→登录→测试→问称呼）。<b>开箱即用，不迷茫</b>'},
+  {n:'容器化交付 ★',d:'<b>已实现（2026-08-16）</b>：Docker 版交付——docker compose up 一条命令启动、独立状态页 8890、数据卷隔离、健康检查 30s、双模式文档（DEPLOY.md + 傻瓜手册）。<b>有 IT 的客户给 Docker 版，简单客户给 Hermes 版</b>'},
  ]},
 {ico:'🤝',name:'客户成功',en:'CUSTOMER SUCCESS',layer:'第 10 层 · 4S 店保养回访',
  layman:'买车不是交钥匙就完事，4S 店还包保养、回访、召回。客户成功就是智能体的"保养+回访"——上线后陪你跑 30 天，每周给你报告，越用越顺手。',
@@ -295,7 +343,7 @@ const SYSTEMS=[
   {n:'交付流水线',d:'安装器+验收+文档体系固化成模板。<b>边际成本逐客户递减</b>'},
   {n:'1 对 N 组网',d:'Tailscale 舰队：一台主控管多台客户机。<b>远程运维不用出差</b>'},
   {n:'多租户隔离',d:'每客户独立数据目录/登录态/话术引擎。<b>客户之间不串门</b>'},
-  {n:'Docker 解绑',d:'依赖审计 + 纯 Python 调度器 + 容器化。<b>不被单一生态绑架</b>'},
+  {n:'Docker 容器化 ★',d:'<b>已实现（2026-08-16）</b>：altai-core 独立运行、docker compose 一键启动、数据卷隔离、健康检查、容器内 fail-closed 安全。<b>不被单一生态绑架</b>'},
   {n:'影响力复用',d:'演进记录网页 + 短视频 = 获客素材。<b>下一个客户自己找上门</b>'},
  ]},
 ];
@@ -343,11 +391,11 @@ const FLOW=[
  why:'为什么在交付前？——<b>出厂质检不过，绝不能出厂</b>。上次 full 43/43 + quick 19/19 + oneclick 95/95 全绿——这是"我试过能跑"和"被证明能安全跑"的区别。客户买的就是这份确定性。',
  out:'产出：43/43 验收报告（带证据链）'},
 {step:'10',prio:'fp-p2',prioLabel:'P2 · 加分',name:'交付打包',icon:'📦',
- do:'自包含审计：技能（18 获客技能）+ 真实脚本（29 个）+ 素材（脱敏）+ 文档（SOP/知识库/培训）+ 清单（FILE_MANIFEST）+ 哈希（SHA256）。打包后验证"装完喂给 Hermes 能否全量执行"。',
+ do:'自包含审计：技能（18 获客技能）+ 真实脚本（29 个）+ 素材（脱敏）+ 文档（SOP/知识库/培训）+ 清单（FILE_MANIFEST）+ 哈希（SHA256）。打包后验证"装完喂给 Hermes 能否全量执行"。<b>Docker 版：docker build 打镜像 → 导出 tar → 目标机 docker load + compose up</b>。',
  why:'为什么必须"一包全自动"？——<b>客户机是裸机，装完得开箱即用</b>。上次审计发现 6 个缺口（技能没打包/脚本是测试桩/硬编码路径）——这种包装上去跑不起来，等于没交付。',
  out:'产出：自包含交付包 ZIP（含清单+哈希+审计报告）'},
 {step:'11',prio:'fp-p2',prioLabel:'P2 · 加分',name:'远程安装部署',icon:'🚀',
- do:'两阶段协议（预检→批准→安装）、Tailscale 组网、SSH 直连、安装进度看板（客户机 8899 实时可见）、消毒交付（我的 key/微信/会话清干净）、开箱引导就位。',
+ do:'两阶段协议（预检→批准→安装）、Tailscale 组网、SSH 直连、安装进度看板（客户机 8899 实时可见）、消毒交付（我的 key/微信/会话清干净）、开箱引导就位。<b>Docker 版：拷目录 → 改 config → docker compose up -d → 验证 8890 状态页 healthy</b>。',
  why:'为什么强调"客户看得见"？——<b>远程装机客户会担心"你在我电脑上干嘛"</b>。看板可视化（7 阶段进度）+ 消毒交付（每字节归客户），客户看着装、装完放心。这是信任工程。',
  out:'产出：客户机安装完成 + 消毒验证报告'},
 {step:'12',prio:'fp-p2',prioLabel:'P2 · 加分',name:'开箱激活',icon:'🎁',
