@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阿尔泰智能获客系统 · 项目升级背景与交付价值说明</title>
+<style>
+:root{
+  --bg:#05070d;--bg2:#0a0f1c;--card:rgba(20,28,48,0.55);--card2:rgba(24,33,56,0.45);
+  --txt:#eef2ff;--dim:#a5b1d6;--dim2:#6b7398;--blue:#2997ff;--purple:#bf5af2;
+  --green:#30d158;--red:#ff453a;--orange:#ff9f0a;--yellow:#ffd60a;
+  --grad:linear-gradient(135deg,#2997ff,#bf5af2);
+  --r:16px;--r-lg:24px;--shadow:0 20px 60px rgba(0,0,0,.45);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','PingFang SC','Microsoft YaHei',sans-serif;line-height:1.8;overflow-x:hidden}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px}
+a{color:var(--blue);text-decoration:none}
+
+/* ===== 顶部导航 ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,7,13,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-inner{max-width:900px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:18px}
+.nav-brand{font-weight:700;font-size:13.5px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap}
+.nav-links{display:flex;gap:14px;font-size:12px;flex-wrap:wrap}
+.nav-links a{color:var(--dim);transition:color .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--txt)}
+
+/* ===== Hero ===== */
+.hero{padding:140px 0 56px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(closest-side,rgba(41,151,255,.22),transparent);pointer-events:none}
+.play-badge{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--blue);background:rgba(41,151,255,.10);border:1px solid rgba(41,151,255,.28);padding:6px 14px;border-radius:999px;margin-bottom:22px}
+h1{font-size:clamp(28px,5vw,48px);font-weight:800;letter-spacing:-0.02em;line-height:1.2;margin-bottom:18px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--dim);font-size:15.5px;max-width:720px;margin:0 auto 28px}
+.tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.chip{font-size:11.5px;padding:5px 12px;border-radius:999px;color:#d4e9ff;background:rgba(41,151,255,0.10);border:1px solid rgba(41,151,255,0.28)}
+
+/* ===== 章节 ===== */
+section{padding:56px 0}
+.sec-head{margin-bottom:28px}
+.kicker{font-size:12px;letter-spacing:.14em;color:var(--blue);font-weight:600;margin-bottom:10px;text-transform:uppercase}
+h2{font-size:clamp(23px,3.5vw,32px);font-weight:800;letter-spacing:-0.01em;margin-bottom:12px;line-height:1.3}
+.sec-desc{color:var(--dim);font-size:14.5px;max-width:760px}
+
+/* ===== 卡片 ===== */
+.card{background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);padding:28px;margin-bottom:16px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow)}
+.card h3{font-size:17px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.card h3 .h3-ico{font-size:22px}
+.card p{color:var(--dim);font-size:14px;margin-bottom:10px}
+.card p b, .card li b{color:var(--txt)}
+.card ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.card ul li{color:var(--dim);font-size:13.5px;padding:9px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);line-height:1.7}
+.card ul li::before{content:'▸';color:var(--blue);margin-right:8px}
+
+/* ===== 引用块 ===== */
+.quote{font-size:15px;color:#cfe3ff;background:linear-gradient(135deg,rgba(41,151,255,.12),rgba(191,90,242,.10));border:1px solid rgba(41,151,255,.2);border-left:4px solid var(--blue);border-radius:14px;padding:18px 20px;margin:16px 0;line-height:1.8}
+.quote b{color:var(--blue)}
+
+/* ===== 对比表格 ===== */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r-lg);border:1px solid rgba(255,255,255,0.08);background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;min-width:640px;font-size:13px}
+thead th{background:rgba(41,151,255,.08);color:#cfe3ff;font-weight:700;text-align:left;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.1);font-size:13.5px}
+tbody td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--dim);vertical-align:top;line-height:1.7}
+tbody td:first-child{color:var(--txt);font-weight:600;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(41,151,255,.04)}
+td.old{color:#ff9f0a}
+td.new{color:#4ade80}
+
+/* ===== 加码时间线 ===== */
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:16px;position:relative;padding-bottom:18px}
+.step:last-child{padding-bottom:0}
+.step::before{content:'';position:absolute;left:19px;top:40px;bottom:0;width:2px;background:linear-gradient(180deg,rgba(41,151,255,.4),rgba(41,151,255,.05))}
+.step:last-child::before{display:none}
+.step-num{flex-shrink:0;width:40px;height:40px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#fff;box-shadow:0 6px 20px rgba(41,151,255,.35);position:relative;z-index:2}
+.step-body{flex:1;background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);padding:16px 18px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.step-body p{color:var(--dim);font-size:13.5px;line-height:1.7;margin:0}
+
+/* ===== 费用分层 ===== */
+.fee-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.fee-card{background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);padding:24px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow);transition:transform .3s,border-color .3s}
+.fee-card:hover{transform:translateY(-4px);border-color:rgba(41,151,255,.4)}
+.fee-card .fc-level{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:8px}
+.fee-card .fc-price{font-size:26px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:10px}
+.fee-card .fc-desc{font-size:12.5px;color:var(--dim);line-height:1.7}
+.fee-card:nth-child(2){border-color:rgba(41,151,255,.3)}
+.fee-card:nth-child(3){border-color:rgba(191,90,242,.3)}
+
+/* ===== 阶段 ===== */
+.phase{background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);padding:24px;margin-bottom:14px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.phase-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.phase-tag{font-size:11px;font-weight:700;padding:4px 12px;border-radius:999px}
+.ph1{background:rgba(48,209,88,.13);color:#4ade80;border:1px solid rgba(48,209,88,.35)}
+.ph2{background:rgba(41,151,255,.13);color:#5ab3ff;border:1px solid rgba(41,151,255,.35)}
+.ph3{background:rgba(191,90,242,.13);color:#d39aff;border:1px solid rgba(191,90,242,.35)}
+.phase h3{font-size:16.5px;font-weight:700;color:var(--txt)}
+.phase ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.phase ul li{color:var(--dim);font-size:13px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05)}
+.phase ul li::before{content:'✓';color:var(--green);margin-right:8px}
+
+/* ===== 进度 ===== */
+.progress-card{background:linear-gradient(160deg,rgba(41,151,255,.07),rgba(191,90,242,.05));border:1px solid rgba(41,151,255,.22);border-radius:var(--r-lg);padding:28px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--shadow)}
+.pg-row{margin-bottom:16px}
+.pg-label{display:flex;justify-content:space-between;font-size:13px;color:var(--dim);margin-bottom:8px}
+.pg-label b{color:var(--txt);font-size:14px}
+.pg-bar{height:10px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden}
+.pg-fill{height:100%;border-radius:99px;background:var(--grad);width:0;transition:width 1.2s cubic-bezier(.22,1,.36,1)}
+.pg-note{font-size:12.5px;color:var(--dim);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px 14px;margin-top:14px;line-height:1.7}
+.pg-note b{color:#7cc0ff}
+
+/* ===== 强调 ===== */
+.hl{color:var(--yellow)}
+.hl-blue{color:#5ab3ff}
+.hl-green{color:#4ade80}
+.hl-red{color:#ff6961}
+.note{font-size:12.5px;color:var(--dim2);background:rgba(255,255,255,0.03);border-radius:10px;padding:10px 14px;margin-top:10px;line-height:1.7}
+
+/* ===== 总结 ===== */
+.final{padding:60px 0 80px;text-align:center}
+.final-card{background:linear-gradient(160deg,rgba(41,151,255,.10),rgba(191,90,242,.08));border:1px solid rgba(41,151,255,.25);border-radius:var(--r-lg);padding:40px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:var(--shadow)}
+.final-card h3{font-size:22px;font-weight:800;margin-bottom:14px}
+.final-card p{color:var(--dim);font-size:14.5px;max-width:720px;margin:0 auto 14px}
+.final-card p b{color:var(--txt)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+.reveal.in{opacity:1;transform:none}
+
+footer{padding:30px 0;text-align:center;color:var(--dim2);font-size:12px;border-top:1px solid rgba(255,255,255,0.05)}
+
+@media(max-width:640px){
+  .nav-links{display:none}
+  .card{padding:22px}
+  .fee-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="nav-inner">
+  <div class="nav-brand">阿尔泰智能获客系统</div>
+  <div class="nav-links">
+    <a href="#s1">一 最初定义</a>
+    <a href="#s2">二 为什么升级</a>
+    <a href="#s3">三 容器结构</a>
+    <a href="#s4">四 加码过程</a>
+    <a href="#s5">五 核心差别</a>
+    <a href="#s6">六 最终意义</a>
+    <a href="#s7">七 费用理解</a>
+    <a href="#s8">八 合作方式</a>
+    <a href="#s9">九 项目进展</a>
+    <a href="#s10">十 最终说明</a>
+  </div>
+</div></nav>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="play-badge"><span style="width:20px;height:20px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px">▶</span> 项目升级背景与交付价值说明 · 客户版</div>
+    <h1>从"AI Agent 自动获客方案"<br>到"企业级智能获客系统"</h1>
+    <p>这份说明用于完整解释阿尔泰智能获客系统从最初的"AI Agent 自动获客方案"，逐步升级为<b>"可安装、可管理、可持续运行的企业级获客系统"</b>的原因，以及这种变化对<b>效果、稳定性、交付方式、后续使用和费用</b>意味着什么。</p>
+    <div class="tags">
+      <span class="chip">🎯 效果</span><span class="chip">🛡️ 稳定</span><span class="chip">📦 交付</span><span class="chip">👥 团队</span><span class="chip">💰 费用</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 一、项目最初是怎样定义的 ===== -->
+<section id="s1">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">一 · THE ORIGIN</div>
+      <h2>项目最初是怎样定义的</h2>
+      <p class="sec-desc" style="font-size:15px;color:var(--txt);font-weight:600">尊敬的客户：</p>
+      <p class="sec-desc" style="margin-top:8px">这份说明用于完整解释阿尔泰智能获客系统从最初的"AI Agent 自动获客方案"，逐步升级为"可安装、可管理、可持续运行的企业级获客系统"的原因，以及这种变化对<b>效果、稳定性、交付方式、后续使用和费用</b>意味着什么。</p>
+    </div>
+    <div class="card reveal">
+      <p style="font-size:13.5px;color:var(--dim2)">项目刚开始时，我们对需求的理解比较直接：</p>
+      <div class="quote">为企业配置一套 <b>AI Agent</b>，并为它准备获客所需的技能、规则和操作流程，让它能够根据关键词寻找潜在客户、分析客户信息并辅助完成触达。</div>
+      <p style="margin-top:16px">按照这个目标，最初 <b>5000 元</b> 对应的是一套偏 MVP 性质的交付：</p>
+      <ul style="margin-top:12px">
+        <li>配置一个可工作的 AI Agent；</li>
+        <li>安装和配置必要的 Skills；</li>
+        <li>接入基础的搜索、采集、分析和内容生成能力；</li>
+        <li>编写基础提示词、关键词和客户画像规则；</li>
+        <li>跑通一条最小获客流程；</li>
+        <li>在现有电脑和已有环境中完成演示与初步测试。</li>
+      </ul>
+      <p style="margin-top:16px">早期 MVP 测试能够运行，说明<b>核心方向是成立的</b>：AI 确实可以帮助完成信息搜集、客户分析和个性化内容生成。</p>
+      <div class="note" style="border-left:3px solid var(--yellow);background:rgba(255,214,10,.05);color:var(--dim)">⚠️ 但"MVP 能够跑一次"和"系统可以交给企业长期稳定使用"，是<b style="color:var(--yellow)">两个完全不同的交付标准</b>。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 二、为什么后来没有停留在最初的Agent配置 ===== -->
+<section id="s2">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">二 · WHY WE UPGRADED</div>
+      <h2>为什么后来没有停留在最初的 Agent 配置</h2>
+      <p class="sec-desc">随着测试不断深入，我们逐渐发现，如果只交付一个配置好的 Agent，会存在几个实际问题。</p>
+    </div>
+
+    <div class="card reveal">
+      <h3><span class="h3-ico">⚙️</span>1. 能运行，不代表能够稳定重复运行</h3>
+      <p>早期 MVP 通常依赖当时电脑里的登录状态、文件路径、浏览器环境、Token、网络和临时配置。一旦电脑重启、账号过期、网络变化、页面调整或任务中途失败，就可能出现：</p>
+      <ul>
+        <li>同一个任务重复执行；</li>
+        <li>任务执行到一半无法恢复；</li>
+        <li>显示已经完成，实际并没有产生正确结果；</li>
+        <li>配置修改了，但后台仍在使用旧配置；</li>
+        <li>不知道失败发生在哪一步；</li>
+        <li>换一台电脑后无法复现原来的效果。</li>
+      </ul>
+      <p style="margin-top:14px">如果系统只用于内部试验，这些问题可以人工处理；但如果正式交给客户团队，就会<b>直接影响员工使用、客户数据和企业信誉</b>。</p>
+    </div>
+
+    <div class="card reveal">
+      <h3><span class="h3-ico">🛡️</span>2. AI 内容正确，不代表业务动作安全</h3>
+      <p>自动获客不仅是"生成一段话"，还涉及：</p>
+      <ul>
+        <li>找什么样的客户；</li>
+        <li>为什么选择这个客户；</li>
+        <li>是否看过对方的资料和作品；</li>
+        <li>是否有与业务相关的真实契合点；</li>
+        <li>留言是否有事实依据；</li>
+        <li>是否需要人工审核；</li>
+        <li>对方拒绝后是否会停止联系；</li>
+        <li>同一客户是否会被多个账号重复触达；</li>
+        <li>平台是否真的确认发送成功。</li>
+      </ul>
+      <p style="margin-top:14px">如果没有清楚的状态、审核、去重和停止机制，<b>系统越自动，风险反而越大</b>。因此项目必须从"AI 帮忙执行"升级为<b>"AI 在规则、审批和安全边界内执行"</b>。</p>
+    </div>
+
+    <div class="card reveal">
+      <h3><span class="h3-ico">👥</span>3. 单人电脑能用，不代表团队能够使用</h3>
+      <p>客户未来需要的不只是某一台电脑上的一个 Agent，而可能包括：</p>
+      <ul>
+        <li>管理者可以统一修改关键词、客户画像、话术和审核规则；</li>
+        <li>员工可以使用简单的工作台完成日常任务；</li>
+        <li>修改后自动保存版本；</li>
+        <li>新规则能够真实同步到后台；</li>
+        <li>出现问题时能够回滚到上一个稳定版本；</li>
+        <li>不同员工和不同账号之间数据隔离；</li>
+        <li>管理者可以看到任务、结果和异常；</li>
+        <li>未来可以迁移到云服务器，支持多人协同。</li>
+      </ul>
+      <p style="margin-top:14px">这些能力已经超出了"配置一个 Agent"的范围，属于<b>完整的软件系统和企业交付体系</b>。</p>
+    </div>
+
+    <div class="card reveal">
+      <h3><span class="h3-ico">💻</span>4. 能在开发电脑运行，不代表能交给客户安装</h3>
+      <p>真正的客户交付必须回答：</p>
+      <ul>
+        <li>客户使用 Windows、macOS 还是 Linux？</li>
+        <li>是否需要安装 Docker、浏览器和其他依赖？</li>
+        <li>客户换电脑后能否重新安装？</li>
+        <li>是否可以一键部署？</li>
+        <li>安装失败时如何诊断？</li>
+        <li>能否远程协助？</li>
+        <li>本地部署和云端部署如何选择？</li>
+        <li>数据、账号、Token 和备份分别存在哪里？</li>
+        <li>升级失败后如何回滚？</li>
+      </ul>
+      <p style="margin-top:14px">因此，我们引入了<b>容器化、安装预检、版本管理、备份恢复和远程交付 SOP</b>。这些工作不会直接表现为一个新的获客按钮，却<b>决定了系统能不能真正交到客户手里</b>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 三、为什么要引入容器和新的系统结构 ===== -->
+<section id="s3">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">三 · WHY CONTAINER</div>
+      <h2>为什么要引入容器和新的系统结构</h2>
+      <p class="sec-desc"><b>容器不是为了增加技术复杂度，而是为了降低客户未来的使用成本。</b></p>
+    </div>
+    <div class="card reveal">
+      <p>采用正确的容器和宿主机结构后，可以获得：</p>
+      <ul>
+        <li>开发环境与客户环境尽量一致；</li>
+        <li>减少"在我们的电脑能用，在客户电脑不能用"的情况；</li>
+        <li>系统依赖、版本和配置更容易统一；</li>
+        <li>升级前可以备份，升级失败可以回滚；</li>
+        <li>故障更容易定位；</li>
+        <li>可以从客户本地电脑迁移到云服务器；</li>
+        <li>后续可以扩展多个员工、多个账号和多个渠道；</li>
+        <li>客户的重要凭证、浏览器会话和业务数据可以按照边界独立保存。</li>
+      </ul>
+    </div>
+    <div class="note reveal" style="border-left:3px solid var(--blue);background:rgba(41,151,255,.05);margin-top:6px">💡 容器也不是完全代替宿主机。浏览器登录、账号凭证、代理、远程控制和某些平台能力仍需要宿主机配合。因此新的结构会明确：<b style="color:#7cc0ff">哪些能力在容器里运行，哪些由宿主机提供，双方通过受控接口通信</b>，而不是相互混用。</div>
+  </div>
+</section>
+
+<!-- ===== 四、项目是怎样一步步"加码"的 ===== -->
+<section id="s4">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">四 · THE JOURNEY</div>
+      <h2>项目是怎样一步步"加码"的</h2>
+      <p class="sec-desc">项目并不是为了追求功能数量而不断扩张，而是在<b>每次测试中发现了更深一层的交付条件</b>。大致过程如下：</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><p>最初验证 AI Agent 和 Skills 能否完成基本获客任务；</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><p>MVP 跑通后，开始关注结果是否准确、是否稳定、失败后能否恢复；</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><p>为了可以交付到客户电脑，引入容器、统一依赖和安装流程；</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><p>为了避免旧版本、新版本和多份配置互相冲突，建立唯一版本、唯一配置和发布门禁；</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><p>为了避免重复发送、错误发送和任务假完成，建立消息状态机、幂等、任务租约、故障恢复和人工授权机制；</p></div></div>
+      <div class="step"><div class="step-num">6</div><div class="step-body"><p>为了让历史数据可以安全迁移，建立数据库、迁移、双读核对和回滚机制；</p></div></div>
+      <div class="step"><div class="step-num">7</div><div class="step-body"><p>为了让管理者真正控制系统，增加规则中心的版本、发布、同步、行为验证和回滚设计；</p></div></div>
+      <div class="step"><div class="step-num">8</div><div class="step-body"><p>为了提高获客效率，规划多账号管理、账号隔离、任务分配、全局去重和风险熔断；</p></div></div>
+      <div class="step"><div class="step-num">9</div><div class="step-body"><p>为了让员工易于使用，规划管理者控制台和员工工作台；</p></div></div>
+      <div class="step"><div class="step-num">10</div><div class="step-body"><p>为了正式交付，增加一键安装、远程协助、诊断包、备份升级和云端迁移方案；</p></div></div>
+      <div class="step"><div class="step-num">11</div><div class="step-body"><p>为了让系统不仅"能发消息"，还能够持续产生有效客户，建立从关键词、画像、研究、审核、触达、跟进到复盘的完整 SOP。</p></div></div>
+    </div>
+    <div class="quote reveal" style="margin-top:18px">每一次加码的本质，都是把<b>一个技术演示</b>转变成<b>可承担实际业务责任的产品</b>。</div>
+  </div>
+</section>
+
+<!-- ===== 五、前后方案的核心差别 ===== -->
+<section id="s5">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">五 · BEFORE VS AFTER</div>
+      <h2>前后方案的核心差别</h2>
+    </div>
+    <div class="tbl-wrap reveal">
+      <table>
+        <thead><tr><th style="width:22%">对比项</th><th>最初 5000 元 MVP 方案</th><th>当前企业级目标方案</th></tr></thead>
+        <tbody>
+          <tr><td>产品形态</td><td class="old">一个配置好的 AI Agent</td><td class="new">完整的 AI 获客系统</td></tr>
+          <tr><td>使用人数</td><td class="old">主要面向单人</td><td class="new">管理者与多名员工</td></tr>
+          <tr><td>运行环境</td><td class="old">当前电脑、当前登录状态</td><td class="new">客户新电脑、容器、本地或云端</td></tr>
+          <tr><td>获客流程</td><td class="old">能完成基础搜索和生成</td><td class="new">关键词→画像→研究→审核→触达→跟进→复盘</td></tr>
+          <tr><td>规则修改</td><td class="old">修改文件或提示词</td><td class="new">可视化修改、自动保存版本、发布、同步、回滚</td></tr>
+          <tr><td>数据</td><td class="old">多种文件和临时状态</td><td class="new">统一数据库、迁移、备份、恢复和审计</td></tr>
+          <tr><td>任务恢复</td><td class="old">失败后可能需要人工重跑</td><td class="new">任务状态可追踪、可重试、可恢复、避免重复副作用</td></tr>
+          <tr><td>发送安全</td><td class="old">依赖执行过程判断</td><td class="new">审批、去重、状态机、平台确认、未知状态处理</td></tr>
+          <tr><td>多账号</td><td class="old">单账号或临时切换</td><td class="new">账号池、凭证隔离、会话亲和、任务分配、全局 DNC</td></tr>
+          <tr><td>交付方式</td><td class="old">在现有环境配置</td><td class="new">一键安装、预检、远程协助、诊断、升级和回滚</td></tr>
+          <tr><td>扩展能力</td><td class="old">继续堆 Skills</td><td class="new">可扩展渠道、员工、服务器和业务流程</td></tr>
+          <tr><td>验收标准</td><td class="old">演示能够运行</td><td class="new">可重复、可恢复、可管理、可交付、可审计</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 六、按照现在的节奏继续，最终意味着什么 ===== -->
+<section id="s6">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">六 · WHAT IT MEANS</div>
+      <h2>按照现在的节奏继续，最终意味着什么</h2>
+      <p class="sec-desc">如果继续按照当前标准完成，客户获得的就不再是一次性的 AI 配置服务，而是<b>一套可以持续建设和运营的企业资产</b>。</p>
+    </div>
+
+    <div class="card reveal">
+      <h3><span class="h3-ico">🎯</span>对效果的意义</h3>
+      <ul>
+        <li>获客对象不再只依赖关键词命中，而会结合画像和对方真实内容进行判断；</li>
+        <li>留言和触达内容会有明确依据，不只是通用 AI 文案；</li>
+        <li>人工审核可以拦截不合适的目标和内容；</li>
+        <li>系统可以统计每个阶段的转化，逐步优化关键词、画像和话术；</li>
+        <li>多账号可以提高处理能力，但会受统一去重、频率和平台安全策略约束；</li>
+        <li>系统可以减少重复劳动，但不会承诺固定的客户数量或成交数量，因为最终结果还受产品、市场、账号质量、平台政策和销售承接能力影响。</li>
+      </ul>
+    </div>
+
+    <div class="card reveal">
+      <h3><span class="h3-ico">🛡️</span>对稳定性的意义</h3>
+      <ul>
+        <li>任务不会只依赖某个进程或某次浏览器操作；</li>
+        <li>中途失败可以知道停在哪里；</li>
+        <li>重启后可以恢复，而不是从头猜测；</li>
+        <li>规则和版本可以追踪；</li>
+        <li>重要动作有记录；</li>
+        <li>数据和配置可以备份与回滚；</li>
+        <li>系统升级不再依赖直接覆盖文件。</li>
+      </ul>
+    </div>
+
+    <div class="card reveal">
+      <h3><span class="h3-ico">👥</span>对团队使用的意义</h3>
+      <ul>
+        <li>管理者控制目标、关键词、画像、规则、话术和审批；</li>
+        <li>员工只操作必要的任务，不需要理解底层技术；</li>
+        <li>不同员工、账号和渠道拥有明确权限和隔离；</li>
+        <li>后续可以在本地部署，也可以迁移到云端供团队使用。</li>
+      </ul>
+    </div>
+
+    <div class="card reveal">
+      <h3><span class="h3-ico">💰</span>对后续成本的意义</h3>
+      <p>前期投入会增加，但未来新增客户电脑、账号、员工、渠道和规则时，<b>不需要每次重新搭建一套临时环境</b>。系统越早建立正确骨架，后续迭代和维护成本越低。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 七、关于5000元费用应当怎样理解 ===== -->
+<section id="s7">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">七 · ABOUT THE FEE</div>
+      <h2>关于 5000 元费用应当怎样理解</h2>
+    </div>
+    <div class="card reveal">
+      <p><b>5000 元</b>对于最初定义的 MVP——Agent 配置、Skills 组合、基础规则和最小流程验证——是<b>合理的项目费用</b>。</p>
+      <p style="margin-top:14px">但当前目标已经扩展为：</p>
+      <ul>
+        <li>独立软件系统；</li>
+        <li>容器化和跨电脑交付；</li>
+        <li>统一数据库与安全迁移；</li>
+        <li>可恢复任务和安全发送内核；</li>
+        <li>规则中心与版本回滚；</li>
+        <li>多账号与多员工；</li>
+        <li>管理者/员工工作台；</li>
+        <li>一键安装、运维、云端部署和交付 SOP；</li>
+        <li>长期试运行和稳定性验证。</li>
+      </ul>
+      <div class="note" style="border-left:3px solid var(--orange);background:rgba(255,159,10,.05);margin-top:14px">⚠️ 这些内容<b style="color:var(--orange)">已经不是原 5000 元 MVP 范围内的简单增补，而是新的产品研发和企业交付范围</b>。为了对双方公平，建议商业上分成两个层次处理。</div>
+    </div>
+
+    <div class="card reveal">
+      <h3><span class="h3-ico">📄</span>原合同 / 原费用范围</h3>
+      <p>原 <b>5000 元</b> 继续对应：</p>
+      <ul>
+        <li>AI 获客 MVP；</li>
+        <li>基础 Agent 和 Skills 配置；</li>
+        <li>基础获客流程；</li>
+        <li>单机测试环境；</li>
+        <li>已完成工作的阶段性成果和说明。</li>
+      </ul>
+    </div>
+
+    <div class="card reveal">
+      <h3><span class="h3-ico">🏗️</span>新增企业级范围</h3>
+      <p>企业级系统应重新确认：</p>
+      <ul>
+        <li>明确功能清单；</li>
+        <li>支持的平台、账号和员工数量；</li>
+        <li>本地部署还是云端部署；</li>
+        <li>是否包含管理后台；</li>
+        <li>是否包含安装器和客户机适配；</li>
+        <li>是否包含后续维护；</li>
+        <li>验收方法和试运行周期；</li>
+        <li>第三方 API、代理、服务器和账号成本由谁承担。</li>
+      </ul>
+    </div>
+
+    <div class="card reveal">
+      <p>从市场工作量看，这类项目<b>不宜继续按 5000 元整体包干</b>。比较现实的分级参考是：</p>
+    </div>
+    <div class="fee-grid">
+      <div class="fee-card reveal">
+        <div class="fc-level">🥉 MVP 完善版</div>
+        <div class="fc-price">1–2 万</div>
+        <div class="fc-desc">单机、单渠道、基础 SOP、人工审核、测试模式稳定运行</div>
+      </div>
+      <div class="fee-card reveal">
+        <div class="fc-level">🥈 标准交付版</div>
+        <div class="fc-price">2–5 万</div>
+        <div class="fc-desc">容器化、规则版本、数据库、备份恢复、一键安装、单客户机 E2E</div>
+      </div>
+      <div class="fee-card reveal">
+        <div class="fc-level">🥇 企业协作版</div>
+        <div class="fc-price">5–15 万+</div>
+        <div class="fc-desc">多账号、多员工、权限、管理后台、云端部署、监控与正式交付</div>
+      </div>
+    </div>
+    <div class="note reveal" style="margin-top:16px">最终价格需要以确认后的范围为准。这些数字<b>不是要求客户立即补齐全部差价</b>，而是说明当前目标与最初 5000 元 MVP 之间已经发生了本质变化。</div>
+    <div class="quote reveal" style="margin-top:14px">更稳妥的合作方式是：<b>保留原 5000 元成果，再把新增内容拆成阶段报价和阶段验收</b>，客户可以选择做到哪一层，而不是在范围不断增加的情况下继续用一个固定价格覆盖全部研发。</div>
+  </div>
+</section>
+
+<!-- ===== 八、建议的后续合作和验收方式 ===== -->
+<section id="s8">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">八 · COOPERATION</div>
+      <h2>建议的后续合作和验收方式</h2>
+      <p class="sec-desc">建议将后续项目拆成以下阶段：</p>
+    </div>
+
+    <div class="phase reveal">
+      <div class="phase-head">
+        <span class="phase-tag ph1">阶段一</span>
+        <h3>稳定的单机试用版</h3>
+      </div>
+      <ul>
+        <li>单渠道；</li>
+        <li>单账号或少量受控账号；</li>
+        <li>完整获客 SOP；</li>
+        <li>人工审核；</li>
+        <li>测试模式；</li>
+        <li>数据可备份和恢复；</li>
+        <li>在指定电脑稳定运行。</li>
+      </ul>
+    </div>
+
+    <div class="phase reveal">
+      <div class="phase-head">
+        <span class="phase-tag ph2">阶段二</span>
+        <h3>正式客户交付版</h3>
+      </div>
+      <ul>
+        <li>一键安装和首次启动预检；</li>
+        <li>客户新电脑完整 E2E；</li>
+        <li>规则中心版本发布和回滚；</li>
+        <li>管理者与员工基础权限；</li>
+        <li>诊断、升级和远程支持 SOP。</li>
+      </ul>
+    </div>
+
+    <div class="phase reveal">
+      <div class="phase-head">
+        <span class="phase-tag ph3">阶段三</span>
+        <h3>企业协作与云端版</h3>
+      </div>
+      <ul>
+        <li>多账号和多员工；</li>
+        <li>云端服务器；</li>
+        <li>更完整的权限、监控和运营报表；</li>
+        <li>多渠道扩展；</li>
+        <li>持续维护和版本升级。</li>
+      </ul>
+    </div>
+
+    <div class="note reveal" style="border-left:3px solid var(--green);background:rgba(48,209,88,.05);margin-top:6px">✅ 每个阶段都应有独立的<b style="color:#4ade80">范围、价格、工期和验收标准</b>。只有已经验收通过的内容，才计入正式完成。</div>
+  </div>
+</section>
+
+<!-- ===== 九、当前项目进展说明 ===== -->
+<section id="s9">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">九 · PROGRESS</div>
+      <h2>当前项目进展说明</h2>
+    </div>
+    <div class="progress-card reveal">
+      <p style="font-size:14px;color:var(--dim);margin-bottom:18px">目前项目已经完成了<b style="color:var(--txt)">最重要的一部分底层重构</b>：事实基线、安全发送规则、任务故障边界、数据库、原子迁移、数据核对、切换和回滚门禁已经形成并经过<b style="color:#4ade80">多轮反例验证</b>。</p>
+      <div class="pg-row">
+        <div class="pg-label"><span>正式完成度</span><b>约 29%</b></div>
+        <div class="pg-bar"><div class="pg-fill" data-v="29"></div></div>
+      </div>
+      <div class="pg-row">
+        <div class="pg-label"><span>核心候选成熟度</span><b>约 52%</b></div>
+        <div class="pg-bar"><div class="pg-fill" data-v="52"></div></div>
+      </div>
+      <div class="pg-note">剩余工作主要集中在 <b>Worker、客户机支持、宿主机能力、通道接入、规则中心、多账号、管理/员工工作台、运维、一键安装和真实试运行</b>。</div>
+      <div class="pg-note" style="margin-top:10px">⏱️ 预计还需要约 <b>80–140 个有效工程小时</b>，加上 <b>7–14 天受控试运行</b>。按照正常推进节奏，完整稳态交付约需要 <b>3–5 周</b>；如果平台授权、客户设备或跨平台安装出现外部阻塞，可能需要 <b>4–6 周</b>。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 十、最终说明 ===== -->
+<section id="s10">
+  <div class="wrap">
+    <div class="final reveal">
+      <div class="final-card">
+        <h3>最终说明</h3>
+        <p>这次项目路线的变化，并不是因为最初的方案完全错误。<b>最初的 MVP 完成了它最重要的任务：证明 AI 自动获客方向可以成立</b>，也让我们提前发现了正式应用中的真实问题。</p>
+        <p>后续重构的原因，是我们不希望把一个"当时能够演示"的方案直接当作"可以长期交付"的系统。<b>真正负责任的交付</b>，需要把准确性、稳定性、安全、版本、数据、安装、恢复、团队使用和后续扩展一起考虑。</p>
+        <p>如果客户只需要原始 MVP，我们可以按照原范围整理和交付；如果客户希望得到可供团队长期使用、可以部署到新电脑或云服务器的系统，就需要按照企业级项目重新确认范围、阶段、费用和验收标准。</p>
+        <p style="font-size:16px;color:var(--txt);font-weight:700;margin-top:18px">我们的目标不是单纯把功能做多，而是把项目做成一套<b>客户敢用、员工会用、出现问题能恢复、未来能够继续扩展</b>的系统。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>阿尔泰智能获客系统 · 项目升级背景与交付价值说明 · 客户版 · 2026-08-17</footer>
+
+<script>
+// 滚动渐入
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// 进度条动画
+setTimeout(()=>{
+  document.querySelectorAll('.pg-fill').forEach(el=>{ el.style.width=el.dataset.v+'%'; });
+},600);
+</script>
+</body>
+</html>
