@@ -1,30 +1,1555 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="可验证的软件架构方法论与标准SOP：14步流程、AWS Well-Architected、ATAM、C4、ADR与方法论自证"><title>可验证的软件架构方法论与标准SOP</title>
-<style>
-:root{--bg:#05070d;--card:#111827d9;--line:#ffffff18;--text:#f5f7ff;--muted:#aab5ce;--blue:#2997ff;--cyan:#64d2ff;--purple:#bf5af2;--green:#30d158;--orange:#ff9f0a;--red:#ff453a}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:72px}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.7}body:before{content:"";position:fixed;inset:-30%;z-index:-1;background:radial-gradient(circle at 18% 12%,#2997ff22,transparent 25%),radial-gradient(circle at 82% 30%,#bf5af21b,transparent 25%)}a{color:inherit;text-decoration:none}.wrap{width:min(1140px,calc(100% - 34px));margin:auto}.nav{position:sticky;top:0;z-index:10;background:#05070ddd;backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}.navin{min-height:62px;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:850;font-size:14px;color:var(--cyan)}.links{display:flex;gap:4px}.links a{font-size:12px;color:var(--muted);padding:7px 9px}.hero{text-align:center;padding:110px 0 70px}.badge,.pill{display:inline-flex;border:1px solid #64d2ff44;background:#64d2ff10;color:var(--cyan);border-radius:30px;padding:5px 10px;font-size:10px;font-weight:800}.hero h1{font-size:clamp(38px,6.5vw,75px);letter-spacing:-.045em;line-height:1.08;margin:20px auto;background:linear-gradient(125deg,#fff,var(--cyan),var(--purple));background-clip:text;color:transparent}.hero p{max-width:850px;margin:auto;color:var(--muted);font-size:clamp(15px,2vw,20px)}.stats,.grid3,.grid2,.grid6,.maturity{display:grid;gap:14px}.stats{grid-template-columns:repeat(4,1fr);max-width:850px;margin:34px auto 0}.stats div,.card,details,.source{border:1px solid var(--line);background:var(--card);border-radius:19px}.stats div{padding:13px;font-size:12px;color:var(--muted)}.stats b{display:block;color:var(--cyan);font-size:20px}.grid3{grid-template-columns:repeat(3,1fr)}.grid2{grid-template-columns:repeat(2,1fr)}.grid6{grid-template-columns:repeat(3,1fr)}section{padding:68px 0}.head{max-width:820px;margin-bottom:28px}.kicker{font-size:11px;font-weight:850;letter-spacing:.15em;color:var(--blue)}h2{font-size:clamp(28px,4vw,44px);line-height:1.2;margin:8px 0 10px}.head p,.card p,.card li{color:var(--muted)}.card{padding:22px}.card h3{margin:5px 0}.card p,.card li{font-size:13px}.card ul{padding-left:18px}.num{font-size:10px;font-weight:850;letter-spacing:.12em;color:var(--cyan)}.flow{display:flex;align-items:center;gap:7px;overflow:auto;padding-bottom:20px}.step{min-width:122px;flex:1;padding:14px 9px;text-align:center;border:1px solid var(--line);background:var(--card);border-radius:14px;font-size:12px}.step b{display:block;color:var(--cyan);font-size:10px}.arr{color:var(--cyan)}.notice{margin-top:18px;padding:17px 19px;border-left:4px solid var(--orange);background:#ff9f0a12;border-radius:0 15px 15px 0;color:var(--muted);font-size:13px}.notice b{color:var(--orange)}.details{display:grid;gap:9px}details{padding:0 19px}summary{cursor:pointer;list-style:none;padding:17px 1px;font-weight:760;display:flex;gap:11px;align-items:center}summary::-webkit-details-marker{display:none}summary:after{content:"＋";margin-left:auto;color:var(--cyan)}details[open] summary:after{content:"－"}.inside{border-top:1px solid var(--line);padding:15px 1px 19px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.inside div{font-size:12px;color:var(--muted)}.inside b{display:block;color:var(--cyan)}.aws{padding:27px;border:1px solid #ff9f0a55;border-radius:27px;background:linear-gradient(135deg,#111a2c,#181222)}.awsmark{font-weight:900;color:var(--orange);letter-spacing:.1em}.good{border-color:#30d15855}.bad{border-color:#ff453a55}.pillar{padding:16px;border:1px solid var(--line);border-radius:15px;background:#ffffff07}.pillar b{display:block}.pillar span{font-size:12px;color:var(--muted)}.timeline{display:grid;grid-template-columns:40px 1fr;gap:10px;margin-top:18px}.dot{width:34px;height:34px;display:grid;place-items:center;border:1px solid #ff9f0a66;border-radius:50%;color:var(--orange);font-size:11px}.titem{padding:0 0 18px}.titem h3{font-size:15px;margin:2px 0}.titem p{font-size:12px;color:var(--muted);margin:3px 0}.table{overflow:auto;border:1px solid var(--line);border-radius:16px;background:var(--card)}table{width:100%;border-collapse:collapse;min-width:700px}th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);font-size:12px}th{color:var(--cyan)}td{color:var(--muted)}td:first-child{color:#fff;font-weight:700}.maturity{grid-template-columns:repeat(6,1fr)}.maturity div{text-align:center;padding:16px 8px;border:1px solid var(--line);border-radius:15px;background:var(--card)}.maturity b{display:block;color:var(--cyan);font-size:19px}.maturity span{font-size:10px;color:var(--muted)}.source{display:block;padding:14px 16px}.source b{font-size:13px;color:var(--cyan)}.source p{font-size:11px;color:var(--muted);margin:3px 0}.footer{text-align:center;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding:40px 0 60px}@media(max-width:850px){.links{display:none}.grid3,.grid6{grid-template-columns:1fr 1fr}.inside{grid-template-columns:1fr 1fr}.maturity{grid-template-columns:repeat(3,1fr)}}@media(max-width:560px){.grid3,.grid2,.grid6{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.inside{grid-template-columns:1fr}.hero{padding-top:75px}.aws{padding:19px}}
-</style></head><body>
-<nav class="nav"><div class="wrap navin"><a class="brand" href="#top">可验证的软件架构方法论</a><div class="links"><a href="#map">总地图</a><a href="#gates">三道门</a><a href="#sop">14步SOP</a><a href="#aws">AWS审查</a><a href="#meta">方法自证</a><a href="#maturity">成熟度</a><a href="architecture.html">阿尔泰架构</a></div></div></nav>
-<header class="hero" id="top"><div class="wrap"><span class="badge">完整总纲 · v1.2 · 可验证、可反驳、可复查</span><h1>可验证的软件架构方法论<br>与标准 SOP</h1><p>Research / Reality / Plan 只是入口。完整方法是把<strong>事实、权威来源、架构权衡、分段实施、自动测试、独立审计、AWS外部复核和客户验收</strong>连成一条证据链。</p><div class="stats"><div><b>3</b>前置收敛门</div><div><b>14</b>项目标准步骤</div><div><b>6</b>AWS审查支柱</div><div><b>10</b>方法论自证</div></div></div></header>
-<main><section id="map"><div class="wrap"><div class="head"><div class="kicker">00 · COMPLETE MAP</div><h2>小白先看这一张总地图</h2><p>像盖房子：查规范、勘察现场、冻结施工图，然后分段施工、验收、交付和持续观察。</p></div><div class="flow"><div class="step"><b>① RESEARCH</b>查行业规范</div><span class="arr">›</span><div class="step"><b>② REALITY</b>查项目事实</div><span class="arr">›</span><div class="step"><b>③ PLAN</b>冻结计划</div><span class="arr">›</span><div class="step"><b>④ DESIGN</b>架构权衡</div><span class="arr">›</span><div class="step"><b>⑤ BUILD</b>逐Gate实施</div><span class="arr">›</span><div class="step"><b>⑥ VERIFY</b>测试反例</div><span class="arr">›</span><div class="step"><b>⑦ REVIEW</b>AWS复核</div><span class="arr">›</span><div class="step"><b>⑧ DELIVER</b>客户验收</div><span class="arr">›</span><div class="step"><b>⑨ EVOLVE</b>生产演进</div></div></div></section>
-<section id="gates"><div class="wrap"><div class="head"><div class="kicker">01 · THREE PRE-GATES</div><h2>三个新理念放在完整体系最前面</h2><p>分别防止“方向没依据”“理解错项目”“施工范围漂移”。</p></div><div class="grid3"><article class="card"><div class="num">R1 · RESEARCH</div><h3>最佳实践调查</h3><p>查官方标准、成熟案例和至少两个候选方案，写清版本、条件、局限和反例。</p><ul><li>输出：来源登记、候选矩阵、未知假设</li><li>阻断：只有观点，没有权威依据</li></ul></article><article class="card"><div class="num">R2 · REALITY</div><h3>代码与运行事实扫描</h3><p>复现Bug后沿入口、调用链、数据源、副作用、错误和回滚路径检查关键代码。</p><ul><li>输出：事实基线、复现、影响面</li><li>阻断：没有文件、命令、测试或运行证据</li></ul></article><article class="card"><div class="num">R3 · PLAN</div><h3>计划冻结</h3><p>一次批准一个节点，写明目标、非目标、允许文件、测试、验收人和回滚。</p><ul><li>输出：计划、Gate任务书、证据清单</li><li>阻断：“全面优化”等模糊任务</li></ul></article></div><div class="notice"><b>不能互相替代：</b>Research给方向，Reality给真实地形，Plan给施工路线；三道门通过后，才进入下面14步完整SOP。</div></div></section>
-<section id="sop"><div class="wrap"><div class="head"><div class="kicker">02 · FOURTEEN STEPS</div><h2>完整14步标准项目流程</h2><p>点击展开。每步都必须说清输入、动作、产物和通过条件。</p></div><div class="details">
-<details open><summary><span class="pill">SOP 01</span>项目章程与边界</summary><div class="inside"><div><b>输入</b>客户目标、用户、预算、时限</div><div><b>动作</b>定义成功、非目标、授权和风险</div><div><b>产物</b>PROJECT_CHARTER</div><div><b>通过</b>客户与负责人共同确认</div></div></details>
-<details><summary><span class="pill">SOP 02</span>事实冻结</summary><div class="inside"><div><b>输入</b>代码、配置、容器、数据、环境</div><div><b>动作</b>扫描入口、依赖、状态、Secret</div><div><b>产物</b>FACT_BASELINE、依赖图</div><div><b>通过</b>事实/推断/未知分开</div></div></details>
-<details><summary><span class="pill">SOP 03</span>质量属性场景</summary><div class="inside"><div><b>输入</b>目标与故障担忧</div><div><b>动作</b>把稳定、安全、性能写成可测场景</div><div><b>产物</b>指标、阈值、测量法</div><div><b>通过</b>每个承诺都有数字</div></div></details>
-<details><summary><span class="pill">SOP 04</span>候选架构与技术探针</summary><div class="inside"><div><b>输入</b>事实与质量场景</div><div><b>动作</b>至少两个方案，小实验验证最大未知</div><div><b>产物</b>候选矩阵、Spike</div><div><b>通过</b>不凭个人喜好选型</div></div></details>
-<details><summary><span class="pill">SOP 05</span>轻量ATAM权衡</summary><div class="inside"><div><b>输入</b>业务驱动、候选方案</div><div><b>动作</b>找风险、敏感点、取舍点</div><div><b>产物</b>风险清单、选择理由</div><div><b>通过</b>代价和收益都被说清</div></div></details>
-<details><summary><span class="pill">SOP 06</span>C4与九张项目地图</summary><div class="inside"><div><b>输入</b>被选架构</div><div><b>动作</b>画上下文、容器、组件、运行、数据、规则、发送、部署、恢复</div><div><b>产物</b>可导航架构地图</div><div><b>通过</b>新人能找到边界和故障域</div></div></details>
-<details><summary><span class="pill">SOP 07</span>架构宪法</summary><div class="inside"><div><b>输入</b>风险、合规、目标架构</div><div><b>动作</b>规定单一真源、默认拒绝、审批、幂等和回滚</div><div><b>产物</b>工程硬规则</div><div><b>通过</b>每条原则可转成测试</div></div></details>
-<details><summary><span class="pill">SOP 08</span>ADR架构决策记录</summary><div class="inside"><div><b>输入</b>重要且难逆转的选择</div><div><b>动作</b>记录背景、候选、决定、后果</div><div><b>产物</b>版本化ADR</div><div><b>通过</b>知道为何选、何时推翻</div></div></details>
-<details><summary><span class="pill">SOP 09</span>架构适应度测试</summary><div class="inside"><div><b>输入</b>宪法和质量属性</div><div><b>动作</b>自动检查边界、Secret、迁移、发送规则</div><div><b>产物</b>CI fitness functions</div><div><b>通过</b>故意违规会自动失败</div></div></details>
-<details><summary><span class="pill">SOP 10</span>按Gate实施</summary><div class="inside"><div><b>输入</b>批准计划与验收合同</div><div><b>动作</b>小步提交，一次一个节点</div><div><b>产物</b>diff、commit、测试、退出码</div><div><b>通过</b>独立角色裁决PASS</div></div></details>
-<details><summary><span class="pill">SOP 11</span>故障、安全与恢复验证</summary><div class="inside"><div><b>输入</b>新能力、威胁模型</div><div><b>动作</b>注入崩溃、超时、重复、越权、恢复失败</div><div><b>产物</b>故障矩阵、恢复报告</div><div><b>通过</b>危险失败能安全停止</div></div></details>
-<details><summary><span class="pill">SOP 12</span>外部框架交叉复核</summary><div class="inside"><div><b>输入</b>内部架构证据包</div><div><b>动作</b>用AWS WAF、NIST、OWASP复核</div><div><b>产物</b>风险与改进计划</div><div><b>通过</b>外部结果逐项映射项目证据</div></div></details>
-<details><summary><span class="pill">SOP 13</span>客户真实环境验收</summary><div class="inside"><div><b>输入</b>发布包、安装SOP、支持矩阵</div><div><b>动作</b>干净客户机盲装、升级、备份、恢复、员工UAT</div><div><b>产物</b>客户签字与交付证据</div><div><b>通过</b>不只在开发者电脑成功</div></div></details>
-<details><summary><span class="pill">SOP 14</span>生产观察与演进</summary><div class="inside"><div><b>输入</b>运行指标、事故、反馈</div><div><b>动作</b>复盘SLO、规则效果与ADR假设</div><div><b>产物</b>观察报告、下一版路线</div><div><b>通过</b>变化继续走同一证据链</div></div></details>
-</div></div></section>
-<section id="aws"><div class="wrap"><div class="aws"><div class="awsmark">AWS WELL-ARCHITECTED</div><div class="head"><h2>它是什么？怎么真正使用？</h2><p>它是AWS控制台里的在线架构自评工具，不是下载安装到电脑的软件，也不会自动扫描代码。它用结构化问题帮助团队发现高/中风险，形成改进计划、里程碑和报告。</p></div><div class="grid2"><article class="card good"><h3>它能做</h3><p>统一问题集；六支柱复核；记录HRI/MRI；形成改进项；保存Milestone；下载报告。</p></article><article class="card bad"><h3>它不能做</h3><p>不能证明代码已接线；不能替你跑测试；不能代替客户验收、法律意见或平台授权。</p></article></div><h3>六大支柱</h3><div class="grid6"><div class="pillar"><b>卓越运营</b><span>发布、观察、响应、改进</span></div><div class="pillar"><b>安全性</b><span>身份、权限、数据、响应</span></div><div class="pillar"><b>可靠性</b><span>隔离、恢复、容量、变化</span></div><div class="pillar"><b>性能效率</b><span>资源选择、监控、适配</span></div><div class="pillar"><b>成本优化</b><span>成本和业务价值可追踪</span></div><div class="pillar"><b>可持续性</b><span>减少消耗并持续改善</span></div></div><h3>实际操作流程</h3><div class="timeline"><div class="dot">1</div><div class="titem"><h3>准备账号与权限</h3><p>正式工具通常需要AWS账号登录Management Console，并由管理员授予相应IAM权限；公开框架文档无需账号。</p></div><div class="dot">2</div><div class="titem"><h3>创建 Workload</h3><p>填写名称、环境、地区、行业、负责人和边界；绝不录入Token、Cookie或客户个人数据。</p></div><div class="dot">3</div><div class="titem"><h3>选择 Lens</h3><p>至少选择官方Well-Architected Framework Lens，适用时再加Serverless/SaaS等专项Lens。</p></div><div class="dot">4</div><div class="titem"><h3>回答六支柱问题</h3><p>每个勾选项绑定本地证据编号；没证据就写UNKNOWN，不能为了低风险而自我美化。</p></div><div class="dot">5</div><div class="titem"><h3>读取 Improvement Plan</h3><p>把HRI/MRI映射到负责人、日期、项目Gate和验收测试。</p></div><div class="dot">6</div><div class="titem"><h3>保存 Milestone</h3><p>架构批准、重要发布、生产复盘时各保存一次，形成可比较的历史快照。</p></div><div class="dot">7</div><div class="titem"><h3>下载并归档报告</h3><p>保存PDF、生成时间、工具版本、SHA-256和证据矩阵。</p></div><div class="dot">8</div><div class="titem"><h3>回项目关闭风险</h3><p>AWS只提出问题；必须通过代码、故障测试、独立审计和客户环境验收真正关闭。</p></div></div><div class="notice"><b>关键结论：</b>AWS Well-Architected是“结构化复核员”，不是绝对权威裁判。非AWS项目也可借用问题集，但必须标注不适用项，不能假装部署在AWS。</div><div class="table" style="margin-top:18px"><table><thead><tr><th>AWS问题</th><th>项目事实</th><th>决策</th><th>测试</th><th>证据</th></tr></thead><tbody><tr><td>支柱/问题编号</td><td>代码、配置、运行态</td><td>ADR与取舍</td><td>正常、故障、反例</td><td>commit、退出码、报告、hash</td></tr><tr><td>无证据</td><td>标记UNKNOWN</td><td>不得当已实现</td><td>创建待验证Gate</td><td>风险保持打开</td></tr></tbody></table></div></div></div></section>
-<section id="artifacts"><div class="wrap"><div class="head"><div class="kicker">04 · EVIDENCE SYSTEM</div><h2>最终必须留下的三类证据</h2></div><div class="grid3"><article class="card"><h3>事实包</h3><p>项目章程、事实基线、依赖/数据/Secret地图、问题复现、外部约束。</p></article><article class="card"><h3>决策包</h3><p>质量属性、候选对比、ATAM、C4九图、宪法、ADR和来源登记。</p></article><article class="card"><h3>验收包</h3><p>测试、反例、退出码、commit、审计、AWS报告、客户UAT和回滚点。</p></article></div><div class="table" style="margin-top:14px"><table><thead><tr><th>标签</th><th>含义</th><th>能否说已完成</th></tr></thead><tbody><tr><td>FACT</td><td>当前可复查的客观事实</td><td>只能描述现状</td></tr><tr><td>VERIFIED-CONTRACT</td><td>隔离契约已验收，可能尚未生产接线</td><td>必须写清边界</td></tr><tr><td>TARGET</td><td>被批准但待实施的设计</td><td>不能</td></tr><tr><td>EXTERNAL</td><td>依赖平台、法规、客户或第三方</td><td>未知时保守阻断</td></tr></tbody></table></div></div></section>
-<section id="meta"><div class="wrap"><div class="head"><div class="kicker">05 · VERIFY THE METHOD</div><h2>方法论本身也要经过10项验证</h2><p>我们不宣称“绝对正确”，而是让它可以被反驳、复现和持续修正。</p></div><div class="grid2"><article class="card"><div class="num">META 01–05</div><h3>证明它能发现错误</h3><ul><li>权威来源与需求追溯</li><li>历史缺陷回放</li><li>故意植入违规</li><li>不同审计员一致性</li><li>陌生项目盲测</li></ul></article><article class="card"><div class="num">META 06–10</div><h3>证明它能复用与演进</h3><ul><li>跨行业/规模复用</li><li>外部报告交叉验证</li><li>上线结果指标验证</li><li>红队反向攻击</li><li>版本化、废弃与替换</li></ul></article></div></div></section>
-<section id="maturity"><div class="wrap"><div class="head"><div class="kicker">06 · MATURITY</div><h2>项目成熟度不是文件数量</h2><p>看的是证据链闭合到哪一步。</p></div><div class="maturity"><div><b>M0</b><span>凭经验/提示词</span></div><div><b>M1</b><span>清单与计划</span></div><div><b>M2</b><span>来源与架构图</span></div><div><b>M3</b><span>Gate自动测试</span></div><div><b>M4</b><span>外部复核+客户验收</span></div><div><b>M5</b><span>生产数据持续校正</span></div></div><div class="notice"><b>阿尔泰边界：</b>架构总纲已通过A0文档级审计，不等于生产实现或客户交付通过；正式实现仍按逐Gate证据计分，真实发送继续默认禁止。</div></div></section>
-<section id="sources"><div class="wrap"><div class="head"><div class="kicker">07 · OFFICIAL SOURCES</div><h2>主要官方依据</h2></div><div class="grid2"><a class="source" href="https://docs.aws.amazon.com/wellarchitected/latest/userguide/intro.html" target="_blank" rel="noopener"><b>AWS Well-Architected Tool User Guide</b><p>Workload、Lens、Milestone与改进计划。</p></a><a class="source" href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" rel="noopener"><b>AWS Well-Architected Framework</b><p>六大支柱与官方审查问题。</p></a><a class="source" href="https://www.sei.cmu.edu/library/atam-method-for-architecture-evaluation/" target="_blank" rel="noopener"><b>SEI · ATAM</b><p>质量属性、风险、敏感点与取舍。</p></a><a class="source" href="https://c4model.com/" target="_blank" rel="noopener"><b>C4 Model</b><p>上下文、容器、组件和代码架构视图。</p></a><a class="source" href="https://csrc.nist.gov/projects/ssdf" target="_blank" rel="noopener"><b>NIST · SSDF 1.1</b><p>安全软件开发生命周期。</p></a><a class="source" href="https://owasp.org/www-project-application-security-verification-standard/" target="_blank" rel="noopener"><b>OWASP ASVS</b><p>可测试的应用安全控制。</p></a><a class="source" href="https://iso25000.com/index.php/en/iso-25000-standards/iso-25010" target="_blank" rel="noopener"><b>ISO/IEC 25010</b><p>软件产品质量模型。</p></a><a class="source" href="https://adr.github.io/" target="_blank" rel="noopener"><b>Architecture Decision Records</b><p>记录架构选择与后果。</p></a></div></div></section></main>
-<footer class="footer"><div class="wrap">可验证的软件架构方法论与标准 SOP v1.2<br>Research → Reality → Plan → Architecture → Evidence → AWS Review → Customer Acceptance<br><a style="color:var(--cyan)" href="architecture.html">继续查看阿尔泰架构学习地图</a></div></footer></body></html>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="可验证的软件架构方法论与标准SOP：14步流程、AWS Well-Architected、ATAM、C4、ADR与方法论自证"
+    />
+    <title>可验证的软件架构方法论与标准SOP</title>
+    <style>
+      :root {
+        --bg: #05070d;
+        --card: #111827d9;
+        --line: #ffffff18;
+        --text: #f5f7ff;
+        --muted: #aab5ce;
+        --blue: #2997ff;
+        --cyan: #64d2ff;
+        --purple: #bf5af2;
+        --green: #30d158;
+        --orange: #ff9f0a;
+        --red: #ff453a;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 72px;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei",
+          sans-serif;
+        line-height: 1.7;
+      }
+      body:before {
+        content: "";
+        position: fixed;
+        inset: -30%;
+        z-index: -1;
+        background:
+          radial-gradient(circle at 18% 12%, #2997ff22, transparent 25%),
+          radial-gradient(circle at 82% 30%, #bf5af21b, transparent 25%);
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .wrap {
+        width: min(1140px, calc(100% - 34px));
+        margin: auto;
+      }
+      .nav {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: #05070ddd;
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--line);
+      }
+      .navin {
+        min-height: 62px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .brand {
+        font-weight: 850;
+        font-size: 14px;
+        color: var(--cyan);
+      }
+      .links {
+        display: flex;
+        gap: 4px;
+      }
+      .links a {
+        font-size: 12px;
+        color: var(--muted);
+        padding: 7px 9px;
+      }
+      .hero {
+        text-align: center;
+        padding: 110px 0 70px;
+      }
+      .badge,
+      .pill {
+        display: inline-flex;
+        border: 1px solid #64d2ff44;
+        background: #64d2ff10;
+        color: var(--cyan);
+        border-radius: 30px;
+        padding: 5px 10px;
+        font-size: 10px;
+        font-weight: 800;
+      }
+      .hero h1 {
+        font-size: clamp(38px, 6.5vw, 75px);
+        letter-spacing: -0.045em;
+        line-height: 1.08;
+        margin: 20px auto;
+        background: linear-gradient(125deg, #fff, var(--cyan), var(--purple));
+        background-clip: text;
+        color: transparent;
+      }
+      .hero p {
+        max-width: 850px;
+        margin: auto;
+        color: var(--muted);
+        font-size: clamp(15px, 2vw, 20px);
+      }
+      .stats,
+      .grid3,
+      .grid2,
+      .grid6,
+      .maturity {
+        display: grid;
+        gap: 14px;
+      }
+      .stats {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 850px;
+        margin: 34px auto 0;
+      }
+      .stats div,
+      .card,
+      details,
+      .source {
+        border: 1px solid var(--line);
+        background: var(--card);
+        border-radius: 19px;
+      }
+      .stats div {
+        padding: 13px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .stats b {
+        display: block;
+        color: var(--cyan);
+        font-size: 20px;
+      }
+      .grid3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .grid2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .grid6 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      section {
+        padding: 68px 0;
+      }
+      .head {
+        max-width: 820px;
+        margin-bottom: 28px;
+      }
+      .kicker {
+        font-size: 11px;
+        font-weight: 850;
+        letter-spacing: 0.15em;
+        color: var(--blue);
+      }
+      h2 {
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.2;
+        margin: 8px 0 10px;
+      }
+      .head p,
+      .card p,
+      .card li {
+        color: var(--muted);
+      }
+      .card {
+        padding: 22px;
+      }
+      .card h3 {
+        margin: 5px 0;
+      }
+      .card p,
+      .card li {
+        font-size: 13px;
+      }
+      .card ul {
+        padding-left: 18px;
+      }
+      .num {
+        font-size: 10px;
+        font-weight: 850;
+        letter-spacing: 0.12em;
+        color: var(--cyan);
+      }
+      .flow {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        overflow: auto;
+        padding-bottom: 20px;
+      }
+      .step {
+        min-width: 122px;
+        flex: 1;
+        padding: 14px 9px;
+        text-align: center;
+        border: 1px solid var(--line);
+        background: var(--card);
+        border-radius: 14px;
+        font-size: 12px;
+      }
+      .step b {
+        display: block;
+        color: var(--cyan);
+        font-size: 10px;
+      }
+      .arr {
+        color: var(--cyan);
+      }
+      .notice {
+        margin-top: 18px;
+        padding: 17px 19px;
+        border-left: 4px solid var(--orange);
+        background: #ff9f0a12;
+        border-radius: 0 15px 15px 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .notice b {
+        color: var(--orange);
+      }
+      .details {
+        display: grid;
+        gap: 9px;
+      }
+      details {
+        padding: 0 19px;
+      }
+      summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 17px 1px;
+        font-weight: 760;
+        display: flex;
+        gap: 11px;
+        align-items: center;
+      }
+      summary::-webkit-details-marker {
+        display: none;
+      }
+      summary:after {
+        content: "＋";
+        margin-left: auto;
+        color: var(--cyan);
+      }
+      details[open] summary:after {
+        content: "－";
+      }
+      .inside {
+        border-top: 1px solid var(--line);
+        padding: 15px 1px 19px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      .inside div {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .inside b {
+        display: block;
+        color: var(--cyan);
+      }
+      .aws {
+        padding: 27px;
+        border: 1px solid #ff9f0a55;
+        border-radius: 27px;
+        background: linear-gradient(135deg, #111a2c, #181222);
+      }
+      .awsmark {
+        font-weight: 900;
+        color: var(--orange);
+        letter-spacing: 0.1em;
+      }
+      .good {
+        border-color: #30d15855;
+      }
+      .bad {
+        border-color: #ff453a55;
+      }
+      .pillar {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        background: #ffffff07;
+      }
+      .pillar b {
+        display: block;
+      }
+      .pillar span {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .timeline {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .dot {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border: 1px solid #ff9f0a66;
+        border-radius: 50%;
+        color: var(--orange);
+        font-size: 11px;
+      }
+      .titem {
+        padding: 0 0 18px;
+      }
+      .titem h3 {
+        font-size: 15px;
+        margin: 2px 0;
+      }
+      .titem p {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 3px 0;
+      }
+      .table {
+        overflow: auto;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--card);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 700px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--line);
+        font-size: 12px;
+      }
+      th {
+        color: var(--cyan);
+      }
+      td {
+        color: var(--muted);
+      }
+      td:first-child {
+        color: #fff;
+        font-weight: 700;
+      }
+      .maturity {
+        grid-template-columns: repeat(6, 1fr);
+      }
+      .maturity div {
+        text-align: center;
+        padding: 16px 8px;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        background: var(--card);
+      }
+      .maturity b {
+        display: block;
+        color: var(--cyan);
+        font-size: 19px;
+      }
+      .maturity span {
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .source {
+        display: block;
+        padding: 14px 16px;
+      }
+      .source b {
+        font-size: 13px;
+        color: var(--cyan);
+      }
+      .source p {
+        font-size: 11px;
+        color: var(--muted);
+        margin: 3px 0;
+      }
+      .footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 12px;
+        border-top: 1px solid var(--line);
+        padding: 40px 0 60px;
+      }
+      @media (max-width: 850px) {
+        .links {
+          display: none;
+        }
+        .grid3,
+        .grid6 {
+          grid-template-columns: 1fr 1fr;
+        }
+        .inside {
+          grid-template-columns: 1fr 1fr;
+        }
+        .maturity {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 560px) {
+        .grid3,
+        .grid2,
+        .grid6 {
+          grid-template-columns: 1fr;
+        }
+        .stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .inside {
+          grid-template-columns: 1fr;
+        }
+        .hero {
+          padding-top: 75px;
+        }
+        .aws {
+          padding: 19px;
+        }
+      }
+      .directory {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 9px;
+        margin-top: 22px;
+      }
+      .directory a {
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        background: var(--card);
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .directory a:hover {
+        border-color: #64d2ff66;
+        color: #fff;
+      }
+      .deep {
+        border: 1px solid #64d2ff40;
+        border-radius: 27px;
+        padding: 26px;
+        background: linear-gradient(145deg, #101a2b, #0c1120);
+      }
+      .deepsteps {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+      .deepstep {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        background: #ffffff07;
+      }
+      .deepstep b {
+        display: block;
+        color: var(--cyan);
+        font-size: 12px;
+      }
+      .deepstep span {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .score {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 9px;
+        margin-top: 14px;
+      }
+      .score div {
+        padding: 13px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .score strong {
+        display: block;
+        color: #fff;
+      }
+      .subplay {
+        grid-column: 1/-1;
+        border-top: 1px dashed #ffffff22;
+        padding-top: 14px;
+      }
+      .subplay h4 {
+        margin: 0 0 8px;
+        color: var(--cyan);
+      }
+      .subplay ol {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        counter-reset: s;
+      }
+      .subplay li {
+        list-style: none;
+        padding: 10px;
+        border-radius: 11px;
+        background: #ffffff06;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .subplay li:before {
+        counter-increment: s;
+        content: counter(s);
+        display: inline-grid;
+        place-items: center;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #2997ff22;
+        color: var(--cyan);
+        margin-right: 6px;
+      }
+      .submeta {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .submeta span {
+        padding: 5px 8px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        font-size: 10px;
+        color: var(--muted);
+      }
+      @media (max-width: 850px) {
+        .directory,
+        .deepsteps {
+          grid-template-columns: 1fr 1fr;
+        }
+        .subplay ol {
+          grid-template-columns: 1fr 1fr;
+        }
+        .score {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 560px) {
+        .directory,
+        .deepsteps,
+        .subplay ol,
+        .score {
+          grid-template-columns: 1fr;
+        }
+        .deep {
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="wrap navin">
+        <a class="brand" href="#top">可验证的软件架构方法论</a>
+        <div class="links">
+          <a href="#directory">目录</a><a href="#discovery">需求发现</a
+          ><a href="#research">最佳实践</a><a href="#sop">14步SOP</a
+          ><a href="#aws">AWS审查</a><a href="#meta">方法自证</a
+          ><a href="architecture.html">阿尔泰架构</a>
+        </div>
+      </div>
+    </nav>
+    <header class="hero" id="top">
+      <div class="wrap">
+        <span class="badge">完整总纲 · v1.3 · 需求发现与部门级子SOP</span>
+        <h1>可验证的软件架构方法论<br />与标准 SOP</h1>
+        <p>
+          Research / Reality / Plan
+          只是入口。完整方法是把<strong>事实、权威来源、架构权衡、分段实施、自动测试、独立审计、AWS外部复核和客户验收</strong>连成一条证据链。
+        </p>
+        <div class="stats">
+          <div><b>3</b>前置收敛门</div>
+          <div><b>14</b>项目标准步骤</div>
+          <div><b>6</b>AWS审查支柱</div>
+          <div><b>10</b>方法论自证</div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section id="map">
+        <div class="wrap">
+          <div class="head">
+            <div class="kicker">00 · COMPLETE MAP</div>
+            <h2>小白先看这一张总地图</h2>
+            <p>
+              像盖房子：查规范、勘察现场、冻结施工图，然后分段施工、验收、交付和持续观察。
+            </p>
+          </div>
+          <div class="flow">
+            <div class="step"><b>① RESEARCH</b>查行业规范</div>
+            <span class="arr">›</span>
+            <div class="step"><b>② REALITY</b>查项目事实</div>
+            <span class="arr">›</span>
+            <div class="step"><b>③ PLAN</b>冻结计划</div>
+            <span class="arr">›</span>
+            <div class="step"><b>④ DESIGN</b>架构权衡</div>
+            <span class="arr">›</span>
+            <div class="step"><b>⑤ BUILD</b>逐Gate实施</div>
+            <span class="arr">›</span>
+            <div class="step"><b>⑥ VERIFY</b>测试反例</div>
+            <span class="arr">›</span>
+            <div class="step"><b>⑦ REVIEW</b>AWS复核</div>
+            <span class="arr">›</span>
+            <div class="step"><b>⑧ DELIVER</b>客户验收</div>
+            <span class="arr">›</span>
+            <div class="step"><b>⑨ EVOLVE</b>生产演进</div>
+          </div>
+        </div>
+      </section>
+      <section id="directory">
+        <div class="wrap">
+          <div class="head">
+            <div class="kicker">DIRECTORY · 多级执行目录</div>
+            <h2>从问题直接进入对应部门</h2>
+            <p>
+              每个一级模块都能展开查看子SOP；两个最常用模块已经提供完整量化操作台。
+            </p>
+          </div>
+          <div class="directory">
+            <a href="#discovery">01 需求发现与澄清</a
+            ><a href="#research">02 最佳实践调查</a>
+            <a href="#sop">03 事实冻结与代码扫描</a
+            ><a href="#sop">04 质量属性场景</a>
+            <a href="#sop">05 候选架构与探针</a
+            ><a href="#sop">06 ATAM架构权衡</a>
+            <a href="#sop">07 C4与九张地图</a><a href="#sop">08 架构宪法</a>
+            <a href="#sop">09 ADR决策记录</a
+            ><a href="#sop">10 自动适应度门禁</a>
+            <a href="#sop">11 分Gate实施</a><a href="#sop">12 故障安全恢复</a>
+            <a href="#aws">13 AWS外部复核</a><a href="#sop">14 客户环境交付</a>
+            <a href="#sop">15 生产观察演进</a
+            ><a href="#meta">16 方法论自身验证</a>
+          </div>
+        </div>
+      </section>
+      <section id="gates">
+        <div class="wrap">
+          <div class="head">
+            <div class="kicker">01 · THREE PRE-GATES</div>
+            <h2>三个新理念放在完整体系最前面</h2>
+            <p>分别防止“方向没依据”“理解错项目”“施工范围漂移”。</p>
+          </div>
+          <div class="grid3">
+            <article class="card">
+              <div class="num">R1 · RESEARCH</div>
+              <h3>最佳实践调查</h3>
+              <p>
+                查官方标准、成熟案例和至少两个候选方案，写清版本、条件、局限和反例。
+              </p>
+              <ul>
+                <li>输出：来源登记、候选矩阵、未知假设</li>
+                <li>阻断：只有观点，没有权威依据</li>
+              </ul>
+            </article>
+            <article class="card">
+              <div class="num">R2 · REALITY</div>
+              <h3>代码与运行事实扫描</h3>
+              <p>
+                复现Bug后沿入口、调用链、数据源、副作用、错误和回滚路径检查关键代码。
+              </p>
+              <ul>
+                <li>输出：事实基线、复现、影响面</li>
+                <li>阻断：没有文件、命令、测试或运行证据</li>
+              </ul>
+            </article>
+            <article class="card">
+              <div class="num">R3 · PLAN</div>
+              <h3>计划冻结</h3>
+              <p>
+                一次批准一个节点，写明目标、非目标、允许文件、测试、验收人和回滚。
+              </p>
+              <ul>
+                <li>输出：计划、Gate任务书、证据清单</li>
+                <li>阻断：“全面优化”等模糊任务</li>
+              </ul>
+            </article>
+          </div>
+          <div class="notice">
+            <b>不能互相替代：</b
+            >Research给方向，Reality给真实地形，Plan给施工路线；三道门通过后，才进入下面14步完整SOP。
+          </div>
+        </div>
+      </section>
+      <section id="discovery">
+        <div class="wrap">
+          <div class="deep">
+            <div class="head">
+              <div class="kicker">DEEP SOP 01 · REQUIREMENTS DISCOVERY</div>
+              <h2>客户说不清需求，也能逐步发现</h2>
+              <p>
+                问卷只是入口。成熟做法是“问卷＋访谈＋观察＋场景＋原型＋追踪＋变更管理”，把客户脑中的模糊愿望逐步变成可验证需求。
+              </p>
+            </div>
+            <div class="deepsteps">
+              <div class="deepstep">
+                <b>1 初始问卷</b
+                ><span
+                  >目标、现状、痛点、角色、结果、禁区、系统、预算、时限、未来。</span
+                >
+              </div>
+              <div class="deepstep">
+                <b>2 角色地图</b
+                ><span
+                  >购买者、管理者、员工、审批者、维护者、最终用户不得遗漏。</span
+                >
+              </div>
+              <div class="deepstep">
+                <b>3 观察现状</b
+                ><span
+                  >跟随一条真实任务，记录输入、动作、交接、等待、错误和经验依赖。</span
+                >
+              </div>
+              <div class="deepstep">
+                <b>4 量化痛点</b
+                ><span>频率、耗时、错误率、人数、成本、最坏后果和目标值。</span>
+              </div>
+              <div class="deepstep">
+                <b>5 场景卡</b
+                ><span>角色＋环境＋目标＋任务＋期望结果＋失败处理。</span>
+              </div>
+              <div class="deepstep">
+                <b>6 环境调查</b
+                ><span
+                  >设备、系统、网络、并发、数据位置、管理员权限、备份责任。</span
+                >
+              </div>
+              <div class="deepstep">
+                <b>7 原型验证</b
+                ><span>流程图→黑白原型→可点击原型；先验证再写正式代码。</span>
+              </div>
+              <div class="deepstep">
+                <b>8 优先级</b
+                ><span
+                  >MUST / SHOULD / COULD / WON'T NOW，明确当前报价边界。</span
+                >
+              </div>
+              <div class="deepstep">
+                <b>9 需求追踪</b
+                ><span>客户原话→场景→页面→决策→任务→测试→证据。</span>
+              </div>
+              <div class="deepstep">
+                <b>10 受控变更</b
+                ><span>评估范围、费用、时间、依赖和架构影响后再批准版本。</span>
+              </div>
+            </div>
+            <h3>20分需求完整度门禁</h3>
+            <div class="score">
+              <div><strong>18–20</strong>可进入正式架构</div>
+              <div><strong>15–17</strong>只允许做原型</div>
+              <div><strong>10–14</strong>继续Discovery</div>
+              <div><strong>0–9</strong>问题尚未定义</div>
+            </div>
+            <div class="notice">
+              <b>一票阻断：</b
+              >用户角色、核心场景、安全边界任一项为0，不得正式开发。建议原型门槛：每个关键角色完成3–5项代表任务，关键任务完成率目标≥80%，严重理解错误为0；最终阈值由客户签字确认。
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="research">
+        <div class="wrap">
+          <div class="deep">
+            <div class="head">
+              <div class="kicker">DEEP SOP 02 · BEST-PRACTICE RESEARCH</div>
+              <h2>最佳实践调查：8步量化执行</h2>
+              <p>
+                不靠“我觉得”，也不盲从大厂。把权威来源、项目适配、候选比较和技术实验放进同一张验收单。
+              </p>
+            </div>
+            <div class="deepsteps">
+              <div class="deepstep">
+                <b>1 问题具体化</b
+                ><span
+                  >一次只研究一个会改变架构的决策，包含场景、目标、限制。</span
+                >
+              </div>
+              <div class="deepstep">
+                <b>2 登记8项条件</b
+                ><span
+                  >用户、角色、数据、并发、部署、安全、预算、扩展；未知写UNKNOWN。</span
+                >
+              </div>
+              <div class="deepstep">
+                <b>3 最少6份来源</b
+                ><span
+                  >标准/政府≥1、官方文档≥2、研究机构≥1、案例≥1、失败/反例≥1。</span
+                >
+              </div>
+              <div class="deepstep">
+                <b>4 至少2个候选</b
+                ><span>复杂决策建议3个，并保留“维持现状”作为比较基线。</span>
+              </div>
+              <div class="deepstep">
+                <b>5 十维打分</b
+                ><span
+                  >业务、稳定、安全、实施、运维、易用、初期/长期成本、扩展、回滚。</span
+                >
+              </div>
+              <div class="deepstep">
+                <b>6 验证最大未知</b
+                ><span
+                  >做最小技术探针，保留环境、步骤、原始输出、退出码和复现法。</span
+                >
+              </div>
+              <div class="deepstep">
+                <b>7 五态结论</b
+                ><span>DIRECT / ADAPTED / DEFERRED / REJECTED / UNKNOWN。</span>
+              </div>
+              <div class="deepstep">
+                <b>8 独立复审</b
+                ><span
+                  >10项审计全过才PASS；8–9补证；≤7 RETURN；触红线BLOCKED。</span
+                >
+              </div>
+            </div>
+            <div class="notice">
+              <b>三项一票否决：</b
+              >违反法律或平台规则；无法保护客户数据/Secret；危险失败后不能安全停止或恢复。GitHub星标和博客只能作实现参考，不能单独证明架构正确。
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="sop">
+        <div class="wrap">
+          <div class="head">
+            <div class="kicker">02 · FOURTEEN STEPS</div>
+            <h2>完整14步标准项目流程</h2>
+            <p>点击展开。每步都必须说清输入、动作、产物和通过条件。</p>
+          </div>
+          <div class="details">
+            <details open>
+              <summary><span class="pill">SOP 01</span>项目章程与边界</summary>
+              <div class="inside">
+                <div><b>输入</b>客户目标、用户、预算、时限</div>
+                <div><b>动作</b>定义成功、非目标、授权和风险</div>
+                <div><b>产物</b>PROJECT_CHARTER</div>
+                <div><b>通过</b>客户与负责人共同确认</div>
+              </div>
+            </details>
+            <details>
+              <summary><span class="pill">SOP 02</span>事实冻结</summary>
+              <div class="inside">
+                <div><b>输入</b>代码、配置、容器、数据、环境</div>
+                <div><b>动作</b>扫描入口、依赖、状态、Secret</div>
+                <div><b>产物</b>FACT_BASELINE、依赖图</div>
+                <div><b>通过</b>事实/推断/未知分开</div>
+              </div>
+            </details>
+            <details>
+              <summary><span class="pill">SOP 03</span>质量属性场景</summary>
+              <div class="inside">
+                <div><b>输入</b>目标与故障担忧</div>
+                <div><b>动作</b>把稳定、安全、性能写成可测场景</div>
+                <div><b>产物</b>指标、阈值、测量法</div>
+                <div><b>通过</b>每个承诺都有数字</div>
+              </div>
+            </details>
+            <details>
+              <summary>
+                <span class="pill">SOP 04</span>候选架构与技术探针
+              </summary>
+              <div class="inside">
+                <div><b>输入</b>事实与质量场景</div>
+                <div><b>动作</b>至少两个方案，小实验验证最大未知</div>
+                <div><b>产物</b>候选矩阵、Spike</div>
+                <div><b>通过</b>不凭个人喜好选型</div>
+              </div>
+            </details>
+            <details>
+              <summary><span class="pill">SOP 05</span>轻量ATAM权衡</summary>
+              <div class="inside">
+                <div><b>输入</b>业务驱动、候选方案</div>
+                <div><b>动作</b>找风险、敏感点、取舍点</div>
+                <div><b>产物</b>风险清单、选择理由</div>
+                <div><b>通过</b>代价和收益都被说清</div>
+              </div>
+            </details>
+            <details>
+              <summary>
+                <span class="pill">SOP 06</span>C4与九张项目地图
+              </summary>
+              <div class="inside">
+                <div><b>输入</b>被选架构</div>
+                <div>
+                  <b>动作</b
+                  >画上下文、容器、组件、运行、数据、规则、发送、部署、恢复
+                </div>
+                <div><b>产物</b>可导航架构地图</div>
+                <div><b>通过</b>新人能找到边界和故障域</div>
+              </div>
+            </details>
+            <details>
+              <summary><span class="pill">SOP 07</span>架构宪法</summary>
+              <div class="inside">
+                <div><b>输入</b>风险、合规、目标架构</div>
+                <div><b>动作</b>规定单一真源、默认拒绝、审批、幂等和回滚</div>
+                <div><b>产物</b>工程硬规则</div>
+                <div><b>通过</b>每条原则可转成测试</div>
+              </div>
+            </details>
+            <details>
+              <summary><span class="pill">SOP 08</span>ADR架构决策记录</summary>
+              <div class="inside">
+                <div><b>输入</b>重要且难逆转的选择</div>
+                <div><b>动作</b>记录背景、候选、决定、后果</div>
+                <div><b>产物</b>版本化ADR</div>
+                <div><b>通过</b>知道为何选、何时推翻</div>
+              </div>
+            </details>
+            <details>
+              <summary><span class="pill">SOP 09</span>架构适应度测试</summary>
+              <div class="inside">
+                <div><b>输入</b>宪法和质量属性</div>
+                <div><b>动作</b>自动检查边界、Secret、迁移、发送规则</div>
+                <div><b>产物</b>CI fitness functions</div>
+                <div><b>通过</b>故意违规会自动失败</div>
+              </div>
+            </details>
+            <details>
+              <summary><span class="pill">SOP 10</span>按Gate实施</summary>
+              <div class="inside">
+                <div><b>输入</b>批准计划与验收合同</div>
+                <div><b>动作</b>小步提交，一次一个节点</div>
+                <div><b>产物</b>diff、commit、测试、退出码</div>
+                <div><b>通过</b>独立角色裁决PASS</div>
+              </div>
+            </details>
+            <details>
+              <summary>
+                <span class="pill">SOP 11</span>故障、安全与恢复验证
+              </summary>
+              <div class="inside">
+                <div><b>输入</b>新能力、威胁模型</div>
+                <div><b>动作</b>注入崩溃、超时、重复、越权、恢复失败</div>
+                <div><b>产物</b>故障矩阵、恢复报告</div>
+                <div><b>通过</b>危险失败能安全停止</div>
+              </div>
+            </details>
+            <details>
+              <summary>
+                <span class="pill">SOP 12</span>外部框架交叉复核
+              </summary>
+              <div class="inside">
+                <div><b>输入</b>内部架构证据包</div>
+                <div><b>动作</b>用AWS WAF、NIST、OWASP复核</div>
+                <div><b>产物</b>风险与改进计划</div>
+                <div><b>通过</b>外部结果逐项映射项目证据</div>
+              </div>
+            </details>
+            <details>
+              <summary>
+                <span class="pill">SOP 13</span>客户真实环境验收
+              </summary>
+              <div class="inside">
+                <div><b>输入</b>发布包、安装SOP、支持矩阵</div>
+                <div><b>动作</b>干净客户机盲装、升级、备份、恢复、员工UAT</div>
+                <div><b>产物</b>客户签字与交付证据</div>
+                <div><b>通过</b>不只在开发者电脑成功</div>
+              </div>
+            </details>
+            <details>
+              <summary><span class="pill">SOP 14</span>生产观察与演进</summary>
+              <div class="inside">
+                <div><b>输入</b>运行指标、事故、反馈</div>
+                <div><b>动作</b>复盘SLO、规则效果与ADR假设</div>
+                <div><b>产物</b>观察报告、下一版路线</div>
+                <div><b>通过</b>变化继续走同一证据链</div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+      <section id="aws">
+        <div class="wrap">
+          <div class="aws">
+            <div class="awsmark">AWS WELL-ARCHITECTED</div>
+            <div class="head">
+              <h2>它是什么？怎么真正使用？</h2>
+              <p>
+                它是AWS控制台里的在线架构自评工具，不是下载安装到电脑的软件，也不会自动扫描代码。它用结构化问题帮助团队发现高/中风险，形成改进计划、里程碑和报告。
+              </p>
+            </div>
+            <div class="grid2">
+              <article class="card good">
+                <h3>它能做</h3>
+                <p>
+                  统一问题集；六支柱复核；记录HRI/MRI；形成改进项；保存Milestone；下载报告。
+                </p>
+              </article>
+              <article class="card bad">
+                <h3>它不能做</h3>
+                <p>
+                  不能证明代码已接线；不能替你跑测试；不能代替客户验收、法律意见或平台授权。
+                </p>
+              </article>
+            </div>
+            <h3>六大支柱</h3>
+            <div class="grid6">
+              <div class="pillar">
+                <b>卓越运营</b><span>发布、观察、响应、改进</span>
+              </div>
+              <div class="pillar">
+                <b>安全性</b><span>身份、权限、数据、响应</span>
+              </div>
+              <div class="pillar">
+                <b>可靠性</b><span>隔离、恢复、容量、变化</span>
+              </div>
+              <div class="pillar">
+                <b>性能效率</b><span>资源选择、监控、适配</span>
+              </div>
+              <div class="pillar">
+                <b>成本优化</b><span>成本和业务价值可追踪</span>
+              </div>
+              <div class="pillar">
+                <b>可持续性</b><span>减少消耗并持续改善</span>
+              </div>
+            </div>
+            <h3>实际操作流程</h3>
+            <div class="timeline">
+              <div class="dot">1</div>
+              <div class="titem">
+                <h3>准备账号与权限</h3>
+                <p>
+                  正式工具通常需要AWS账号登录Management
+                  Console，并由管理员授予相应IAM权限；公开框架文档无需账号。
+                </p>
+              </div>
+              <div class="dot">2</div>
+              <div class="titem">
+                <h3>创建 Workload</h3>
+                <p>
+                  填写名称、环境、地区、行业、负责人和边界；绝不录入Token、Cookie或客户个人数据。
+                </p>
+              </div>
+              <div class="dot">3</div>
+              <div class="titem">
+                <h3>选择 Lens</h3>
+                <p>
+                  至少选择官方Well-Architected Framework
+                  Lens，适用时再加Serverless/SaaS等专项Lens。
+                </p>
+              </div>
+              <div class="dot">4</div>
+              <div class="titem">
+                <h3>回答六支柱问题</h3>
+                <p>
+                  每个勾选项绑定本地证据编号；没证据就写UNKNOWN，不能为了低风险而自我美化。
+                </p>
+              </div>
+              <div class="dot">5</div>
+              <div class="titem">
+                <h3>读取 Improvement Plan</h3>
+                <p>把HRI/MRI映射到负责人、日期、项目Gate和验收测试。</p>
+              </div>
+              <div class="dot">6</div>
+              <div class="titem">
+                <h3>保存 Milestone</h3>
+                <p>
+                  架构批准、重要发布、生产复盘时各保存一次，形成可比较的历史快照。
+                </p>
+              </div>
+              <div class="dot">7</div>
+              <div class="titem">
+                <h3>下载并归档报告</h3>
+                <p>保存PDF、生成时间、工具版本、SHA-256和证据矩阵。</p>
+              </div>
+              <div class="dot">8</div>
+              <div class="titem">
+                <h3>回项目关闭风险</h3>
+                <p>
+                  AWS只提出问题；必须通过代码、故障测试、独立审计和客户环境验收真正关闭。
+                </p>
+              </div>
+            </div>
+            <div class="notice">
+              <b>关键结论：</b>AWS
+              Well-Architected是“结构化复核员”，不是绝对权威裁判。非AWS项目也可借用问题集，但必须标注不适用项，不能假装部署在AWS。
+            </div>
+            <div class="table" style="margin-top: 18px">
+              <table>
+                <thead>
+                  <tr>
+                    <th>AWS问题</th>
+                    <th>项目事实</th>
+                    <th>决策</th>
+                    <th>测试</th>
+                    <th>证据</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>支柱/问题编号</td>
+                    <td>代码、配置、运行态</td>
+                    <td>ADR与取舍</td>
+                    <td>正常、故障、反例</td>
+                    <td>commit、退出码、报告、hash</td>
+                  </tr>
+                  <tr>
+                    <td>无证据</td>
+                    <td>标记UNKNOWN</td>
+                    <td>不得当已实现</td>
+                    <td>创建待验证Gate</td>
+                    <td>风险保持打开</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="artifacts">
+        <div class="wrap">
+          <div class="head">
+            <div class="kicker">04 · EVIDENCE SYSTEM</div>
+            <h2>最终必须留下的三类证据</h2>
+          </div>
+          <div class="grid3">
+            <article class="card">
+              <h3>事实包</h3>
+              <p>
+                项目章程、事实基线、依赖/数据/Secret地图、问题复现、外部约束。
+              </p>
+            </article>
+            <article class="card">
+              <h3>决策包</h3>
+              <p>质量属性、候选对比、ATAM、C4九图、宪法、ADR和来源登记。</p>
+            </article>
+            <article class="card">
+              <h3>验收包</h3>
+              <p>
+                测试、反例、退出码、commit、审计、AWS报告、客户UAT和回滚点。
+              </p>
+            </article>
+          </div>
+          <div class="table" style="margin-top: 14px">
+            <table>
+              <thead>
+                <tr>
+                  <th>标签</th>
+                  <th>含义</th>
+                  <th>能否说已完成</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>FACT</td>
+                  <td>当前可复查的客观事实</td>
+                  <td>只能描述现状</td>
+                </tr>
+                <tr>
+                  <td>VERIFIED-CONTRACT</td>
+                  <td>隔离契约已验收，可能尚未生产接线</td>
+                  <td>必须写清边界</td>
+                </tr>
+                <tr>
+                  <td>TARGET</td>
+                  <td>被批准但待实施的设计</td>
+                  <td>不能</td>
+                </tr>
+                <tr>
+                  <td>EXTERNAL</td>
+                  <td>依赖平台、法规、客户或第三方</td>
+                  <td>未知时保守阻断</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <section id="meta">
+        <div class="wrap">
+          <div class="head">
+            <div class="kicker">05 · VERIFY THE METHOD</div>
+            <h2>方法论本身也要经过10项验证</h2>
+            <p>我们不宣称“绝对正确”，而是让它可以被反驳、复现和持续修正。</p>
+          </div>
+          <div class="grid2">
+            <article class="card">
+              <div class="num">META 01–05</div>
+              <h3>证明它能发现错误</h3>
+              <ul>
+                <li>权威来源与需求追溯</li>
+                <li>历史缺陷回放</li>
+                <li>故意植入违规</li>
+                <li>不同审计员一致性</li>
+                <li>陌生项目盲测</li>
+              </ul>
+            </article>
+            <article class="card">
+              <div class="num">META 06–10</div>
+              <h3>证明它能复用与演进</h3>
+              <ul>
+                <li>跨行业/规模复用</li>
+                <li>外部报告交叉验证</li>
+                <li>上线结果指标验证</li>
+                <li>红队反向攻击</li>
+                <li>版本化、废弃与替换</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section id="maturity">
+        <div class="wrap">
+          <div class="head">
+            <div class="kicker">06 · MATURITY</div>
+            <h2>项目成熟度不是文件数量</h2>
+            <p>看的是证据链闭合到哪一步。</p>
+          </div>
+          <div class="maturity">
+            <div><b>M0</b><span>凭经验/提示词</span></div>
+            <div><b>M1</b><span>清单与计划</span></div>
+            <div><b>M2</b><span>来源与架构图</span></div>
+            <div><b>M3</b><span>Gate自动测试</span></div>
+            <div><b>M4</b><span>外部复核+客户验收</span></div>
+            <div><b>M5</b><span>生产数据持续校正</span></div>
+          </div>
+          <div class="notice">
+            <b>阿尔泰边界：</b
+            >架构总纲已通过A0文档级审计，不等于生产实现或客户交付通过；正式实现仍按逐Gate证据计分，真实发送继续默认禁止。
+          </div>
+        </div>
+      </section>
+      <section id="sources">
+        <div class="wrap">
+          <div class="head">
+            <div class="kicker">07 · OFFICIAL SOURCES</div>
+            <h2>主要官方依据</h2>
+          </div>
+          <div class="grid2">
+            <a
+              class="source"
+              href="https://docs.aws.amazon.com/wellarchitected/latest/userguide/intro.html"
+              target="_blank"
+              rel="noopener"
+              ><b>AWS Well-Architected Tool User Guide</b>
+              <p>Workload、Lens、Milestone与改进计划。</p></a
+            ><a
+              class="source"
+              href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+              target="_blank"
+              rel="noopener"
+              ><b>AWS Well-Architected Framework</b>
+              <p>六大支柱与官方审查问题。</p></a
+            ><a
+              class="source"
+              href="https://www.sei.cmu.edu/library/atam-method-for-architecture-evaluation/"
+              target="_blank"
+              rel="noopener"
+              ><b>SEI · ATAM</b>
+              <p>质量属性、风险、敏感点与取舍。</p></a
+            ><a
+              class="source"
+              href="https://c4model.com/"
+              target="_blank"
+              rel="noopener"
+              ><b>C4 Model</b>
+              <p>上下文、容器、组件和代码架构视图。</p></a
+            ><a
+              class="source"
+              href="https://csrc.nist.gov/projects/ssdf"
+              target="_blank"
+              rel="noopener"
+              ><b>NIST · SSDF 1.1</b>
+              <p>安全软件开发生命周期。</p></a
+            ><a
+              class="source"
+              href="https://owasp.org/www-project-application-security-verification-standard/"
+              target="_blank"
+              rel="noopener"
+              ><b>OWASP ASVS</b>
+              <p>可测试的应用安全控制。</p></a
+            ><a
+              class="source"
+              href="https://iso25000.com/index.php/en/iso-25000-standards/iso-25010"
+              target="_blank"
+              rel="noopener"
+              ><b>ISO/IEC 25010</b>
+              <p>软件产品质量模型。</p></a
+            ><a
+              class="source"
+              href="https://adr.github.io/"
+              target="_blank"
+              rel="noopener"
+              ><b>Architecture Decision Records</b>
+              <p>记录架构选择与后果。</p></a
+            ><a
+              class="source"
+              href="https://www.iso.org/standard/72089.html"
+              target="_blank"
+              rel="noopener"
+              ><b>ISO/IEC/IEEE 29148</b>
+              <p>需求工程过程、信息项与需求质量。</p></a
+            ><a
+              class="source"
+              href="https://www.iso.org/standard/77520.html"
+              target="_blank"
+              rel="noopener"
+              ><b>ISO 9241-210</b>
+              <p>交互系统全生命周期的人本设计。</p></a
+            ><a
+              class="source"
+              href="https://www.gov.uk/service-manual/agile-delivery/how-the-discovery-phase-works"
+              target="_blank"
+              rel="noopener"
+              ><b>GOV.UK Discovery</b>
+              <p>先理解用户、完整旅程和约束，再决定是否建设。</p></a
+            ><a
+              class="source"
+              href="https://www.iiba.org/globalassets/business-analysis-resources/the-business-analysis-standard/files/the-business-analysis-standard.pdf"
+              target="_blank"
+              rel="noopener"
+              ><b>IIBA Business Analysis Standard</b>
+              <p>准备、获取、确认、沟通与持续协作。</p></a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="wrap">
+        可验证的软件架构方法论与标准 SOP v1.3<br />Research → Reality → Plan →
+        Architecture → Evidence → AWS Review → Customer Acceptance<br /><a
+          style="color: var(--cyan)"
+          href="architecture.html"
+          >继续查看阿尔泰架构学习地图</a
+        >
+      </div>
+    </footer>
+    <script>
+      const playbooks = [
+        [
+          "需求与边界部门",
+          [
+            "发初始问卷并登记未知",
+            "画全体利益相关者地图",
+            "访谈并观察一条真实工作流",
+            "量化痛点、成功指标和禁区",
+            "用原型复述并让各角色完成任务",
+            "编号需求、签字并建立变更池",
+          ],
+          "需求完整度≥18/20，关键项无0分",
+          "ISO 29148 · ISO 9241-210 · IIBA",
+        ],
+        [
+          "事实审计部门",
+          [
+            "记录Git/版本/时间快照",
+            "枚举入口、进程、端口和外部依赖",
+            "沿关键调用链检查数据与副作用",
+            "区分业务数据、配置、Secret和运行态",
+            "复现问题并保存命令退出码",
+            "将FACT/INFERENCE/UNKNOWN分开审计",
+          ],
+          "关键路径覆盖100%，每项事实有证据位置",
+          "NIST SSDF · 代码审查实践",
+        ],
+        [
+          "质量工程部门",
+          [
+            "收集业务驱动和最坏担忧",
+            "按角色与环境写触发事件",
+            "写期望响应与失败响应",
+            "确定指标、阈值、样本和计时点",
+            "让客户确认目标而非空泛形容词",
+            "把场景变成验收测试",
+          ],
+          "所有关键质量承诺可测；未定阈值=BLOCKED",
+          "ISO 25010 · SEI QAW/ATAM",
+        ],
+        [
+          "方案实验部门",
+          [
+            "至少提出两个候选及现状基线",
+            "登记每个候选前提和失败模式",
+            "按质量场景统一比较",
+            "选择最大未知做最小Spike",
+            "保存环境、原始结果和复现步骤",
+            "形成采用/适配/延期/拒绝结论",
+          ],
+          "无单一预设答案；最大未知均有实验",
+          "ATAM · ADR · 官方技术文档",
+        ],
+        [
+          "架构评估部门",
+          [
+            "确认业务驱动与利益相关者",
+            "展示候选架构和关键决策",
+            "建立质量属性效用树",
+            "按优先级走查具体场景",
+            "识别风险、敏感点、取舍点",
+            "聚类风险并形成整改清单",
+          ],
+          "高风险有负责人/期限/Gate；反方能复述代价",
+          "CMU SEI ATAM",
+        ],
+        [
+          "架构制图部门",
+          [
+            "画系统上下文和外部角色",
+            "画部署容器/进程边界",
+            "画组件职责与依赖方向",
+            "补运行、数据、规则、发送地图",
+            "补部署、升级、备份、恢复地图",
+            "用新人导航任务验证可理解性",
+          ],
+          "九张图覆盖边界/真源/副作用/恢复，图与代码一致",
+          "ISO 42010 · C4 Model",
+        ],
+        [
+          "架构治理部门",
+          [
+            "从历史事故提炼不可违反原则",
+            "定义单一真源和写入所有者",
+            "定义默认拒绝与最小权限",
+            "规定审批、幂等、审计和回滚",
+            "为每条原则设计违规样本",
+            "接入自动门禁并确定例外流程",
+          ],
+          "每条宪法都有自动或人工测试；例外有期限",
+          "NIST SSDF · OWASP ASVS",
+        ],
+        [
+          "决策记录部门",
+          [
+            "识别重要且难逆转的决定",
+            "记录背景和驱动因素",
+            "列出至少两个候选",
+            "写决定及证据链接",
+            "写正负后果、风险与迁移",
+            "规定重新评估触发条件",
+          ],
+          "ADR状态/负责人/日期齐全，能追到测试证据",
+          "ADR社区规范 · ISO 42010",
+        ],
+        [
+          "自动门禁部门",
+          [
+            "把架构规则转成可执行断言",
+            "准备一个故意违规样本",
+            "在本地和CI运行正反测试",
+            "检查依赖方向、Secret和发布物",
+            "设置失败即阻断的Gate",
+            "记录退出码、版本和证据路径",
+          ],
+          "违规检出率100%；门禁不可被普通发布绕过",
+          "NIST SSDF · OWASP ASVS",
+        ],
+        [
+          "实施调度部门",
+          [
+            "一次只批准一个主节点",
+            "锁定目标、非目标和允许文件",
+            "先写验收合同和回滚点",
+            "小步实现并保留原子提交",
+            "实施者提交候选而非自宣PASS",
+            "独立验收后才累计正式进度",
+          ],
+          "代码/测试/diff/退出码/审计齐全，否则RETURN",
+          "持续交付 · 小变更审查",
+        ],
+        [
+          "韧性与安全部门",
+          [
+            "建立威胁和故障清单",
+            "注入崩溃、超时、断网、重复",
+            "测试越权、Secret泄漏和数据破坏",
+            "验证幂等、fencing、fail-closed",
+            "执行备份恢复与回滚演练",
+            "记录RPO/RTO实测和剩余风险",
+          ],
+          "危险副作用不重复；恢复结果可校验；目标未达不放行",
+          "NIST SSDF · OWASP ASVS · AWS WAF",
+        ],
+        [
+          "外部复核部门",
+          [
+            "准备需求-决策-测试-证据矩阵",
+            "创建AWS Workload并选Lens",
+            "逐题只按证据作答",
+            "登记HRI/MRI和不适用理由",
+            "映射负责人、日期和内部Gate",
+            "保存Milestone、PDF与SHA-256",
+          ],
+          "无证据写UNKNOWN；报告风险必须回项目关闭",
+          "AWS Well-Architected",
+        ],
+        [
+          "客户交付部门",
+          [
+            "确定支持系统和运行前提",
+            "从干净Git构建签名交付包",
+            "在干净客户机做安装前检查",
+            "完成盲装、升级、备份和恢复",
+            "按角色执行员工/管理员UAT",
+            "移交手册、培训、支持与签字",
+          ],
+          "新机安装成功；无Secret入包；恢复演练通过；客户签字",
+          "供应链安全 · 客户验收",
+        ],
+        [
+          "生产演进部门",
+          [
+            "定义业务与技术SLO",
+            "采集日志、指标、追踪和审计",
+            "按事故严重度响应与沟通",
+            "对比上线结果与原假设",
+            "复盘规则、ADR和架构风险",
+            "新变化重新进入Research/Reality/Plan",
+          ],
+          "SLO可测；事故有复盘；旧决策失效能被触发重审",
+          "AWS运营卓越 · 持续改进",
+        ],
+      ];
+      document.querySelectorAll("#sop details").forEach((d, i) => {
+        const p = playbooks[i];
+        if (!p) return;
+        const box = document.createElement("div");
+        box.className = "subplay";
+        box.innerHTML =
+          "<h4>" +
+          p[0] +
+          " · 子SOP</h4><ol>" +
+          p[1].map((x) => "<li>" + x + "</li>").join("") +
+          "</ol><div class='submeta'><span>量化门禁：" +
+          p[2] +
+          "</span><span>依据：" +
+          p[3] +
+          "</span><span>裁决：PASS / RETURN / BLOCKED</span></div>";
+        d.querySelector(".inside").appendChild(box);
+      });
+    </script>
+  </body>
+</html>
