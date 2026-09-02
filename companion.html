@@ -5,13 +5,25 @@
     if (!sb) return;
     const pct = Math.round(FLYWHEEL.coverage * 100);
     const tgt = Math.round(FLYWHEEL.target * 100);
-    const pubPct = (FLYWHEEL.publishedCards/FLYWHEEL.totalCards*100).toFixed(0);
+    const pubPct = Math.round(FLYWHEEL.publishedCards/FLYWHEEL.totalCards*100);
     const barColor = pct >= tgt ? 'linear-gradient(90deg,var(--green),var(--lime))' : 'linear-gradient(90deg,var(--orange),var(--accent))';
-    sb.innerHTML = '<div class="stat-item"><strong>' + FLYWHEEL.publishedCards + '</strong><span>已发布方法论卡 / 14</span><div class="stat-progress"><div style="width:' + pubPct + '%"></div></div></div>' +
-      '<div class="stat-item"><strong>' + FLYWHEEL.coreCards + '</strong><span>核心子领域</span><div class="stat-progress"><div style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime))"></div></div></div>' +
-      '<div class="stat-item"><strong>' + FLYWHEEL.goldenHits + ' / ' + FLYWHEEL.goldenScenes + '</strong><span>黄金集命中 / 总场景</span><div class="stat-progress"><div style="width:' + pct + '%"></div></div></div>' +
-      '<div class="stat-item"><strong>' + pct + '% / ' + tgt + '%</strong><span>黄金集覆盖率 / 目标线</span><div class="stat-progress"><div style="width:' + (pct/tgt*100).toFixed(0) + '%;background:' + barColor + '"></div></div></div>' +
-      '<div class="stat-item"><strong>v1.0</strong><span>当前版本</span><div class="stat-progress"><div style="width:57%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div></div>';
+    const items = [
+      {n:FLYWHEEL.publishedCards, l:'已发布方法论卡 / 14', w:pubPct, c:''},
+      {n:FLYWHEEL.coreCards, l:'核心子领域', w:100, c:'background:linear-gradient(90deg,var(--green),var(--lime))'},
+      {n:FLYWHEEL.goldenHits + ' / ' + FLYWHEEL.goldenScenes, l:'黄金集命中 / 总场景', w:pct, c:''},
+      {n:pct + '% / ' + tgt + '%', l:'黄金集覆盖率 / 目标线', w:Math.round(pct/tgt*100), c:'background:' + barColor},
+      {n:'v1.0', l:'当前版本', w:57, c:'background:linear-gradient(90deg,var(--accent),var(--blue))'}
+    ];
+    sb.textContent = '';
+    items.forEach(function(it){
+      const d = document.createElement('div'); d.className='stat-item';
+      const s = document.createElement('strong'); s.textContent = String(it.n); d.appendChild(s);
+      const sp = document.createElement('span'); sp.textContent = it.l; d.appendChild(sp);
+      const bar = document.createElement('div'); bar.className='stat-progress';
+      const fill = document.createElement('div'); fill.style.cssText='width:'+it.w+'%;'+it.c;
+      bar.appendChild(fill); d.appendChild(bar);
+      sb.appendChild(d);
+    });
   })();
 !doctype html>
 <html lang="zh-CN">
