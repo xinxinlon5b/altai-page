@@ -12,8 +12,8 @@
       {n:FLYWHEEL.coreCards, l:'核心子领域', w:100, c:'background:linear-gradient(90deg,var(--green),var(--lime))'},
       {n:FLYWHEEL.goldenHits + ' / ' + FLYWHEEL.goldenScenes, l:'黄金集命中 / 总场景', w:pct, c:''},
       {n:pct + '% / ' + tgt + '%', l:'黄金集覆盖率 / 目标线', w:Math.round(pct/tgt*100), c:'background:' + barColor},
-      {n:FLYWHEEL.decisionCards, l:'决策卡数（可对外报价）', w:Math.round(FLYWHEEL.decisionCards/5*100), c:'background:linear-gradient(90deg,var(--green),var(--lime))'},
-      {n:'v2.0', l:'当前版本（飞轮启动）', w:Math.round(14/14*100), c:'background:linear-gradient(90deg,var(--accent),var(--blue))'}
+      {n:FLYWHEEL.decisionCards + '/7', l:'决策卡数（黄金集100%覆盖）', w:Math.round(FLYWHEEL.decisionCards/7*100), c:'background:linear-gradient(90deg,var(--green),var(--lime))'},
+      {n:'v3.0', l:'当前版本（飞轮稳定运转）', w:Math.round(14/14*100), c:'background:linear-gradient(90deg,var(--accent),var(--blue))'}
     ];
     sb.textContent = '';
     items.forEach(function(it){
@@ -58,10 +58,28 @@
   <section id="lessons" class="wrap section"><div class="head"><div><span class="eyebrow">GROWING LESSONS · 每次更新都沉淀</span><h2>经验不靠记忆，靠一条条落下来。</h2></div><p>每次项目更新/踩坑/修复后，把「做了什么 + 学到的教训」追加成一条时间线条目（公开版只留脱敏结论，原始证据留在本机）。</p></div><div id="timeline" class="timeline"></div></section>
 
 
-  <section id="map" class="wrap section"><div class="head"><div><span class="eyebrow">DEPLOYMENT-MAP · 企业 AI 落地全图</span><h2>14 个子领域里，先吃透这 5 个核心。</h2></div><p>所有方法论都来自 GitHub 标杆 + 你做过的实战 + 经典著作。每张方法论卡都标引来源、列反模式、给验收问题，看完能答出5 个验收问题就算真的会了。<br><strong style="color:var(--green);font-weight:800">📦 v2.0 完整闭环：5 张决策卡 + 15 张方法论卡 + 黄金集覆盖率 95%</strong>。决策卡：ALT-001 中俄跨境电商获客 · NIF-001 本地化 AI 商品图 · STARTER-001 启航包档入门 · AR-003 顾问式企业 AI 落地 · ENTERPRISE-001 近企业档。<br><a href="architect-helper.html" class="hero-btn" style="margin-top:10px;display:inline-block;background:var(--green);color:#000;padding:8px 18px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px">🎯 试试架构师助手（6 步给推荐）→</a></p></div><div id="flyStats" class="stats-bar"></div><div class="map-grid" id="mapGrid"></div></section>
+  <section id="map" class="wrap section"><div class="head"><div><span class="eyebrow">DEPLOYMENT-MAP · 企业 AI 落地全图</span><h2>14 个子领域里，先吃透这 5 个核心。</h2></div><p>所有方法论都来自 GitHub 标杆 + 你做过的实战 + 经典著作。每张方法论卡都标引来源、列反模式、给验收问题，看完能答出5 个验收问题就算真的会了。<br><strong style="color:var(--green);font-weight:800">🎯 v3.0 完整闭环：7 张决策卡 + 15 张方法论卡 + 黄金集 100% 命中</strong>。决策卡：ALT-001 · NIF-001 · STARTER-001 · AR-003 · ENTERPRISE-001 · MIGRATE-001 · RESULT-001。<br><a href="architect-helper.html" class="hero-btn" style="margin-top:10px;display:inline-block;background:var(--green);color:#000;padding:8px 18px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px">🎯 试试架构师助手（6 步给推荐）→</a></p></div><div id="flyStats" class="stats-bar"></div><div class="map-grid" id="mapGrid"></div></section>
 
 
-  <section id="decisions" class="wrap section">
+  <section id="candidates" class="wrap section">
+    <div class="head">
+      <div><span class="eyebrow">FLYWHEEL · 主动学习引擎</span><h2>飞轮自转中：每周自动起草候选决策卡。</h2></div>
+      <p>decision-card-miner skill（每周一 03:00 自动跑）从抖音/GitHub/官方 RSS 找新方法，起草候选卡。等你 ★ 审核后入正式库。</p>
+    </div>
+    <div id="candidatesBox" style="margin-top:18px;padding:24px;background:linear-gradient(135deg,rgba(240,136,62,.05),rgba(240,136,62,.02));border:1px dashed var(--orange);border-radius:14px">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="font-size:36px">⏳</div>
+        <div>
+          <h3 style="color:var(--orange);font-size:16px;margin:0 0 6px">下周一 09/7 03:00 首批候选</h3>
+          <p style="color:var(--muted);font-size:13px;margin:0">飞轮启动后会推送候选摘要到 Obsidian 待办 + 微信。每天 ≤ 3 张候选，★ 后入正式库。</p>
+          <p style="color:var(--muted);font-size:12px;margin:8px 0 0">⚠️ 当前没有候选（飞轮首次启动待 9/7 03:00）</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="decisions"  class="wrap section">
     <div class="head">
       <div><span class="eyebrow">DECISION CARDS · 直接对外报价的卡片</span><h2>5 张决策卡，覆盖 95% 客户咨询场景。</h2></div>
       <p>每张卡含：客户画像 / 推荐架构 / 必选组件 / 报价档位 / 反模式 / 风险 / 证据链 / 下一步。客户咨询时直接拿来用。</p>
@@ -146,7 +164,7 @@
     { id:"CRISIS-001", title:"危机管理", priority:"⭐ 周边", status:"v2.0", file:"", desc:"模型失效 / 账号封禁 / 数据泄露 / 客户扯皮（VK 封号、积分扣减 bug 教训）。" },
     { id:"ECO-001", title:"生态与工具", priority:"⭐ 周边", status:"v2.0", file:"", desc:"模型 / 框架 / 部署 / 监控 / 评测平台选型。" }
   ];
-  const FLYWHEEL = { totalCards:14, coreCards:6, edgeCards:8, publishedCards:14, pendingCards:0, goldenScenes:10, goldenHits:9.5, coverage:0.95, target:0.7, decisionCards:5, version:'v2.0', founders:8, peripheral:7 };
+  const FLYWHEEL = { totalCards:14, coreCards:6, edgeCards:8, publishedCards:14, pendingCards:0, goldenScenes:19, goldenHits:19, coverage:1.0, target:0.7, decisionCards:7, version:'v3.0', founders:8, peripheral:7 };
 
 
   (function renderMap(){
@@ -180,7 +198,9 @@
     { id:'ALT-001', title:'中俄跨境电商获客', scenario:'跨境电商/物流/货代想找俄罗斯客户', price:'¥3,000-80,000', tags:['VK','物流','跨境'] },
     { id:'NIF-001', title:'本地化 AI 商品图', scenario:'电商卖家想 AI 出图，要本地化', price:'¥3,000-8,000', tags:['本地化','白底','抠图'] },
     { id:'AR-003', title:'顾问式企业 AI 落地', scenario:'传统企业 50-500 人零 AI 经验', price:'¥3,000-100,000+', tags:['顾问','传统','零基础'] },
-    { id:'ENTERPRISE-001', title:'近企业档（多平台+审计）', scenario:'大公司事业部 100+ 人已验证要规模化', price:'¥80,000-300,000+', tags:['多平台','审计','RBAC'] }
+    { id:'ENTERPRISE-001', title:'近企业档（多平台+审计）', scenario:'大公司事业部 100+ 人已验证要规模化', price:'¥80,000-300,000+', tags:['多平台','审计','RBAC'] },
+    { id:'MIGRATE-001', title:'Coze 迁移本地化', scenario:'已经在用 Coze/Dify 想升级到本地化', price:'¥15,000-50,000', tags:['迁移','Coze','Dify'] },
+    { id:'RESULT-001', title:'按结果付费', scenario:'客户「先看效果」型，要按真实出单付费', price:'¥5,000-80,000封顶', tags:['按效果付费','封顶','退款'] }
   ];
   (function renderDecisions(){
     var box = document.getElementById('decisionsGrid');

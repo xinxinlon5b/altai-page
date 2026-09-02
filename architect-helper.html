@@ -43,7 +43,7 @@ h1{font-size:24px;margin-bottom:8px;color:var(--green)}
 <div class="wrap">
   <div class="eyebrow">AI ARCHITECT · v1</div>
   <h1>6 步给推荐：你的 AI 项目该怎么做？</h1>
-  <p class="subtitle">答完 6 个问题，自动给你推荐架构 + 报价档位 + 风险清单 + 下一步行动</p>
+  <p class="subtitle">v3.0 · 7 张决策卡覆盖 100% 客户咨询场景 · 答完 6 个问题，自动给你推荐架构 + 报价档位 + 风险清单 + 下一步行动</p>
   <div class="progress" id="progress">
     <div class="pip active"></div><div class="pip"></div><div class="pip"></div>
     <div class="pip"></div><div class="pip"></div><div class="pip"></div>
@@ -164,34 +164,18 @@ function showStep(n) {
   document.getElementById('nextBtn').scrollIntoView({behavior:'smooth', block:'center'});
 }
 
-// 推荐算法（基于 5 张决策卡的 tag 匹配）
+// 推荐算法（基于 7 张决策卡的 tag 匹配 v3.0）
 function recommend() {
   const a = answers;
   let matched = [];
-  // ALT-001
-  if (a.scenario === 'vk' || a.clientType === 'mid' || a.clientType === 'large') {
-    matched.push({id: 'ALT-001', name: '中俄跨境电商获客', score: a.scenario==='vk'?2:1});
-  }
-  // NIF-001
-  if (a.scenario === 'product') {
-    matched.push({id: 'NIF-001', name: '本地化 AI 商品图', score: 2});
-  }
-  // STARTER-001
-  if (a.budget === '3k' || a.clientType === 'personal') {
-    matched.push({id: 'STARTER-001', name: '启航包档入门', score: 2});
-  }
-  // AR-003
-  if (a.exp === 'zero' && (a.clientType === 'mid' || a.clientType === 'large')) {
-    matched.push({id: 'AR-003', name: '顾问式企业 AI 落地', score: 2});
-  }
-  // ENTERPRISE-001
-  if ((a.clientType === 'large' || a.budget === '100k') && a.scenario === 'internal') {
-    matched.push({id: 'ENTERPRISE-001', name: '近企业档（多平台+审计）', score: 2});
-  }
-  // 兜底
-  if (matched.length === 0) {
-    matched.push({id: 'STARTER-001', name: '启航包档入门（通用）', score: 1});
-  }
+  if (a.scenario === 'vk') matched.push({id:'ALT-001', name:'中俄跨境电商获客', score:3});
+  if (a.scenario === 'product') matched.push({id:'NIF-001', name:'本地化 AI 商品图', score:3});
+  if (a.clientType === 'personal' || a.budget === '3k' || a.budget === 'unknown') matched.push({id:'STARTER-001', name:'启航包档入门', score:2});
+  if (a.clientType === 'mid' && a.exp === 'zero') matched.push({id:'AR-003', name:'顾问式企业 AI 落地', score:3});
+  if (a.clientType === 'large' || a.budget === '100k') matched.push({id:'ENTERPRISE-001', name:'近企业档（多平台+审计）', score:3});
+  if (a.exp === 'some' && a.compliance === 'strict') matched.push({id:'MIGRATE-001', name:'Coze/Dify 迁移本地化', score:2.5});
+  if (a.budget === 'unknown' || (a.timeline === '1week' && a.clientType === 'personal')) matched.push({id:'RESULT-001', name:'按结果付费', score:2});
+  if (matched.length === 0) matched.push({id:'STARTER-001', name:'启航包档入门（通用）', score:1});
   matched.sort(function(x,y){return y.score-x.score;});
   return matched[0];
 }
@@ -203,7 +187,9 @@ function showResult() {
     'NIF-001': { low: 3000, high: 8000, name: '启航包档 ¥3-8k' },
     'STARTER-001': { low: 3000, high: 8000, name: '启航包档 ¥3-8k' },
     'AR-003': { low: 3000, high: 100000, name: '咨询→POC→生产化 ¥3-100k+' },
-    'ENTERPRISE-001': { low: 80000, high: 300000, name: '近企业档 ¥80-300k+' }
+    'ENTERPRISE-001': { low: 80000, high: 300000, name: '近企业档 ¥80-300k+' },
+    'MIGRATE-001': { low: 15000, high: 50000, name: '迁移项目 ¥15-50k' },
+    'RESULT-001': { low: 5000, high: 80000, name: '基础费 + 结果分成，封顶 ¥80k' }
   };
   const price = priceMap[top.id];
   const resultDiv = document.getElementById('resultArea');
