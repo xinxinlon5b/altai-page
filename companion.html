@@ -1,4 +1,19 @@
-<!doctype html>
+<
+  // ===== v1.0 飞轮状态 + 黄金集评分 =====
+  (function renderStats(){
+    const sb = document.getElementById('flyStats');
+    if (!sb) return;
+    const pct = Math.round(FLYWHEEL.coverage * 100);
+    const tgt = Math.round(FLYWHEEL.target * 100);
+    sb.innerHTML = `
+      <div class="stat-item"><strong>${FLYWHEEL.publishedCards}</strong><span>已发布方法论卡 / 14</span><div class="stat-progress"><div style="width:${(FLYWHEEL.publishedCards/FLYWHEEL.totalCards*100).toFixed(0)}%"></div></div></div>
+      <div class="stat-item"><strong>${FLYWHEEL.coreCards}</strong><span>⭐⭐⭐ 核心子领域</span><div class="stat-progress"><div style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime))"></div></div></div>
+      <div class="stat-item"><strong>${FLYWHEEL.goldenHits} / ${FLYWHEEL.goldenScenes}</strong><span>黄金集命中 / 总场景</span><div class="stat-progress"><div style="width:${pct}%"></div></div></div>
+      <div class="stat-item"><strong>${pct}% / ${tgt}%</strong><span>黄金集覆盖率 / 目标线</span><div class="stat-progress"><div style="width:${(pct/tgt*100).toFixed(0)}%;background:${pct>=tgt?'linear-gradient(90deg,var(--green),var(--lime))':'linear-gradient(90deg,var(--orange),var(--accent))'}"></div></div></div>
+      <div class="stat-item"><strong>v1.0</strong><span>当前版本</span><div class="stat-progress"><div style="width:57%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div></div>
+    `;
+  })();
+!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,6 +26,8 @@
     .timeline{position:relative;margin-top:20px;padding-left:26px}.timeline::before{content:"";position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:var(--line);border-radius:2px}.tl-item{position:relative;margin-bottom:14px;background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:16px 18px;transition:.22s}.tl-item::before{content:"";position:absolute;left:-24px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--lime);border:3px solid var(--bg)}.tl-item:hover{transform:translateX(3px);box-shadow:var(--shadow)}.tl-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:8px}.tl-date{font-size:11px;color:var(--green);font-weight:800;letter-spacing:.05em}.tl-proj{font-size:10px;font-weight:800;color:var(--blue);background:rgba(10,132,255,.09);border:1px solid rgba(10,132,255,.22);padding:2px 8px;border-radius:20px}.tl-tag{font-size:10px;font-weight:800;color:var(--orange);background:rgba(255,159,10,.09);border:1px solid rgba(255,159,10,.22);padding:2px 8px;border-radius:20px}.tl-item h4{margin:0 0 6px;font-size:15px}.tl-item p{margin:0 0 8px;color:var(--muted);font-size:13px;line-height:1.7}.tl-lesson{font-size:12px;color:var(--green);background:rgba(23,79,61,.06);border-left:3px solid var(--green);padding:6px 10px;border-radius:0 10px 10px 0}
 
     .map-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:18px}.map-card{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:14px;transition:.22s;position:relative}.map-card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--green)}.map-card .m-tag{display:inline-block;font-size:9px;font-weight:800;padding:2px 8px;border-radius:20px;margin-bottom:6px}.m-tag.c5{background:rgba(23,79,61,.12);color:var(--green);border:1px solid rgba(23,79,61,.3)}.m-tag.c9{background:rgba(0,140,255,.08);color:var(--blue);border:1px solid rgba(0,140,255,.22)}.map-card h4{margin:4px 0;font-size:14px;line-height:1.4}.map-card p{margin:0;font-size:12px;color:var(--muted);line-height:1.6}.map-meta{display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--green);font-weight:700}
+
+    .stats-bar{background:linear-gradient(135deg,rgba(23,79,61,.06),rgba(10,132,255,.04));border:1px solid var(--line);border-radius:20px;padding:18px 22px;margin-bottom:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}.stat-item{text-align:center}.stat-item strong{display:block;font-size:24px;color:var(--green);font-weight:800;letter-spacing:-.02em}.stat-item span{font-size:11px;color:var(--muted);display:block;margin-top:3px}.stat-progress{height:6px;background:var(--line);border-radius:6px;margin-top:8px;overflow:hidden}.stat-progress div{height:100%;background:linear-gradient(90deg,var(--green),var(--accent));border-radius:6px;transition:width .5s}
 </style>
 </head>
 <body>
@@ -27,7 +44,7 @@
   <section id="lessons" class="wrap section"><div class="head"><div><span class="eyebrow">GROWING LESSONS · 每次更新都沉淀</span><h2>经验不靠记忆，靠一条条落下来。</h2></div><p>每次项目更新/踩坑/修复后，把「做了什么 + 学到的教训」追加成一条时间线条目（公开版只留脱敏结论，原始证据留在本机）。</p></div><div id="timeline" class="timeline"></div></section>
 
 
-  <section id="map" class="wrap section"><div class="head"><div><span class="eyebrow">DEPLOYMENT-MAP · 企业 AI 落地全图</span><h2>14 个子领域里，先吃透这 5 个核心。</h2></div><p>所有方法论都来自 GitHub 标杆 + 你做过的实战 + 经典著作。每张方法论卡都标引来源、列反模式、给验收问题，看完能答出5 个验收问题就算真的会了。</p></div><div class="map-grid" id="mapGrid"></div></section>
+  <section id="map" class="wrap section"><div class="head"><div id="flyStats" class="stats-bar"></div><div><span class="eyebrow">DEPLOYMENT-MAP · 企业 AI 落地全图</span><h2>14 个子领域里，先吃透这 5 个核心。</h2></div><p>所有方法论都来自 GitHub 标杆 + 你做过的实战 + 经典著作。每张方法论卡都标引来源、列反模式、给验收问题，看完能答出5 个验收问题就算真的会了。</p></div><div class="map-grid" id="mapGrid"></div></section>
 
   <section id="method" class="wrap section"><div class="head"><div><span class="eyebrow">VERIFIABLE METHOD</span><h2>从说不清，到可验收。</h2></div><p>每一步都有输入、负责人、动作、产物、反例、退出条件和证据，不靠某个AI“宣布正确”。</p></div><div class="flow"><span>需求发现</span><b>→</b><span>最佳实践</span><b>→</b><span>代码现实</span><b>→</b><span>候选架构</span><b>→</b><span>权衡批准</span><b>→</b><span>分Gate实施</span><b>→</b><span>独立审计</span><b>→</b><span>客户交付</span><b>→</b><span>持续进化</span></div><div class="sops" style="margin-top:18px">
     <details open><summary>01 · 需求发现SOP</summary><div class="inside">一次只问一个问题：业务结果、用户、流程、部署、数据、安全、验收、未来。每个答案先复述为候选，由另一角色确认；八类没齐不能进入架构。</div></details>
@@ -84,15 +101,18 @@
     { id:"AR-002", title:"你的3 项目实战映射", priority:"⭐⭐⭐ 核心", status:"已发布", file:"AR-002", desc:"阿尔泰 / NIFTY / 中俄轻舟三个项目的架构决策复盘 + 16 个 ADR。" },
     { id:"POC-001", title:"POC 与 MVP 验证", priority:"⭐⭐⭐ 核心", status:"已发布", file:"POC-001", desc:"POC 成功标志 / 演示陷阱 / 客户内部立项证据 / 优雅退场。" },
     { id:"CJ-001", title:"客户旅程与报价档位", priority:"⭐⭐⭐ 核心", status:"已发布", file:"CJ-001", desc:"三档报价对应客户旅程哪几个阶段, 启航包 → 工作站 → 近企业路径。" },
-    { id:"REL-001", title:"可靠性与自愈", priority:"⭐⭐ 周边", status:"v1.1", file:"", desc:"服务挂了怎么办 / 监控 / 灾备 / 升级 / 撤退计划（NIFTY launchd watchdog 实战）。" },
+    { id:"REL-001", title:"可靠性与自愈", priority:"⭐⭐ 周边", status:"已发布", file:"REL-001", desc:"服务挂了怎么办 / 监控 / 灾备 / 升级 / 撤退计划（NIFTY launchd watchdog 实战）。" },
+    { id:"EVAL-001", title:"效果评估", priority:"⭐⭐ 周边", status:"已发布", file:"EVAL-001", desc:"黄金集 / 离线评测 / 在线评测 / 业务指标（intellagent + NIFTY 回归）。" },
     { id:"COMP-001", title:"合规与法律", priority:"⭐ 周边", status:"v2.0", file:"", desc:"数据隐私 / 行业监管 / 开源协议 / 出口管制（跨境电商 VK/TikTok 教训）。" },
     { id:"PRICE-001", title:"定价与商业化", priority:"⭐ 周边", status:"v2.0", file:"", desc:"SaaS / 项目制 / 结果分成 / 平台费（三档报价卡起源）。" },
     { id:"SALES-001", title:"销售与增长", priority:"⭐ 周边", status:"v2.0", file:"", desc:"怎么找客户 / 怎么转化 / 怎么续约（阿尔泰/NIFTY 实践）。" },
     { id:"ORG-001", title:"组织与团队", priority:"⭐ 周边", status:"v2.0", file:"", desc:"单兵 / 小团队 / 跨职能 / 客户内部团队（你的演化路径）。" },
     { id:"CRISIS-001", title:"危机管理", priority:"⭐ 周边", status:"v2.0", file:"", desc:"模型失效 / 账号封禁 / 数据泄露 / 客户扯皮（VK 封号、积分扣减 bug 教训）。" },
-    { id:"EVAL-001", title:"效果评估", priority:"⭐⭐ 周边", status:"v1.1", file:"", desc:"黄金集 / 离线评测 / 在线评测 / 业务指标（intellagent + NIFTY 回归）。" },
     { id:"ECO-001", title:"生态与工具", priority:"⭐ 周边", status:"v2.0", file:"", desc:"模型 / 框架 / 部署 / 监控 / 评测平台选型。" }
   ];
+  const FLYWHEEL = { totalCards:14, coreCards:6, edgeCards:8, publishedCards:8, pendingCards:6, goldenScenes:10, goldenHits:5, coverage:0.5, target:0.7 };
+
+
   (function renderMap(){
     const box = document.getElementById('mapGrid');
     if (!box) return;
