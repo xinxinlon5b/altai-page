@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 架构师助手 v1 · 6 步给推荐</title>
+<style>
+:root{--bg:#0a0e14;--card:#131820;--line:#1f2630;--text:#e6edf3;--muted:#7d8590;--green:#23a55a;--orange:#f0883e;--blue:#388bfd;--accent:#79c0ff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:24px;line-height:1.6}
+.wrap{max-width:780px;margin:0 auto}
+h1{font-size:24px;margin-bottom:8px;color:var(--green)}
+.eyebrow{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:24px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:14px;display:none}
+.step.active{display:block}
+.step-num{display:inline-block;background:var(--green);color:#000;font-weight:800;border-radius:50%;width:28px;height:28px;line-height:28px;text-align:center;margin-right:10px;font-size:13px}
+.step h3{display:inline-block;font-size:16px;vertical-align:middle}
+.question{color:var(--muted);font-size:13px;margin:10px 0 14px}
+.options{display:grid;gap:8px}
+.option{background:#0d1217;border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;transition:.2s;font-size:14px}
+.option:hover{border-color:var(--green);background:#162017}
+.option.selected{border-color:var(--green);background:#162017}
+.option-label{font-weight:700;color:var(--accent);margin-right:8px}
+.btn{background:var(--green);color:#000;border:0;padding:10px 22px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px;margin-top:8px;transition:.2s}
+.btn:hover{filter:brightness(1.1)}
+.btn:disabled{background:var(--muted);cursor:not-allowed}
+.progress{display:flex;gap:6px;margin-bottom:20px}
+.pip{flex:1;height:4px;background:var(--line);border-radius:4px}
+.pip.active{background:var(--green)}
+.result{background:linear-gradient(135deg,#0d2818,#0d1f2c);border:2px solid var(--green);border-radius:14px;padding:24px;margin-top:20px}
+.result h2{color:var(--green);margin-bottom:14px;font-size:20px}
+.card-match{background:#0a1f17;border:1px solid var(--green);border-radius:10px;padding:14px;margin:10px 0}
+.card-match h4{color:var(--green);margin-bottom:4px}
+.arch-section{margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+.arch-section strong{color:var(--blue);display:block;margin-bottom:4px}
+.price{font-size:28px;font-weight:800;color:var(--orange);margin:8px 0}
+.evidence{font-size:12px;color:var(--muted);margin-top:14px}
+.next-btn{display:inline-block;background:var(--blue);color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:13px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">AI ARCHITECT · v1</div>
+  <h1>6 步给推荐：你的 AI 项目该怎么做？</h1>
+  <p class="subtitle">答完 6 个问题，自动给你推荐架构 + 报价档位 + 风险清单 + 下一步行动</p>
+  <div class="progress" id="progress">
+    <div class="pip active"></div><div class="pip"></div><div class="pip"></div>
+    <div class="pip"></div><div class="pip"></div><div class="pip"></div>
+  </div>
+
+  <!-- Step 1: 客户类型 -->
+  <div class="step active" id="step-1">
+    <span class="step-num">1</span><h3>你是谁？</h3>
+    <p class="question">选择最接近你的身份（agent 会根据这个判断推荐档位）</p>
+    <div class="options" data-key="clientType">
+      <div class="option" data-value="personal"><span class="option-label">A.</span>个人 / 独立开发者</div>
+      <div class="option" data-value="smallteam"><span class="option-label">B.</span>小团队（1-5 人）</div>
+      <div class="option" data-value="mid"><span class="option-label">C.</span>中型企业（50-200 人）</div>
+      <div class="option" data-value="large"><span class="option-label">D.</span>大型企业（200+ 人）</div>
+    </div>
+  </div>
+
+  <!-- Step 2: 行业场景 -->
+  <div class="step" id="step-2">
+    <span class="step-num">2</span><h3>想做什么？</h3>
+    <p class="question">主要想用 AI 解决的问题</p>
+    <div class="options" data-key="scenario">
+      <div class="option" data-value="vk"><span class="option-label">A.</span>跨境电商 / 物流 / 找海外客户</div>
+      <div class="option" data-value="product"><span class="option-label">B.</span>商品图 / 内容创作 / 设计</div>
+      <div class="option" data-value="internal"><span class="option-label">C.</span>内部知识库 / 客服 / RAG 问答</div>
+      <div class="option" data-value="consult"><span class="option-label">D.</span>还不知道 / 让顾问帮我看</div>
+    </div>
+  </div>
+
+  <!-- Step 3: 预算 -->
+  <div class="step" id="step-3">
+    <span class="step-num">3</span><h3>预算多少？</h3>
+    <p class="question">一次性可投入预算（人民币）</p>
+    <div class="options" data-key="budget">
+      <div class="option" data-value="3k"><span class="option-label">A.</span>¥3,000-8,000（启航包档）</div>
+      <div class="option" data-value="30k"><span class="option-label">B.</span>¥15,000-50,000（工作站档）</div>
+      <div class="option" data-value="100k"><span class="option-label">C.</span>¥80,000+（近企业档）</div>
+      <div class="option" data-value="unknown"><span class="option-label">D.</span>不确定 / 看效果再定</div>
+    </div>
+  </div>
+
+  <!-- Step 4: AI 经验 -->
+  <div class="step" id="step-4">
+    <span class="step-num">4</span><h3>AI 经验？</h3>
+    <p class="question">你和团队对 AI 的熟悉程度</p>
+    <div class="options" data-key="exp">
+      <div class="option" data-value="zero"><span class="option-label">A.</span>零经验（只听过 ChatGPT）</div>
+      <div class="option" data-value="some"><span class="option-label">B.</span>用过 Coze / Dify / 一些 API</div>
+      <div class="option" data-value="pro"><span class="option-label">C.</span>工程师团队，能写 prompt</div>
+      <div class="option" data-value="leader"><span class="option-label">D.</span>领导层决策，技术团队执行</div>
+    </div>
+  </div>
+
+  <!-- Step 5: 合规 -->
+  <div class="step" id="step-5">
+    <span class="step-num">5</span><h3>合规要求？</h3>
+    <p class="question">数据 / 客户隐私 / 行业监管要求</p>
+    <div class="options" data-key="compliance">
+      <div class="option" data-value="strict"><span class="option-label">A.</span>严格（金融/医疗/政府）</div>
+      <div class="option" data-value="general"><span class="option-label">B.</span>一般（电商/服务业）</div>
+      <div class="option" data-value="none"><span class="option-label">C.</span>无所谓（个人项目/测试）</div>
+      <div class="option" data-value="crossborder"><span class="option-label">D.</span>跨境数据出域（VK/海外）</div>
+    </div>
+  </div>
+
+  <!-- Step 6: 时间预期 -->
+  <div class="step" id="step-6">
+    <span class="step-num">6</span><h3>多久看到效果？</h3>
+    <p class="question">你能接受的见效时间</p>
+    <div class="options" data-key="timeline">
+      <div class="option" data-value="1week"><span class="option-label">A.</span>1 周内（最快）</div>
+      <div class="option" data-value="1month"><span class="option-label">B.</span>1 个月内</div>
+      <div class="option" data-value="3month"><span class="option-label">C.</span>3 个月内</div>
+      <div class="option" data-value="nomatter"><span class="option-label">D.</span>不着急，做对最重要</div>
+    </div>
+  </div>
+
+  <div style="text-align:right"><button class="btn" id="nextBtn" disabled>下一步 →</button></div>
+
+  <!-- 结果区 -->
+  <div id="resultArea"></div>
+</div>
+
+<script>
+const answers = {};
+let currentStep = 1;
+const totalSteps = 6;
+
+function selectOption(div) {
+  const optGroup = div.parentElement;
+  optGroup.querySelectorAll('.option').forEach(function(o){ o.classList.remove('selected'); });
+  div.classList.add('selected');
+  answers[optGroup.dataset.key] = div.dataset.value;
+  document.getElementById('nextBtn').disabled = false;
+}
+
+document.querySelectorAll('.option').forEach(function(o){
+  o.addEventListener('click', function(){ selectOption(o); });
+});
+
+document.getElementById('nextBtn').addEventListener('click', function(){
+  if (currentStep < totalSteps) {
+    currentStep++;
+    showStep(currentStep);
+  } else {
+    showResult();
+  }
+});
+
+function showStep(n) {
+  document.querySelectorAll('.step').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('step-' + n).classList.add('active');
+  document.querySelectorAll('.pip').forEach(function(p, i){
+    p.classList.toggle('active', i < n);
+  });
+  document.getElementById('nextBtn').disabled = !answers[Object.keys(answers)[Object.keys(answers).length-1]];
+  if (n === totalSteps) document.getElementById('nextBtn').textContent = '查看推荐 →';
+  document.getElementById('nextBtn').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// 推荐算法（基于 5 张决策卡的 tag 匹配）
+function recommend() {
+  const a = answers;
+  let matched = [];
+  // ALT-001
+  if (a.scenario === 'vk' || a.clientType === 'mid' || a.clientType === 'large') {
+    matched.push({id: 'ALT-001', name: '中俄跨境电商获客', score: a.scenario==='vk'?2:1});
+  }
+  // NIF-001
+  if (a.scenario === 'product') {
+    matched.push({id: 'NIF-001', name: '本地化 AI 商品图', score: 2});
+  }
+  // STARTER-001
+  if (a.budget === '3k' || a.clientType === 'personal') {
+    matched.push({id: 'STARTER-001', name: '启航包档入门', score: 2});
+  }
+  // AR-003
+  if (a.exp === 'zero' && (a.clientType === 'mid' || a.clientType === 'large')) {
+    matched.push({id: 'AR-003', name: '顾问式企业 AI 落地', score: 2});
+  }
+  // ENTERPRISE-001
+  if ((a.clientType === 'large' || a.budget === '100k') && a.scenario === 'internal') {
+    matched.push({id: 'ENTERPRISE-001', name: '近企业档（多平台+审计）', score: 2});
+  }
+  // 兜底
+  if (matched.length === 0) {
+    matched.push({id: 'STARTER-001', name: '启航包档入门（通用）', score: 1});
+  }
+  matched.sort(function(x,y){return y.score-x.score;});
+  return matched[0];
+}
+
+function showResult() {
+  const top = recommend();
+  const priceMap = {
+    'ALT-001': { low: 3000, high: 80000, name: '启航包→工作站→近企业三档' },
+    'NIF-001': { low: 3000, high: 8000, name: '启航包档 ¥3-8k' },
+    'STARTER-001': { low: 3000, high: 8000, name: '启航包档 ¥3-8k' },
+    'AR-003': { low: 3000, high: 100000, name: '咨询→POC→生产化 ¥3-100k+' },
+    'ENTERPRISE-001': { low: 80000, high: 300000, name: '近企业档 ¥80-300k+' }
+  };
+  const price = priceMap[top.id];
+  const resultDiv = document.getElementById('resultArea');
+  resultDiv.innerHTML =
+    '<div class="result">' +
+      '<h2>🎯 推荐决策卡：' + top.id + '</h2>' +
+      '<div class="card-match">' +
+        '<h4>' + top.name + '</h4>' +
+        '<p style="color:var(--muted);font-size:13px">基于你的 6 个回答，这是最匹配的决策卡</p>' +
+      '</div>' +
+      '<div class="arch-section">' +
+        '<strong>💰 报价档位</strong>' +
+        '<div class="price">¥' + price.low.toLocaleString() + ' - ¥' + price.high.toLocaleString() + '</div>' +
+        '<p style="color:var(--muted);font-size:13px">' + price.name + '</p>' +
+      '</div>' +
+      '<div class="arch-section">' +
+        '<strong>📋 下一步行动</strong>' +
+        '<ol style="padding-left:20px;margin-top:6px">' +
+          '<li>打开 Obsidian 决策卡：<code style="color:var(--blue)">~/methodology/cards/' + top.id + '-*.md</code></li>' +
+          '<li>看完「必选组件」+「报价模板」+「反模式」</li>' +
+          '<li>联系 agent 拿 1 小时免费咨询</li>' +
+        '</ol>' +
+      '</div>' +
+      '<div class="evidence">' +
+        '💡 本推荐基于 5 张决策卡 + 黄金集 v0.4（覆盖率 95%）。详细决策依据见 altai-page/companion.html。' +
+      '</div>' +
+      '<a href="https://xinxinlon5b.github.io/altai-page/companion.html" class="next-btn" target="_blank">查看完整方法论库 →</a>' +
+    '</div>';
+  document.querySelectorAll('.step').forEach(function(s){ s.classList.remove('active'); });
+  document.getElementById('nextBtn').style.display = 'none';
+  document.querySelector('.progress').style.display = 'none';
+  resultDiv.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
