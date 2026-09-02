@@ -202,7 +202,7 @@
   })();
 
 
-  // ===== v1.0 飞轮状态条（createElement 避免 innerHTML 触发 HTML 解析）=====
+  // ===== v2.0 飞轮状态条（createElement 避免 innerHTML 触发 HTML 解析）=====
   (function renderStats(){
     const sb = document.getElementById('flyStats');
     if (!sb) return;
@@ -215,7 +215,7 @@
       {n:FLYWHEEL.coreCards, l:'核心子领域', w:100, c:'background:linear-gradient(90deg,var(--green),var(--lime))'},
       {n:FLYWHEEL.goldenHits + ' / ' + FLYWHEEL.goldenScenes, l:'黄金集命中 / 总场景', w:pct, c:''},
       {n:pct + '% / ' + tgt + '%', l:'黄金集覆盖率 / 目标线', w:Math.round(pct/tgt*100), c:'background:' + barColor},
-      {n:'v1.0', l:'当前版本', w:57, c:'background:linear-gradient(90deg,var(--accent),var(--blue))'}
+      {n:'v2.0', l:'当前版本', w:57, c:'background:linear-gradient(90deg,var(--accent),var(--blue))'}
     ];
     sb.textContent = '';
     items.forEach(function(it){
