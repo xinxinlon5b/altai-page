@@ -101,7 +101,20 @@
 (function renderLessons(){
     const box = document.getElementById('timeline');
     if (!box) return;
-    box.innerHTML = LESSONS.map(l => `<div class="tl-item"><div class="tl-top"><span class="tl-date">${esc(l.date)}</span><span class="tl-proj">${esc(l.proj)}</span><span class="tl-tag">${esc(l.tag)}</span></div><h4>${esc(l.title)}</h4><p>${esc(l.body)}</p><div class="tl-lesson">💡 教训：${esc(l.lesson)}</div></div>`).join('');
+    box.textContent = '';
+    LESSONS.forEach(function(l){
+      const item = document.createElement('div'); item.className='tl-item';
+      const top = document.createElement('div'); top.className='tl-top';
+      ['date','proj','tag'].forEach(function(k){
+        const s = document.createElement('span'); s.className='tl-'+k; s.textContent = esc(l[k]); top.appendChild(s);
+      });
+      item.appendChild(top);
+      const h = document.createElement('h4'); h.textContent = esc(l.title); item.appendChild(h);
+      const p = document.createElement('p'); p.textContent = esc(l.body); item.appendChild(p);
+      const less = document.createElement('div'); less.className='tl-lesson'; less.textContent = '💡 教训：' + esc(l.lesson);
+      item.appendChild(less);
+      box.appendChild(item);
+    });
   })();
 
 
@@ -128,11 +141,26 @@
   (function renderMap(){
     const box = document.getElementById('mapGrid');
     if (!box) return;
-    box.innerHTML = DEPLOY_MAP.map(c => {
-      const cls = c.priority.includes('核心') ? 'c5' : 'c9';
-      const stColor = c.status === '已发布' ? 'var(--green)' : 'var(--orange)';
-      return `<div class="map-card"><span class="m-tag ${cls}">${esc(c.priority)}</span><span class="m-tag c9" style="margin-left:4px;${c.status === '已发布' ? 'background:rgba(23,79,61,.12);color:var(--green);border-color:rgba(23,79,61,.3)' : ''}">${esc(c.status)}</span><h4>${esc(c.id)} · ${esc(c.title)}</h4><p>${esc(c.desc)}</p><div class="map-meta"><span>${esc(c.id)}</span><span style="color:${stColor}">${c.status === '已发布' ? '✓ 可用' : '⏳ 待写'}</span></div></div>`;
-    }).join('');
+    box.textContent = '';
+    DEPLOY_MAP.forEach(function(c){
+      const card = document.createElement('div'); card.className='map-card';
+      const isCore = c.priority.indexOf('核心') >= 0;
+      const cls = isCore ? 'c5' : 'c9';
+      const tag1 = document.createElement('span'); tag1.className='m-tag '+cls; tag1.textContent = esc(c.priority); card.appendChild(tag1);
+      const tag2 = document.createElement('span'); tag2.className='m-tag c9'; tag2.style.marginLeft='4px';
+      if (c.status === '已发布') { tag2.style.background='rgba(23,79,61,.12)'; tag2.style.color='var(--green)'; tag2.style.borderColor='rgba(23,79,61,.3)'; }
+      tag2.textContent = esc(c.status); card.appendChild(tag2);
+      const h = document.createElement('h4'); h.textContent = esc(c.id) + ' · ' + esc(c.title); card.appendChild(h);
+      const p = document.createElement('p'); p.textContent = esc(c.desc); card.appendChild(p);
+      const meta = document.createElement('div'); meta.className='map-meta';
+      const idSpan = document.createElement('span'); idSpan.textContent = esc(c.id); meta.appendChild(idSpan);
+      const statusSpan = document.createElement('span');
+      statusSpan.style.color = c.status === '已发布' ? 'var(--green)' : 'var(--orange)';
+      statusSpan.textContent = c.status === '已发布' ? '✓ 可用' : '⏳ 待写';
+      meta.appendChild(statusSpan);
+      card.appendChild(meta);
+      box.appendChild(card);
+    });
   })();
 
 </script>
