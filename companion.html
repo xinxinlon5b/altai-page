@@ -5,13 +5,13 @@
     if (!sb) return;
     const pct = Math.round(FLYWHEEL.coverage * 100);
     const tgt = Math.round(FLYWHEEL.target * 100);
-    sb.innerHTML = `
-      <div class="stat-item"><strong>${FLYWHEEL.publishedCards}</strong><span>已发布方法论卡 / 14</span><div class="stat-progress"><div style="width:${(FLYWHEEL.publishedCards/FLYWHEEL.totalCards*100).toFixed(0)}%"></div></div></div>
-      <div class="stat-item"><strong>${FLYWHEEL.coreCards}</strong><span>⭐⭐⭐ 核心子领域</span><div class="stat-progress"><div style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime))"></div></div></div>
-      <div class="stat-item"><strong>${FLYWHEEL.goldenHits} / ${FLYWHEEL.goldenScenes}</strong><span>黄金集命中 / 总场景</span><div class="stat-progress"><div style="width:${pct}%"></div></div></div>
-      <div class="stat-item"><strong>${pct}% / ${tgt}%</strong><span>黄金集覆盖率 / 目标线</span><div class="stat-progress"><div style="width:${(pct/tgt*100).toFixed(0)}%;background:${pct>=tgt?'linear-gradient(90deg,var(--green),var(--lime))':'linear-gradient(90deg,var(--orange),var(--accent))'}"></div></div></div>
-      <div class="stat-item"><strong>v1.0</strong><span>当前版本</span><div class="stat-progress"><div style="width:57%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div></div>
-    `;
+    const pubPct = (FLYWHEEL.publishedCards/FLYWHEEL.totalCards*100).toFixed(0);
+    const barColor = pct >= tgt ? 'linear-gradient(90deg,var(--green),var(--lime))' : 'linear-gradient(90deg,var(--orange),var(--accent))';
+    sb.innerHTML = '<div class="stat-item"><strong>' + FLYWHEEL.publishedCards + '</strong><span>已发布方法论卡 / 14</span><div class="stat-progress"><div style="width:' + pubPct + '%"></div></div></div>' +
+      '<div class="stat-item"><strong>' + FLYWHEEL.coreCards + '</strong><span>核心子领域</span><div class="stat-progress"><div style="width:100%;background:linear-gradient(90deg,var(--green),var(--lime))"></div></div></div>' +
+      '<div class="stat-item"><strong>' + FLYWHEEL.goldenHits + ' / ' + FLYWHEEL.goldenScenes + '</strong><span>黄金集命中 / 总场景</span><div class="stat-progress"><div style="width:' + pct + '%"></div></div></div>' +
+      '<div class="stat-item"><strong>' + pct + '% / ' + tgt + '%</strong><span>黄金集覆盖率 / 目标线</span><div class="stat-progress"><div style="width:' + (pct/tgt*100).toFixed(0) + '%;background:' + barColor + '"></div></div></div>' +
+      '<div class="stat-item"><strong>v1.0</strong><span>当前版本</span><div class="stat-progress"><div style="width:57%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div></div>';
   })();
 !doctype html>
 <html lang="zh-CN">
