@@ -1,32 +1,4 @@
-<
-  // ===== v1.0 飞轮状态 + 黄金集评分 =====
-  (function renderStats(){
-    const sb = document.getElementById('flyStats');
-    if (!sb) return;
-    const pct = Math.round(FLYWHEEL.coverage * 100);
-    const tgt = Math.round(FLYWHEEL.target * 100);
-    const pubPct = Math.round(FLYWHEEL.publishedCards/FLYWHEEL.totalCards*100);
-    const barColor = pct >= tgt ? 'linear-gradient(90deg,var(--green),var(--lime))' : 'linear-gradient(90deg,var(--orange),var(--accent))';
-    const items = [
-      {n:FLYWHEEL.publishedCards, l:'已发布方法论卡 / 14', w:pubPct, c:''},
-      {n:FLYWHEEL.coreCards, l:'核心子领域', w:100, c:'background:linear-gradient(90deg,var(--green),var(--lime))'},
-      {n:FLYWHEEL.goldenHits + ' / ' + FLYWHEEL.goldenScenes, l:'黄金集命中 / 总场景', w:pct, c:''},
-      {n:pct + '% / ' + tgt + '%', l:'黄金集覆盖率 / 目标线', w:Math.round(pct/tgt*100), c:'background:' + barColor},
-      {n:FLYWHEEL.decisionCards + '/7', l:'决策卡数（黄金集100%覆盖）', w:Math.round(FLYWHEEL.decisionCards/7*100), c:'background:linear-gradient(90deg,var(--green),var(--lime))'},
-      {n:'v3.0', l:'当前版本（飞轮稳定运转）', w:Math.round(14/14*100), c:'background:linear-gradient(90deg,var(--accent),var(--blue))'}
-    ];
-    sb.textContent = '';
-    items.forEach(function(it){
-      const d = document.createElement('div'); d.className='stat-item';
-      const s = document.createElement('strong'); s.textContent = String(it.n); d.appendChild(s);
-      const sp = document.createElement('span'); sp.textContent = it.l; d.appendChild(sp);
-      const bar = document.createElement('div'); bar.className='stat-progress';
-      const fill = document.createElement('div'); fill.style.cssText='width:'+it.w+'%;'+it.c;
-      bar.appendChild(fill); d.appendChild(bar);
-      sb.appendChild(d);
-    });
-  })();
-!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -45,9 +17,9 @@
 </style>
 </head>
 <body>
-<nav class="nav"><div class="wrap navin"><a class="brand" href="index.html"><span class="mark">AI</span>企业 AI 落地伙伴</a><div class="links"><a href="#truth">真实沉淀</a><a href="#map">落地全图</a><a href="#lessons">经验时间线</a><a href="#method">方法论</a><a href="#learn">联网学习</a><a href="#products">三款产品</a><a href="#architecture">架构</a><a href="methodology.html">完整SOP</a><button id="public-sound" class="secondary" aria-pressed="false">♪ 音效关</button></div></div></nav>
+<nav class="nav"><div class="wrap navin"><a class="brand" href="companion.html"><span class="mark">AI</span>企业 AI 落地伙伴</a><div class="links"><a href="#truth">真实沉淀</a><a href="#map">落地全图</a><a href="#lessons">经验时间线</a><a href="#method">方法论</a><a href="#learn">联网学习</a><a href="#products">三款产品</a><a href="#architecture">架构</a><a href="#method">完整SOP</a><button id="public-sound" class="secondary" aria-pressed="false">♪ 音效关</button></div></div></nav>
 <main>
-  <section class="wrap hero"><div><span class="eyebrow">EVIDENCE-FIRST · GROWING COMPANION</span><h1>不是一个空聊天框。<br><i>是会陪你把项目做对的系统。</i></h1><p class="lead">它把你做过的项目、方法论、失败经验和新案例放进同一套可验证知识系统；先找证据，再回答；先进入候选，再审核发布；从模糊需求一路带到架构、实施、验收与交付。</p><div class="cta"><a class="button" href="#method">从完整方法开始</a><a class="button secondary" href="methodology.html">打开14步总SOP</a></div></div><aside class="voice"><span class="eyebrow" style="color:#d9f36d">ONE BUTTON VOICE</span><b>按一次，持续多轮对话</b><p>正式应用采用 WebRTC Realtime、语义轮次判断、可插话、断线恢复和短期令牌；不是“按一次只转一句文字”。</p><button id="voice-info">查看真实实现边界</button></aside></section>
+  <section class="wrap hero"><div><span class="eyebrow">EVIDENCE-FIRST · GROWING COMPANION</span><h1>不是一个空聊天框。<br><i>是会陪你把项目做对的系统。</i></h1><p class="lead">它把你做过的项目、方法论、失败经验和新案例放进同一套可验证知识系统；先找证据，再回答；先进入候选，再审核发布；从模糊需求一路带到架构、实施、验收与交付。</p><div class="cta"><a class="button" href="#method">从完整方法开始</a><a class="button secondary" href="#method">打开14步总SOP</a></div></div><aside class="voice"><span class="eyebrow" style="color:#d9f36d">ONE BUTTON VOICE</span><b>按一次，持续多轮对话</b><p>正式应用采用 WebRTC Realtime、语义轮次判断、可插话、断线恢复和短期令牌；不是“按一次只转一句文字”。</p><button id="voice-info">查看真实实现边界</button></aside></section>
 
   <section id="truth" class="wrap section"><div class="head"><div><span class="eyebrow">REAL KNOWLEDGE</span><h2>里面已经有真实沉淀，不是空壳。</h2></div><p>私人原文留在本机产品数据库；公开网页只展示类别、流程与脱敏结论，不发布聊天、Cookie、Token或本机路径。</p></div><div class="facts"><article><strong>10</strong><span>本地正式资料来源</span></article><article><strong>71</strong><span>可追溯证据片段</span></article><article><strong>123/123</strong><span>黄金集回归</span></article><article><strong>166</strong><span>当前自动测试</span></article></div><div class="grid" style="margin-top:14px">
     <article class="card"><span class="n">01</span><h3>项目复盘与交付经验</h3><p>阿尔泰从5000元MVP到企业级交付的升级背景、7天实施记录、整改手册和交付作战图。</p><details><summary>它能帮什么</summary><div class="inside">解释为什么从“配置智能体”升级到可安装、可回滚、可审计、可多人使用的产品；以后报价、范围控制和客户说明都有依据。</div></details></article>
@@ -58,7 +30,7 @@
   <section id="lessons" class="wrap section"><div class="head"><div><span class="eyebrow">GROWING LESSONS · 每次更新都沉淀</span><h2>经验不靠记忆，靠一条条落下来。</h2></div><p>每次项目更新/踩坑/修复后，把「做了什么 + 学到的教训」追加成一条时间线条目（公开版只留脱敏结论，原始证据留在本机）。</p></div><div id="timeline" class="timeline"></div></section>
 
 
-  <section id="map" class="wrap section"><div class="head"><div><span class="eyebrow">DEPLOYMENT-MAP · 企业 AI 落地全图</span><h2>14 个子领域里，先吃透这 5 个核心。</h2></div><p>所有方法论都来自 GitHub 标杆 + 你做过的实战 + 经典著作。每张方法论卡都标引来源、列反模式、给验收问题，看完能答出5 个验收问题就算真的会了。<br><strong style="color:var(--green);font-weight:800">🎯 v3.0 完整闭环：7 张决策卡 + 15 张方法论卡 + 黄金集 100% 命中</strong>。决策卡：ALT-001 · NIF-001 · STARTER-001 · AR-003 · ENTERPRISE-001 · MIGRATE-001 · RESULT-001。<br><a href="architect-helper.html" class="hero-btn" style="margin-top:10px;display:inline-block;background:var(--green);color:#000;padding:8px 18px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px">🎯 试试架构师助手（6 步给推荐）→</a></p></div><div id="flyStats" class="stats-bar"></div><div class="map-grid" id="mapGrid"></div></section>
+  <section id="map" class="wrap section"><div class="head"><div><span class="eyebrow">DEPLOYMENT-MAP · 企业 AI 落地全图</span><h2>14 个子领域里，先吃透这 5 个核心。</h2></div><p>所有方法论都来自 GitHub 标杆 + 你做过的实战 + 经典著作。每张方法论卡都标引来源、列反模式、给验收问题，看完能答出5 个验收问题就算真的会了。<br><strong style="color:var(--green);font-weight:800">🎯 v3.0 完整闭环：7 张决策卡 + 15 张方法论卡 + 黄金集 100% 命中</strong>。决策卡：ALT-001 · NIF-001 · STARTER-001 · AR-003 · ENTERPRISE-001 · MIGRATE-001 · RESULT-001。<br><span style="margin-top:10px;display:inline-block;background:transparent;color:var(--muted);padding:8px 18px;font-size:13px">🎯 架构推荐由 agent 会话按决策卡实时给出（本页不集成静态工具）</span></p></div><div id="flyStats" class="stats-bar"></div><div class="map-grid" id="mapGrid"></div></section>
 
 
   <section id="candidates" class="wrap section">
@@ -94,7 +66,7 @@
     <details><summary>04 · 架构权衡SOP</summary><div class="inside">至少两套候选；按质量场景比较成本、风险、迁移、故障域和回滚；用ATAM识别风险/敏感点/取舍点；用ADR冻结决定。</div></details>
     <details><summary>05 · AWS外部复核SOP</summary><div class="inside">创建Workload并选择Lens→按真实证据回答问题→无证据标UNKNOWN→导出改进项→映射负责人/日期/内部Gate→保存Milestone与报告哈希。</div></details>
     <details><summary>06 · 验收与进化SOP</summary><div class="inside">自动测试+故障注入+独立反例+客户新机UAT。新经验先进入学习候选，只有完整快照、冻结评测、独立批准和行为探针通过后才生效。</div></details>
-  </div><p style="margin-top:20px"><a class="button secondary" href="methodology.html">查看每个部门、14步与全部权威出处 →</a></p></section>
+  </div><p style="margin-top:20px"><span class="button secondary" style="opacity:.6;pointer-events:none">查看每个部门、14步与全部权威出处（在 agent 会话中查）</span></p></section>
 
   <section id="learn" class="wrap section"><div class="head"><div><span class="eyebrow">10 → 1 LEARNING LOOP</span><h2>看到10个方法，决定哪些真正留下。</h2></div><p>GitHub可以在本页用官方公开API做只读发现；抖音在正式应用中走开放平台或用户授权导入，不在公开网页存Token。</p></div><div class="panel research"><div class="search"><input id="query" value="enterprise AI agent architecture" maxlength="100" aria-label="GitHub搜索"><button id="search">搜索最新GitHub案例</button></div><div id="results" class="results"><div class="boundary">点击搜索后只读取GitHub公开仓库元数据。结果只是候选，不会自动进入正式方法论。</div></div></div><div class="grid" style="margin-top:14px">
     <article class="card"><span class="tag">核心采用</span><h3>证据强、适配高、PoC通过</h3><p>进入完整学习卡、回归评测和独立发布。</p></article><article class="card"><span class="tag">局部复用</span><h3>只拿成熟组件</h3><p>保留边界，不把一个库包装成整套架构。</p></article><article class="card"><span class="tag">学习思想</span><h3>沉淀原则，不复制实现</h3><p>记录启发、适用条件和不适用场景。</p></article><article class="card"><span class="tag">观察名单</span><h3>有潜力但证据不足</h3><p>设复核日期，不影响正式回答。</p></article><article class="card"><span class="tag">拒绝</span><h3>不适配也留下原因</h3><p>防止团队下一轮重复踩坑。</p></article><article class="card"><span class="tag">发布门禁</span><h3>候选永远不是正式</h3><p>未激活内容影响检索、回答和决策必须为0。</p></article>
@@ -235,7 +207,7 @@
       {n:FLYWHEEL.coreCards, l:'核心子领域', w:100, c:'background:linear-gradient(90deg,var(--green),var(--lime))'},
       {n:FLYWHEEL.goldenHits + ' / ' + FLYWHEEL.goldenScenes, l:'黄金集命中 / 总场景', w:pct, c:''},
       {n:pct + '% / ' + tgt + '%', l:'黄金集覆盖率 / 目标线', w:Math.round(pct/tgt*100), c:'background:' + barColor},
-      {n:'v2.0', l:'当前版本', w:57, c:'background:linear-gradient(90deg,var(--accent),var(--blue))'}
+      {n:'v3.0', l:'当前版本（飞轮稳定运转）', w:100, c:'background:linear-gradient(90deg,var(--accent),var(--blue))'}
     ];
     sb.textContent = '';
     items.forEach(function(it){
